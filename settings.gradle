@@ -1,0 +1,1 @@
+include 'gfxbuilder-core', 'gfxbuilder-swingx', 'gfxbuilder-svg'
