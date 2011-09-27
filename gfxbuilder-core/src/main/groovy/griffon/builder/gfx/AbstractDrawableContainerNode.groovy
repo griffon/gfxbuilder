@@ -82,7 +82,7 @@ abstract class AbstractDrawableContainerNode extends AbstractDrawableNode implem
              event.newValue.addPropertyChangeListener(this)
              break
          case ElementEvent.REMOVED:
-             event.newValue.removePropertyChangeListener(this)
+             event.oldValue.removePropertyChangeListener(this)
              break
          case ElementEvent.MULTI_ADD:
              event.values.each { it.addPropertyChangeListener(this) }

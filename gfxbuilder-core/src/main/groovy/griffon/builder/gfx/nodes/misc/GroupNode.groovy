@@ -23,82 +23,102 @@ import java.awt.Shape
 import java.awt.Graphics
 import java.awt.geom.Area
 import java.awt.geom.AffineTransform
+import java.awt.geom.Rectangle2D
+import griffon.builder.gfx.nodes.shapes.RectangleNode
 
 /**
  * @author Andres Almiray <aalmiray@users.sourceforge.net>
+ * @author Alexander Klein <info@aklein.org>
  */
-class GroupNode extends AbstractGfxNode  {
-    private Map _previousGroupSettings = [:]
-    private Shape _shape
+class GroupNode extends AbstractGfxNode {
+  private Map _previousGroupSettings = [:]
+  private Shape _shape
+  private List<RectangleNode> _temporaries = []
 
-    GroupNode() {
-        super("group")
-        passThrough = true
+  GroupNode() {
+    super("group")
+    passThrough = true
+  }
+
+  GfxRuntime createRuntime(GfxContext context) {
+    new GroupGfxRuntime(this, context)
+  }
+
+  protected void beforeApply(GfxContext context) {
+    def _nodes = new ArrayList(nodes)
+    _nodes.each { node ->
+      if (node instanceof AbstractGfxNode) {
+        if(node.runtime == null)
+          node.getRuntime(context)
+        Shape s = node.calculateShape()
+        def b = s.bounds2D
+        if (new Area(s).isEmpty() && !b.isEmpty()) {
+          def t = new RectangleNode(b)
+          t.borderWidth = 0
+          _temporaries << t
+          addNode(t)
+        }
+      }
     }
+    super.beforeApply(context)
+  }
 
-    GfxRuntime createRuntime(GfxContext context) {
-        new GroupGfxRuntime(this, context)
-    }
+  protected void afterApply(GfxContext context) {
+    context.groupSettings = _previousGroupSettings
+    super.afterApply(context)
+    new ArrayList(_temporaries).each { removeNode(it) }
+  }
 
-    protected void beforeApply(GfxContext context) {
-       super.beforeApply(context)
-    }
+  protected void applyThisNode(GfxContext context) {
+    _previousGroupSettings = [:]
+    _previousGroupSettings.putAll(context.groupSettings)
+    if (borderColor != null) context.groupSettings.borderColor = borderColor
+    if (borderWidth != null) context.groupSettings.borderWidth = borderWidth
+    if (fill != null) context.groupSettings.fill = fill
+    AffineTransform affineTransform = new AffineTransform()
+    affineTransform.concatenate context.g.transform
+    affineTransform.concatenate runtime.getLocalTransforms()
+    context.g.transform = affineTransform
+  }
 
-    protected void afterApply(GfxContext context) {
-       context.groupSettings = _previousGroupSettings
-       super.afterApply(context)
-    }
+  protected void applyNestedNode(GfxNode node, GfxContext context) {
+    node.apply(context)
+  }
 
-    protected void applyThisNode(GfxContext context) {
-       _previousGroupSettings = [:]
-       _previousGroupSettings.putAll(context.groupSettings)
-       if(borderColor != null) context.groupSettings.borderColor = borderColor
-       if(borderWidth != null) context.groupSettings.borderWidth = borderWidth
-       if(fill != null) context.groupSettings.fill = fill
-       AffineTransform affineTransform = new AffineTransform()
-       affineTransform.concatenate context.g.transform
-       affineTransform.concatenate runtime.getLocalTransforms()
-       context.g.transform = affineTransform
-    }
+  Shape calculateShape() {
+    GfxContext context = getRuntime().getContext()
+    List shapes = []
 
-    protected void applyNestedNode(GfxNode node, GfxContext context) {
-       node.apply(context)
-    }
-
-    Shape calculateShape() {
-       GfxContext context = getRuntime().getContext()
-       List shapes = []
-
-       getNodes().each { node ->
-          if(!node.enabled) return
-          if(node instanceof DrawableNode) {
-             if(!node.visible || !node.enabled) return
-             if(!node.getRuntime()) node.getRuntime(context)
-             Graphics gcopy = null
-             if(node.txs.enabled()) {
-                gcopy = context.g
-                context.g = gcopy.create()
-             }
-             try {
-                Shape s = node.getRuntime().getTransformedShape()
-                if(s) shapes << s
-             } finally {
-                if(gcopy) {
-                   context.g.dispose()
-                   context.g = gcopy
-                }
-             }
+    new ArrayList(getNodes()).each { node ->
+      if (!node.enabled) return
+      if (node instanceof DrawableNode) {
+        if (!node.visible || !node.enabled) return
+        if (!node.getRuntime()) node.getRuntime(context)
+        Graphics gcopy = null
+        if (node.txs.enabled()) {
+          gcopy = context.g
+          context.g = gcopy.create()
+        }
+        try {
+          Shape s = node.getRuntime().getTransformedShape()
+          if (s) shapes << s
+        } finally {
+          if (gcopy) {
+            context.g.dispose()
+            context.g = gcopy
           }
-       }
-
-       if(!shapes) return null
-
-       Area area = new Area(shapes[0])
-       if(shapes.size() > 1) {
-          shapes[1..-1].each { shape ->
-             area.add(shape instanceof Area ? shape : new Area(shape))
-          }
-       }
-       area
+        }
+      }
     }
+
+    if (!shapes) return null
+
+    Area area = new Area(shapes[0])
+    if (shapes.size() > 1) {
+      shapes[1..-1].each { shape ->
+        area.add(shape instanceof Area ? shape : new Area(shape))
+      }
+    }
+    area
+  }
 }
