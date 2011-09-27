@@ -112,7 +112,7 @@ class Transforms extends GfxNode {
     }
 
     void propertyChange(PropertyChangeEvent event) {
-       if(event.source == _transforms){
+       if(event.source == _transforms && event instanceof ElementEvent){
            handleElementEvent(event)
        } else {
            super.propertyChange(event)
@@ -120,7 +120,7 @@ class Transforms extends GfxNode {
     }
 
     protected void handleElementEvent(ElementEvent event) {
-      switch( event.type ) {
+      switch(event.type) {
          case ElementEvent.ADDED:
              event.newValue.addPropertyChangeListener(this)
              break
