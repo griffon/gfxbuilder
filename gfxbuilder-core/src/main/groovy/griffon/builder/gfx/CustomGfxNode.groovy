@@ -20,6 +20,8 @@ import java.awt.geom.AffineTransform
 import java.beans.PropertyChangeEvent
 
 import griffon.builder.gfx.runtime.*
+import java.awt.Graphics2D
+import java.awt.image.BufferedImage
 
 /**
  * @author Andres Almiray <aalmiray@users.sourceforge.net>
@@ -85,7 +87,9 @@ abstract class CustomGfxNode extends AbstractDrawableNode {
       transform.concatenate getRuntime().getLocalTransforms()
       context.g.transform = transform
 
-      _node.apply(context)
+      applyWithFilter(context) {
+        _node.apply(context)
+      }
    }
 
 //    protected boolean shouldSkip(GfxContext context) {

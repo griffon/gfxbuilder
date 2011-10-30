@@ -69,7 +69,9 @@ abstract class AbstractDrawableContainerNode extends AbstractDrawableNode implem
    protected abstract void applyThisNode(GfxContext context)
 
    protected void applyNestedNode(GfxNode node, GfxContext context) {
-      node.apply(context)
+      applyWithFilter(context) {
+         node.apply(context)
+      }
    }
 
    protected void handleElementEvent(PropertyChangeEvent event) {

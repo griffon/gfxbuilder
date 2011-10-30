@@ -27,6 +27,11 @@ import griffon.builder.gfx.Colors
 import griffon.builder.gfx.runtime.GfxRuntime
 import griffon.builder.gfx.runtime.VisualGfxRuntime
 import griffon.builder.gfx.nodes.transforms.*
+import java.awt.image.BufferedImage
+import java.awt.GraphicsConfiguration
+import java.awt.GraphicsEnvironment
+import java.awt.Transparency
+import java.awt.Graphics2D
 
 /**
  * @author Andres Almiray <aalmiray@users.sourceforge.net>
@@ -89,8 +94,10 @@ abstract class AbstractGfxNode extends AbstractDrawableContainerNode {
       Shape shape = _runtime.getLocalShape()
       if(shape) {
          context.bounds = _runtime.getBoundingShape()?.bounds ?: context.bounds
-         fill(context, shape)
-         draw(context, shape)
+         applyWithFilter(context) {
+            fill(context, shape)
+            draw(context, shape)
+         }
       }
    }
 
@@ -155,12 +162,12 @@ abstract class AbstractGfxNode extends AbstractDrawableContainerNode {
              g.paint = __p
           }
        } else if(__bc && __bw > 0) {
-          def __pc = g.color
+          def __pc = g.paint
           def __ps = g.stroke
-          g.color = __bc
+          g.paint = __bc
           if(__st) g.stroke = __st
           g.draw(shape)
-          g.color = __pc
+          g.paint = __pc
           if(__st) g.stroke = __ps
        } else {
           // don't draw the shape

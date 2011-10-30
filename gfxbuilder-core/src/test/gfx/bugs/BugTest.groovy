@@ -3,6 +3,7 @@ package gfx.bugs
 import gfx.test.TestUtils
 import griffon.builder.gfx.GfxBuilder
 import java.awt.image.BufferedImage
+import com.jhlabs.image.GrayscaleFilter
 
 /**
  * @author Alexander Klein <info@aklein.org>
@@ -161,5 +162,21 @@ class BugTest extends GroovyTestCase {
             }
         }
         BufferedImage img = TestUtils.createImage([350, 200], node, false, "NPEWithTextNodeBounds", true)
+    }
+
+    void testFilter() {
+        def gfx = new GfxBuilder()
+        def node = gfx.group(bc: 'none') {
+            antialias true
+            rect(x: 50, y: 50, w: 100, h: 100, fill: color('red'), filter: new GrayscaleFilter())
+        }
+        BufferedImage img = TestUtils.createImage([200, 200], node, false, "NPEWithTextNodeBounds", true)
+        TestUtils.assertPixel img, 60, 60, [76, 76, 76, 255], 0
+        node = gfx.group(bc: 'none', filter: new GrayscaleFilter()) {
+            antialias true
+            rect(x: 50, y: 50, w: 100, h: 100, fill: color('red'))
+        }
+        img = TestUtils.createImage([200, 200], node, false, "NPEWithTextNodeBounds", true)
+        TestUtils.assertPixel img, 60, 60, [76, 76, 76, 255], 0
     }
 }

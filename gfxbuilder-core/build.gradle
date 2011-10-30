@@ -16,6 +16,7 @@
 
 dependencies {
     compile 'org.codehaus.griffon:jsilhouette-geom:0.4'
+    compile 'com.jhlabs:filters:2.0.235'
 }
 
 metaInf << fileTree(dir: file('src/resources/metainf'))

@@ -82,7 +82,9 @@ class GroupNode extends AbstractGfxNode {
   }
 
   protected void applyNestedNode(GfxNode node, GfxContext context) {
-    node.apply(context)
+    applyWithFilter(context) {
+      node.apply(context)
+    }
   }
 
   Shape calculateShape() {
