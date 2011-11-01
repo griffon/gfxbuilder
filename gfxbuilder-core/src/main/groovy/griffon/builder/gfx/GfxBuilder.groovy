@@ -144,6 +144,8 @@ class GfxBuilder extends FactoryBuilderSupport {
         registerFactory("clip", new ClipFactory())
         registerFactory("antialias", new AntialiasFactory())
 //         registerFactory("alphaComposite", new AlphaCompositeFactory())
+        registerGfxBeanFactory("alphaComposite", AlphaCompositeNode, true)
+        registerGfxBeanFactory("composite", CompositeNode, true)
 //         registerFactory( "viewBox", new ViewBoxFactory() )
         registerFactory("props", new PropsFactory())
         registerFactory("background", new BackgroundFactory())

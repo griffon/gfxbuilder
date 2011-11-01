@@ -104,10 +104,12 @@ class ImageNode extends AbstractDrawableNode {
       transform.concatenate getRuntime().getLocalTransforms()
       context.g.transform = transform
 
-      if(Double.isNaN(width) && Double.isNaN(height)) {
-         context.g.drawImage(_image, x as int, y as int, context.component)
-      } else {
-         context.g.drawImage(_image, x as int, y as int, width as int, height as int, context.component)
+      applyWithFilter(context) {
+         if(Double.isNaN(width) && Double.isNaN(height)) {
+            context.g.drawImage(_image, x as int, y as int, context.component)
+         } else {
+            context.g.drawImage(_image, x as int, y as int, width as int, height as int, context.component)
+         }
       }
    }
 

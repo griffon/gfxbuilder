@@ -91,10 +91,12 @@ class GfxCanvas extends JComponent implements PropertyChangeListener, MouseListe
          if(_node) {
              def img = createCompatibleImage(getWidth(), getHeight())
              _context.g = img.getGraphics()
-             _context.g.clip = g.clip
-             _context.g.color = getBackground()
-             _context.g.clearRect(0, 0, getWidth() as int, getHeight() as int)
-             _context.g.color = g.color
+                 _context.g.clip = g.clip
+                 if(isOpaque()) {
+                    _context.g.paint = getBackground()
+                    _context.g.clearRect(0, 0, getWidth() as int, getHeight() as int)
+                 }
+                 _context.g.paint = g.paint
              try {
                  _context.eventTargets = []
                  _context.groupSettings = [:]

@@ -27,6 +27,12 @@ import griffon.builder.gfx.event.GfxInputListener
 import griffon.builder.gfx.runtime.GfxRuntime
 import griffon.builder.gfx.runtime.DrawableGfxRuntime
 import griffon.builder.gfx.nodes.transforms.Transforms
+import java.awt.Transparency
+import java.awt.GraphicsEnvironment
+import java.awt.GraphicsConfiguration
+import java.awt.image.BufferedImage
+import java.awt.image.BufferedImageOp
+import java.awt.Graphics2D
 
 /**
  * @author Andres Almiray <aalmiray@users.sourceforge.net>
@@ -58,6 +64,7 @@ abstract class AbstractDrawableNode extends GfxNode implements GfxInputListener,
    @GfxAttribute(alias="ra") double rotateAngle = Double.NaN
    @GfxAttribute(alias="sx") double scaleX = Double.NaN
    @GfxAttribute(alias="sy") double scaleY = Double.NaN
+   @GfxAttribute(alias="ft")  def/*BufferedImageOp*/ filter
 
    AbstractDrawableNode(String name) {
       super(name)
@@ -206,5 +213,27 @@ abstract class AbstractDrawableNode extends GfxNode implements GfxInputListener,
 
    protected void reset(PropertyChangeEvent event) {
       _runtime?.reset()
+   }
+
+   protected BufferedImage createCompatibleImage(def width, def height) {
+      GraphicsConfiguration gc = GraphicsEnvironment.localGraphicsEnvironment.defaultScreenDevice.defaultConfiguration
+      return gc.createCompatibleImage(width as int, height as int, Transparency.TRANSLUCENT as int)
+   }
+
+   protected void applyWithFilter(GfxContext context, Closure apply) {
+      BufferedImage _img
+      Graphics2D _g
+      def bounds = _runtime.getBoundingShape()?.bounds ?: context.bounds
+      if(filter) {
+         _img = createCompatibleImage(bounds.width, bounds.height)
+         _g = context.g
+         context.g = _img.createGraphics()
+      }
+      apply(context)
+      if(filter) {
+         _g.drawImage(_img, filter, 0, 0)
+         context.g.dispose()
+         context.g = _g
+      }
    }
 }

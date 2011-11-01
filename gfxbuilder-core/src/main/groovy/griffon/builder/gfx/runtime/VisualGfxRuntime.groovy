@@ -79,11 +79,11 @@ class VisualGfxRuntime extends DrawableGfxRuntime {
    /**
     * Returns the borderColor taking into account inherited value from group.<p>
     *
-    * @return a java.awt.Color
+    * @return a java.awt.Paint
     */
    public def getBorderColor(){
       if( !_borderColor ){
-         _borderColor = _context.g.color
+         _borderColor = _context.g.paint
          if( _context.groupSettings.borderColor != null ){
             _borderColor = _context.groupSettings.borderColor
          }
@@ -97,7 +97,7 @@ class VisualGfxRuntime extends DrawableGfxRuntime {
                _borderColor = Colors.getColor(_borderColor)
             }
             if( !_borderColor ){
-               _borderColor = _context.g.color
+               _borderColor = _context.g.paint
             }
          }
       }
@@ -160,7 +160,7 @@ class VisualGfxRuntime extends DrawableGfxRuntime {
                   //_fill = _fill.runtime(context).paint
                   break
                case true:
-                  _fill = _context?.g.color
+                  _fill = _context?.g.paint
                   break
                case Color:
                case Paint:
