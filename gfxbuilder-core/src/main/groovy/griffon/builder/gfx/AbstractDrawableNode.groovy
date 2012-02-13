@@ -223,15 +223,15 @@ abstract class AbstractDrawableNode extends GfxNode implements GfxInputListener,
    protected void applyWithFilter(GfxContext context, Closure apply) {
       BufferedImage _img
       Graphics2D _g
-      def bounds = _runtime.getBoundingShape()?.bounds ?: context.bounds
+      context.bounds = _runtime.getBoundingShape()?.bounds ?: context.bounds
       if(filter) {
-         _img = createCompatibleImage(bounds.width, bounds.height)
+         _img = createCompatibleImage(context.bounds.width + context.bounds.x, context.bounds.height + context.bounds.y)
          _g = context.g
          context.g = _img.createGraphics()
       }
       apply(context)
       if(filter) {
-         _g.drawImage(_img, filter, 0, 0)
+         _g.drawImage(_img, filter, context.bounds.x as int, context.bounds.y as int)
          context.g.dispose()
          context.g = _g
       }
