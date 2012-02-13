@@ -34,9 +34,6 @@ import java.lang.reflect.*
  * @author Andres Almiray <aalmiray@users.sourceforge.net>
  */
 class GfxBuilder extends FactoryBuilderSupport {
-    public static final String DELEGATE_PROPERTY_OBJECT_ID = "_delegateProperty:id";
-    public static final String DEFAULT_DELEGATE_PROPERTY_OBJECT_ID = "id";
-
     static {
         GfxUtils.enhanceShapes()
         GfxUtils.enhanceColor()
@@ -48,8 +45,6 @@ class GfxBuilder extends FactoryBuilderSupport {
         if(init) {
            gfxbAutoRegister()
         }
-
-        this[DELEGATE_PROPERTY_OBJECT_ID] = DEFAULT_DELEGATE_PROPERTY_OBJECT_ID
     }
 
     public gfxbAutoRegister() {
@@ -259,8 +254,7 @@ class GfxBuilder extends FactoryBuilderSupport {
     }
 
     public static objectIDAttributeDelegate(def builder, def node, def attributes) {
-       def idAttr = builder.getAt(DELEGATE_PROPERTY_OBJECT_ID) ?: DEFAULT_DELEGATE_PROPERTY_OBJECT_ID
-       def theID = attributes.remove(idAttr)
+       def theID = attributes.remove('id')
        if (theID) {
            builder.setVariable(theID, node)
        }
