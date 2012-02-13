@@ -14,9 +14,17 @@
  * limitations under the License.
  */
 
+swingxVersion = '1.6.3'
+
 dependencies {
-    compile 'org.swinglabs:swingx-core:1.6.2-2',
-            'org.swinglabs:swingx-beaninfo:1.6.2-2',
+    compile "org.swinglabs.swingx:swingx-core:$swingxVersion",
+            "org.swinglabs.swingx:swingx-graphics:$swingxVersion",
+            "org.swinglabs.swingx:swingx-painters:$swingxVersion",
+            "org.swinglabs.swingx:swingx-plaf:$swingxVersion",
+            "org.swinglabs.swingx:swingx-autocomplete:$swingxVersion",
+            "org.swinglabs.swingx:swingx-action:$swingxVersion",
+            "org.swinglabs.swingx:swingx-common:$swingxVersion",
+            "org.swinglabs.swingx:swingx-beaninfo:$swingxVersion",
             project(':gfxbuilder-core')
 }
 
