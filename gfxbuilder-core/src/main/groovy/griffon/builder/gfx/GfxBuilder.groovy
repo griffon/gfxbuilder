@@ -29,6 +29,7 @@ import griffon.builder.gfx.nodes.transforms.*
 import org.codehaus.griffon.jsilhouette.geom.*
 
 import java.lang.reflect.*
+import groovy.swing.SwingBuilder
 
 /**
  * @author Andres Almiray <aalmiray@users.sourceforge.net>
@@ -258,5 +259,16 @@ class GfxBuilder extends FactoryBuilderSupport {
        if (theID) {
            builder.setVariable(theID, node)
        }
+    }
+
+    // Fix to prevent nodes without context to throw MPE when asked for id (e.g. in BindFactory)
+    public Object getProperty(String property) {
+        try {
+            return super.getProperty(property)
+        } catch (MissingPropertyException mpe) {
+            if (property == SwingBuilder.DELEGATE_PROPERTY_OBJECT_ID)
+                return null
+            throw mpe
+        }
     }
 }
