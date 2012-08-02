@@ -77,10 +77,10 @@ class TriangleNode extends AbstractShapeGfxNode {
 
     private Shape calculateRightTriangle(){
        def ap = null
-       switch( rightAngleAt ){
+       switch( anglePosition ){
           case Triangle.ANGLE_AT_START:
           case Triangle.ANGLE_AT_END:
-             ap = rightAngleAt
+             ap = anglePosition
              break
           case 'start':
              ap = Triangle.ANGLE_AT_START
