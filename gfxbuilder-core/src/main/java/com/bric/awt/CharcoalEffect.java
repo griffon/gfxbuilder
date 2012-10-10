@@ -17,14 +17,14 @@
  */
 package com.bric.awt;
 
-import java.awt.Shape;
-import java.awt.geom.GeneralPath;
-import java.awt.geom.Point2D;
-import java.util.Random;
-
 import com.bric.geom.GeneralPathWriter;
 import com.bric.geom.MeasuredShape;
 import com.bric.geom.PathWriter;
+
+import java.awt.*;
+import java.awt.geom.GeneralPath;
+import java.awt.geom.Point2D;
+import java.util.Random;
 
 /** This applies a charcoal effect to a shape.
  * 

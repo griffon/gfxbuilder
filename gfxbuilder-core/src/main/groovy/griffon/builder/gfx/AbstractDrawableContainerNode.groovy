@@ -1,5 +1,5 @@
 /*
- * Copyright 2007-2010 the original author or authors.
+ * Copyright 2007-2012 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,97 +15,98 @@
 
 package griffon.builder.gfx
 
-import java.beans.PropertyChangeEvent
 import groovy.util.ObservableList.ElementEvent
+
+import java.beans.PropertyChangeEvent
 
 /**
  * @author Andres Almiray <aalmiray@users.sourceforge.net>
  * @author Alexander Klein <info@aklein.org>
  */
 abstract class AbstractDrawableContainerNode extends AbstractDrawableNode implements ContainerNode {
-   private final ObservableList/*<GfxNode>*/ _nodes = new ObservableList()
+    private final ObservableList/*<GfxNode>*/ _nodes = new ObservableList()
 
-   AbstractDrawableContainerNode(String name) {
-      super( name )
-      _nodes.addPropertyChangeListener(this)
-   }
+    AbstractDrawableContainerNode(String name) {
+        super(name)
+        _nodes.addPropertyChangeListener(this)
+    }
 
-   final List/*<GfxNode>*/ getNodes() {
-      _nodes
-   }
+    final List/*<GfxNode>*/ getNodes() {
+        _nodes
+    }
 
-   void addNode(GfxNode node) {
-      if(!node || _nodes.contains(node)) return
-      node.addPropertyChangeListener(this)
-      _nodes << node
-   }
+    void addNode(GfxNode node) {
+        if (!node || _nodes.contains(node)) return
+        node.addPropertyChangeListener(this)
+        _nodes << node
+    }
 
-   void removeNode(GfxNode node) {
-      if(!node || !_nodes.contains(node)) return
-      node.removePropertyChangeListener(this)
-      _nodes.remove(node)
-   }
+    void removeNode(GfxNode node) {
+        if (!node || !_nodes.contains(node)) return
+        node.removePropertyChangeListener(this)
+        _nodes.remove(node)
+    }
 
-   AbstractDrawableContainerNode leftShift(GfxNode node) {
-      addNode(node)
-      this
-   }
+    AbstractDrawableContainerNode leftShift(GfxNode node) {
+        addNode(node)
+        this
+    }
 
-   void propertyChange(PropertyChangeEvent event) {
-      if(event.source == _nodes){
-         handleElementEvent(event)
-      } else {
-         super.propertyChange(event)
-      }
-   }
+    void propertyChange(PropertyChangeEvent event) {
+        if (event.source == _nodes) {
+            handleElementEvent(event)
+        } else {
+            super.propertyChange(event)
+        }
+    }
 
-   protected final void applyNode(GfxContext context) {
-       applyThisNode(context)
-       if(!_nodes.empty) {
-          new ArrayList(_nodes).each { n -> applyNestedNode(n, context) }
-       }
-   }
+    protected final void applyNode(GfxContext context) {
+        applyThisNode(context)
+        if (!_nodes.empty) {
+            new ArrayList(_nodes).each { n -> applyNestedNode(n, context) }
+        }
+    }
 
-   protected abstract void applyThisNode(GfxContext context)
+    protected abstract void applyThisNode(GfxContext context)
 
-   protected void applyNestedNode(GfxNode node, GfxContext context) {
-      applyWithFilter(context) {
-         node.apply(context)
-      }
-   }
+    protected void applyNestedNode(GfxNode node, GfxContext context) {
+        applyWithFilter(context) {
+            node.apply(context)
+        }
+    }
 
-   protected void handleElementEvent(PropertyChangeEvent event) {
-      onDirty(event)
-   }
+    protected void handleElementEvent(PropertyChangeEvent event) {
+        onDirty(event)
+    }
 
-   protected void handleElementEvent(ElementEvent event) {
-      switch(event.type) {
-         case ElementEvent.ADDED:
-             event.newValue.addPropertyChangeListener(this)
-             break
-         case ElementEvent.REMOVED:
-             event.oldValue.removePropertyChangeListener(this)
-             break
-         case ElementEvent.MULTI_ADD:
-             event.values.each { it.addPropertyChangeListener(this) }
-             break
-         case ElementEvent.CLEARED:
-         case ElementEvent.MULTI_REMOVE:
-             event.values.each { it.removePropertyChangeListener(this) }
-         case ElementEvent.UPDATED:
-             break
-      }
-      // _dirty = true
-      onDirty(event)
-      // _dirty = false
-   }
+    protected void handleElementEvent(ElementEvent event) {
+        switch (event.type) {
+            case ObservableList.ChangeType.ADDED:
+                event.newValue.addPropertyChangeListener(this)
+                break
+            case ObservableList.ChangeType.REMOVED:
+                event.oldValue.removePropertyChangeListener(this)
+                break
+            case ObservableList.ChangeType.MULTI_ADD:
+                event.values.each { it.addPropertyChangeListener(this) }
+                break
+            case ObservableList.ChangeType.CLEARED:
+            case ObservableList.ChangeType.MULTI_REMOVE:
+                event.values.each { it.removePropertyChangeListener(this) }
+            case ObservableList.ChangeType.UPDATED:
+                break
+        }
+        // _dirty = true
+        onDirty(event)
+        // _dirty = false
+    }
 
-   protected def findLast(Closure cls) {
-      _nodes.reverse().find(cls)
-   }
+    protected def findLast(Closure cls) {
+        _nodes.reverse().find(cls)
+    }
 
-   protected boolean triggersReset(PropertyChangeEvent event) {
-      if(event.source == _nodes || _nodes.contains(event.source)) return true
-      return super.triggersReset(event)
-   }
+    protected boolean triggersReset(PropertyChangeEvent event) {
+        if (event.source == _nodes || _nodes.contains(event.source)) return true
+        return super.triggersReset(event)
+    }
 }

@@ -17,7 +17,7 @@
  */
 package com.bric.awt;
 
-import java.awt.Stroke;
+import java.awt.*;
 
 /** This is a <code>Stroke</code> that modifies or sits on top of
  * another <code>Stroke</code>.

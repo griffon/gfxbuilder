@@ -55,8 +55,8 @@ subprojects {
 
     metaInf << fileTree(dir: project(':').file('.'), includes: ['LICENSE.txt'])
 
-	if(!project.hasProperty('projectName')) projectName = 'Gfxbuilder'
-	if(!project.hasProperty('projectDescription')) projectDescription = 'Gfxbuilder-core: build Java2D drawings with Groovy'
+    if(!project.hasProperty('projectName')) projectName = 'Gfxbuilder'
+    if(!project.hasProperty('projectDescription')) projectDescription = 'Gfxbuilder-core: build Java2D drawings with Groovy'
     jar {
         manifest {
             attributes(
@@ -69,69 +69,69 @@ subprojects {
         }
     }
 
-	artifacts {
-	    archives jar
-	}
+    artifacts {
+        archives jar
+    }
 
-	installer = install.repositories.mavenInstaller
-	def deployer = null
+    installer = install.repositories.mavenInstaller
+    def deployer = null
 
-	if(!project.hasProperty('codehausUsername')) codehausUsername = ''
-	if(!project.hasProperty('codehausPassword')) codehausPassword = ''
+    if(!project.hasProperty('codehausUsername')) codehausUsername = ''
+    if(!project.hasProperty('codehausPassword')) codehausPassword = ''
 
-	uploadArchives {
-	    repositories {
-	        deployer = mavenDeployer {
-	            name = 'codehausDeployer'
-	            configuration = configurations.deployerJars
-	            uploadDescriptor = true
-	            repository(url: codehausReleaseUrl) {
-	                authentication(userName: codehausUsername, password: codehausPassword)
-	            }
-	            snapshotRepository(url: codehausSnapshotUrl) {
-	                uniqueVersion = false
-	                authentication(userName: codehausUsername, password: codehausPassword)
-	            }
-	        }
-	    }
-	}
+    uploadArchives {
+        repositories {
+            deployer = mavenDeployer {
+                name = 'codehausDeployer'
+                configuration = configurations.deployerJars
+                uploadDescriptor = true
+                repository(url: codehausReleaseUrl) {
+                    authentication(userName: codehausUsername, password: codehausPassword)
+                }
+                snapshotRepository(url: codehausSnapshotUrl) {
+                    uniqueVersion = false
+                    authentication(userName: codehausUsername, password: codehausPassword)
+                }
+            }
+        }
+    }
 
-	[installer, deployer].each { repo ->
-	    configure(repo) {
-	        pom.project {
-	            name projectName
-	            description projectDescription
-	            url('http://griffon.codehaus.org/GfxBuilder')
-	            licenses {
-	                license {
-	                    name 'The Apache Software License, Version 2.0'
-	                    url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
-	                    distribution 'repo'
-	                }
-	            }
-	            repositories {
-	                repository {
-	                    id('codehaus-release')
-	                    name('Codehaus')
-	                    url('http://repository.codehaus.org')
-	                }
-	                repository {
-	                    id('sonatype-release')
-	                    name('Sonatype')
-	                    url('http://repository.sonatype.org/content/groups/public')
-	                }
-	                repository {
-	                    id('jboss-release')
-	                    name('JBoss')
+    [installer, deployer].each { repo ->
+        configure(repo) {
+            pom.project {
+                name projectName
+                description projectDescription
+                url('http://griffon.codehaus.org/GfxBuilder')
+                licenses {
+                    license {
+                        name 'The Apache Software License, Version 2.0'
+                        url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+                        distribution 'repo'
+                    }
+                }
+                repositories {
+                    repository {
+                        id('codehaus-release')
+                        name('Codehaus')
+                        url('http://repository.codehaus.org')
+                    }
+                    repository {
+                        id('sonatype-release')
+                        name('Sonatype')
+                        url('http://repository.sonatype.org/content/groups/public')
+                    }
+                    repository {
+                        id('jboss-release')
+                        name('JBoss')
                         url('https://repository.jboss.org/nexus/content/groups/public-jboss')
-	                }
-	            }
-	        }
-	    }
-	}
+                    }
+                }
+            }
+        }
+    }
 }
 
 task wrapper(type: Wrapper) {
-    gradleVersion = '1.0-milestone-6'
+    gradleVersion = '1.2'
     jarFile = 'gradle/wrapper/gradle-wrapper.jar'
 }

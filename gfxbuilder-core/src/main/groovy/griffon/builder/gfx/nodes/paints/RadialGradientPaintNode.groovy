@@ -1,5 +1,5 @@
 /*
- * Copyright 2007-2010 the original author or authors.
+ * Copyright 2007-2012 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,21 +15,21 @@
 
 package griffon.builder.gfx.nodes.paints
 
-import java.awt.Color
-import java.awt.Paint
-import java.awt.RadialGradientPaint
-import java.awt.geom.Point2D
-import java.awt.geom.Rectangle2D
-import java.awt.geom.AffineTransform
-import java.awt.MultipleGradientPaint.CycleMethod
-import java.awt.MultipleGradientPaint.ColorSpaceType
-
-import static java.lang.Math.*
-import java.beans.PropertyChangeEvent
-
 import griffon.builder.gfx.GfxAttribute
 import griffon.builder.gfx.Transformable
-import griffon.builder.gfx.nodes.transforms.*
+import griffon.builder.gfx.nodes.transforms.Transforms
+
+import java.awt.Color
+import java.awt.MultipleGradientPaint.ColorSpaceType
+import java.awt.MultipleGradientPaint.CycleMethod
+import java.awt.Paint
+import java.awt.RadialGradientPaint
+import java.awt.geom.AffineTransform
+import java.awt.geom.Point2D
+import java.awt.geom.Rectangle2D
+import java.beans.PropertyChangeEvent
+
+import static java.lang.Math.min
 
 /**
  * @author Andres Almiray <aalmiray@users.sourceforge.net>

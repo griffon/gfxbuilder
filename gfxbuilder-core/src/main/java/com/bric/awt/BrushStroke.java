@@ -17,15 +17,13 @@
  */
 package com.bric.awt;
 
-import java.awt.BasicStroke;
-import java.awt.Shape;
-import java.awt.Stroke;
-import java.awt.geom.GeneralPath;
-import java.util.Random;
-
 import com.bric.geom.GeneralPathWriter;
 import com.bric.geom.InsetPathWriter;
 import com.bric.geom.MeasuredShape;
+
+import java.awt.*;
+import java.awt.geom.GeneralPath;
+import java.util.Random;
 
 /** This <code>Stroke</code> that resembles a brush.
  * <P>It's still a work in progress, but I'm distributing it for public

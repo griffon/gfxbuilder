@@ -1,6 +1,6 @@
 package com.camick.awt;
 
-import java.awt.Color;
+import java.awt.*;
 
 /**
  *  The HSLColor class provides methods to manipulate HSL (Hue, Saturation

@@ -17,12 +17,10 @@
  */
 package com.bric.awt;
 
-import java.awt.BasicStroke;
-import java.awt.Shape;
-import java.awt.Stroke;
-import java.awt.geom.GeneralPath;
-
 import com.bric.geom.GeneralPathWriter;
+
+import java.awt.*;
+import java.awt.geom.GeneralPath;
 
 /** This applies the {@link CharcoalEffect} to another <code>Stroke</code>.
  * 

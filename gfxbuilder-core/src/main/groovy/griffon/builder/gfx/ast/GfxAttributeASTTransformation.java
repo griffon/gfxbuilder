@@ -1,5 +1,5 @@
 /*
- * Copyright 2008-2010 the original author or authors.
+ * Copyright 2008-2012 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,6 +16,7 @@
 
 package griffon.builder.gfx.ast;
 
+import griffon.builder.gfx.GfxAttribute;
 import org.codehaus.groovy.ast.*;
 import org.codehaus.groovy.ast.expr.*;
 import org.codehaus.groovy.ast.stmt.BlockStatement;
@@ -35,10 +36,8 @@ import org.codehaus.groovy.transform.GroovyASTTransformation;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
-import java.util.Collection;
 import java.lang.reflect.Modifier;
-
-import griffon.builder.gfx.GfxAttribute;
+import java.util.Collection;
 
 /**
  * Handles generation of code for the @GfxAttribute annotation.

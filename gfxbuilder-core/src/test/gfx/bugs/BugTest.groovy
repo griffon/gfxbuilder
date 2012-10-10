@@ -1,9 +1,11 @@
 package gfx.bugs
 
 import gfx.test.TestUtils
-import griffon.builder.gfx.GfxBuilder
-import java.awt.image.BufferedImage
+
 import com.jhlabs.image.GrayscaleFilter
+import griffon.builder.gfx.GfxBuilder
+
+import java.awt.image.BufferedImage
 
 /**
  * @author Alexander Klein <info@aklein.org>

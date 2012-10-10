@@ -1,5 +1,5 @@
 /*
- * Copyright 2007-2010 the original author or authors.
+ * Copyright 2007-2012 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,23 +15,13 @@
 
 package griffon.builder.gfx
 
-import java.awt.AlphaComposite
-import java.awt.Composite
-import java.awt.Shape
-import java.awt.Color
-import java.awt.Paint
-import java.awt.geom.Rectangle2D
-import java.beans.PropertyChangeEvent
-
-import griffon.builder.gfx.Colors
 import griffon.builder.gfx.runtime.GfxRuntime
 import griffon.builder.gfx.runtime.VisualGfxRuntime
-import griffon.builder.gfx.nodes.transforms.*
-import java.awt.image.BufferedImage
-import java.awt.GraphicsConfiguration
-import java.awt.GraphicsEnvironment
-import java.awt.Transparency
-import java.awt.Graphics2D
+
+import java.awt.Color
+import java.awt.Paint
+import java.awt.Shape
+import java.beans.PropertyChangeEvent
 
 /**
  * @author Andres Almiray <aalmiray@users.sourceforge.net>

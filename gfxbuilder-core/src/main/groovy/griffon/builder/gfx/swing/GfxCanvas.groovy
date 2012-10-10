@@ -1,5 +1,5 @@
 /*
- * Copyright 2007-2010 the original author or authors.
+ * Copyright 2007-2012 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,23 +15,21 @@
 
 package griffon.builder.gfx.swing
 
+import griffon.builder.gfx.GfxContext
+import griffon.builder.gfx.GfxNode
+import griffon.builder.gfx.event.GfxErrorEvent
+import griffon.builder.gfx.event.GfxErrorListener
+import griffon.builder.gfx.event.GfxInputEvent
+
 import java.awt.Graphics
 import java.awt.GraphicsConfiguration
 import java.awt.GraphicsEnvironment
 import java.awt.Transparency
 import java.awt.image.BufferedImage
-import java.awt.event.KeyEvent
-import java.awt.event.KeyListener
-import java.awt.event.MouseEvent
-import java.awt.event.MouseListener
-import java.awt.event.MouseMotionListener
-import java.awt.event.MouseWheelEvent
-import java.awt.event.MouseWheelListener
 import java.beans.PropertyChangeEvent
 import java.beans.PropertyChangeListener
 import javax.swing.JComponent
-import griffon.builder.gfx.*
-import griffon.builder.gfx.event.*
+import java.awt.event.*
 
 /**
  * A Panel that can use a GfxOperation to draw itself.

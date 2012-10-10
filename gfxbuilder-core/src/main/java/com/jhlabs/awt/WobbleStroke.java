@@ -17,7 +17,9 @@ limitations under the License.
 package com.jhlabs.awt;
 
 import java.awt.*;
-import java.awt.geom.*;
+import java.awt.geom.FlatteningPathIterator;
+import java.awt.geom.GeneralPath;
+import java.awt.geom.PathIterator;
 
 public class WobbleStroke implements Stroke {
 	private float detail = 2;

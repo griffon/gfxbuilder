@@ -1,5 +1,5 @@
 /*
- * Copyright 2007-2010 the original author or authors.
+ * Copyright 2007-2012 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,14 +15,12 @@
 
 package griffon.builder.gfx.nodes.transforms
 
-import java.awt.Shape
-import java.awt.geom.AffineTransform
-import java.beans.PropertyChangeEvent
+import griffon.builder.gfx.GfxContext
+import griffon.builder.gfx.GfxNode
 import groovy.util.ObservableList.ElementEvent
 
-import griffon.builder.gfx.GfxNode
-import griffon.builder.gfx.GfxContext
-import griffon.builder.gfx.GfxAttribute
+import java.awt.geom.AffineTransform
+import java.beans.PropertyChangeEvent
 
 /**
  * @author Andres Almiray <aalmiray@users.sourceforge.net>
@@ -32,109 +30,109 @@ class Transforms extends GfxNode {
     private final ObservableList _transforms = new ObservableList()
 
     Transforms() {
-       super("transforms")
-       _transforms.addPropertyChangeListener(this)
+        super("transforms")
+        _transforms.addPropertyChangeListener(this)
     }
 
     String toString() {
-      String str = "${super.toString()}$_transforms"
+        String str = "${super.toString()}$_transforms"
     }
 
     void apply(GfxContext context) {
-       if(!enabled()) return
-       AffineTransform transform = new AffineTransform()
-       transform.concatenate context.g.transform
-       concatenateTo(transform)
-       context.g.transform = transform
+        if (!enabled()) return
+        AffineTransform transform = new AffineTransform()
+        transform.concatenate context.g.transform
+        concatenateTo(transform)
+        context.g.transform = transform
     }
 
     void concatenateTo(AffineTransform transform) {
-       if(!enabled()) return
-       _transforms.each { t ->
-          if(t.enabled && t.transform) transform.concatenate t.transform
-       }
+        if (!enabled()) return
+        _transforms.each { t ->
+            if (t.enabled && t.transform) transform.concatenate t.transform
+        }
     }
 
     Transform getAt(String name) {
-       return _transforms.find{ it?.name == name }
+        return _transforms.find { it?.name == name }
     }
 
     Transforms clone() {
-       Transforms node = new Transforms(enabled: enabled)
-       _transforms.each{ node.addTransform(it.clone()) }
-       node
+        Transforms node = new Transforms(enabled: enabled)
+        _transforms.each { node.addTransform(it.clone()) }
+        node
     }
 
     Transforms leftShift(Transform transform) {
-       addTransform(transform)
-       this
+        addTransform(transform)
+        this
     }
 
     void addTransform(Transform transform) {
-        if(!transform || _transforms.contains(transform)) return
+        if (!transform || _transforms.contains(transform)) return
         int oldSize = _transforms.size()
         _transforms << transform
         int newSize = _transforms.size()
-        if(enabled && oldSize != newSize) firePropertyChange("size", oldSize, newSize)
+        if (enabled && oldSize != newSize) firePropertyChange("size", oldSize, newSize)
     }
 
     void removeTransform(Transform transform) {
-        if(!transform || _transforms.isEmpty()) return
+        if (!transform || _transforms.isEmpty()) return
         int oldSize = _transforms.size()
         _transforms.remove(transform)
         int newSize = _transforms.size()
-        if(enabled && oldSize != newSize) firePropertyChange("size", oldSize, newSize)
+        if (enabled && oldSize != newSize) firePropertyChange("size", oldSize, newSize)
     }
 
     boolean enabled() {
-        if(_transforms.empty) return false
+        if (_transforms.empty) return false
         def b = _transforms.any { it.enabled }
         b ? enabled : false
     }
 
     boolean isEmpty() {
-       _transforms.isEmpty()
+        _transforms.isEmpty()
     }
 
     Iterator iterator() {
-       _transforms.iterator()
+        _transforms.iterator()
     }
 
     void clear() {
-       if(_transforms.isEmpty()) return
-       int oldSize = _transforms.size()
-       _transforms.clear()
-       if(enabled && oldSize != newSize) firePropertyChange("size", oldSize, 0)
+        if (_transforms.isEmpty()) return
+        int oldSize = _transforms.size()
+        _transforms.clear()
+        if (enabled && oldSize != newSize) firePropertyChange("size", oldSize, 0)
     }
 
     int size() {
-       _transforms.size()
+        _transforms.size()
     }
 
     void propertyChange(PropertyChangeEvent event) {
-       if(event.source == _transforms && event instanceof ElementEvent){
-           handleElementEvent(event)
-       } else {
-           super.propertyChange(event)
-       }
+        if (event.source == _transforms && event instanceof ElementEvent) {
+            handleElementEvent(event)
+        } else {
+            super.propertyChange(event)
+        }
     }
 
     protected void handleElementEvent(ElementEvent event) {
-      switch(event.type) {
-         case ElementEvent.ADDED:
-             event.newValue.addPropertyChangeListener(this)
-             break
-         case ElementEvent.REMOVED:
-             event.newValue.removePropertyChangeListener(this)
-         case ElementEvent.MULTI_ADD:
-             event.values.each { it.addPropertyChangeListener(this) }
-             break
-         case ElementEvent.CLEARED:
-         case ElementEvent.MULTI_REMOVE:
-             event.values.each { it.removePropertyChangeListener(this) }
-         case ElementEvent.UPDATED:
-             break
-      }
-      firePropertyChange("transforms", OLDVALUE, Collections.unmodifiableList(_transforms))
-   }
+        switch (event.type) {
+            case ObservableList.ChangeType.ADDED:
+                event.newValue.addPropertyChangeListener(this)
+                break
+            case ObservableList.ChangeType.REMOVED:
+                event.newValue.removePropertyChangeListener(this)
+            case ObservableList.ChangeType.MULTI_ADD:
+                event.values.each { it.addPropertyChangeListener(this) }
+                break
+            case ObservableList.ChangeType.CLEARED:
+            case ObservableList.ChangeType.MULTI_REMOVE:
+                event.values.each { it.removePropertyChangeListener(this) }
+            case ObservableList.ChangeType.UPDATED:
+                break
+        }
+        firePropertyChange("transforms", OLDVALUE, Collections.unmodifiableList(_transforms))
+    }
 }

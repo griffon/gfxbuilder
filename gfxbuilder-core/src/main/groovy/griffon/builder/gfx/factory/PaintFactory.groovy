@@ -1,5 +1,5 @@
 /*
- * Copyright 2008-2010 the original author or authors.
+ * Copyright 2008-2012 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,17 +16,15 @@
 
 package griffon.builder.gfx.factory
 
-import java.awt.Color
-import java.awt.Paint
 import griffon.builder.gfx.Colors
-import griffon.builder.gfx.ShapeProvider
-import griffon.builder.gfx.OutlineProvider
-import griffon.builder.gfx.BorderPaintProvider
-import griffon.builder.gfx.PaintProvider
 import griffon.builder.gfx.MultiPaintProvider
+import griffon.builder.gfx.PaintProvider
 import griffon.builder.gfx.nodes.paints.BorderPaintNode
 import griffon.builder.gfx.nodes.paints.ColorPaintNode
 import griffon.builder.gfx.nodes.paints.MultiPaintNode
+
+import java.awt.Color
+import java.awt.Paint
 
 /**
  * @author Andres Almiray <aalmiray@users.sourceforge.com>

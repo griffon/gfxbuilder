@@ -1,5 +1,5 @@
 /*
- * Copyright 2007-2010 the original author or authors.
+ * Copyright 2007-2012 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,19 +15,19 @@
 
 package griffon.builder.gfx.render
 
-import java.awt.*
 import groovy.swing.j2d.*
 
-import org.apache.batik.svggen.SVGGraphics2D
-import org.apache.batik.dom.svg.SVGDOMImplementation
-
-import org.w3c.dom.Document
-import org.w3c.dom.DOMImplementation
-
-import griffon.builder.gfx.GfxNode
 import griffon.builder.gfx.GfxBuilder
 import griffon.builder.gfx.GfxContext
-import griffon.builder.gfx.GfxUtils
+import griffon.builder.gfx.GfxNode
+import org.apache.batik.dom.svg.SVGDOMImplementation
+import org.apache.batik.svggen.SVGGraphics2D
+import org.w3c.dom.DOMImplementation
+import org.w3c.dom.Document
+
+import java.awt.Color
+import java.awt.Dimension
+import java.awt.Rectangle
 
 /**
  * @author Andres Almiray <aalmiray@users.sourceforge.net>

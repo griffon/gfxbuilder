@@ -1,23 +1,21 @@
 package gfx.test
 
+import com.sun.image.codec.jpeg.JPEGCodec
+import com.sun.image.codec.jpeg.JPEGEncodeParam
+import com.sun.image.codec.jpeg.JPEGImageEncoder
 import griffon.builder.gfx.GfxContext
 import griffon.builder.gfx.GfxNode
 import griffon.builder.gfx.swing.GfxCanvas
 import groovy.swing.SwingBuilder
-import java.awt.GraphicsConfiguration
-import java.awt.GraphicsEnvironment
-import java.awt.Transparency
+
 import java.awt.event.WindowAdapter
 import java.awt.image.BufferedImage
+import java.awt.image.DataBuffer
+import java.util.List
 import java.util.concurrent.CountDownLatch
 import javax.swing.JFrame
 import javax.swing.SwingConstants
-import java.awt.Image
-import java.awt.image.DataBuffer
-import java.awt.Graphics2D
-import com.sun.image.codec.jpeg.JPEGImageEncoder
-import com.sun.image.codec.jpeg.JPEGCodec
-import com.sun.image.codec.jpeg.JPEGEncodeParam
+import java.awt.*
 
 /**
  * @author Alexander Klein <info@aklein.org>

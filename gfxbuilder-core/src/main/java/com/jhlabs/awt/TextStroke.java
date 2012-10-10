@@ -17,7 +17,8 @@ limitations under the License.
 package com.jhlabs.awt;
 
 import java.awt.*;
-import java.awt.font.*;
+import java.awt.font.FontRenderContext;
+import java.awt.font.GlyphVector;
 import java.awt.geom.*;
 
 public class TextStroke implements Stroke {

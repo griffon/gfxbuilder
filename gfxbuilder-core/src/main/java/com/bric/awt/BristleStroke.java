@@ -17,13 +17,12 @@
  */
 package com.bric.awt;
 
-import java.awt.Shape;
-import java.awt.Stroke;
+import com.bric.geom.MeasuredShape;
+
+import java.awt.*;
 import java.awt.geom.GeneralPath;
 import java.awt.geom.Point2D;
 import java.util.Random;
-
-import com.bric.geom.MeasuredShape;
 
 /** This <code>Stroke</code> that resembles a bristle.
  * <P>More specifically: this stroke splatters tiny triangles and dots over a path.

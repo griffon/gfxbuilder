@@ -1,5 +1,5 @@
 /*
- * Copyright 2007-2010 the original author or authors.
+ * Copyright 2007-2012 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,18 +15,17 @@
 
 package griffon.builder.gfx.nodes.misc
 
+import griffon.builder.gfx.AbstractDrawableNode
+import griffon.builder.gfx.GfxAttribute
+import griffon.builder.gfx.GfxContext
+import griffon.builder.gfx.runtime.GfxRuntime
+import griffon.builder.gfx.runtime.ImageGfxRuntime
+
 import java.awt.Image
-import java.awt.Rectangle
-import java.awt.Shape
 import java.awt.RenderingHints
+import java.awt.Shape
 import java.awt.geom.AffineTransform
-import java.awt.image.BufferedImage
-import javax.imageio.ImageIO
 import java.beans.PropertyChangeEvent
-
-import griffon.builder.gfx.*
-import griffon.builder.gfx.runtime.*
-
 
 /**
  * @author Andres Almiray <aalmiray@users.sourceforge.net>

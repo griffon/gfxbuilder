@@ -15,8 +15,7 @@
 
 package com.jhlabs.awt;
 
-import java.awt.Shape;
-import java.awt.Stroke;
+import java.awt.*;
 import java.awt.geom.Area;
 
 /**

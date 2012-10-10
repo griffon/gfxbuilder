@@ -19,8 +19,9 @@
  */
 package com.bric.geom;
 
-import java.awt.geom.*;
 import java.awt.*;
+import java.awt.geom.GeneralPath;
+import java.awt.geom.PathIterator;
 
 /** This object writes path data.
  * <P>With this abstract class you could filter shape data as it is

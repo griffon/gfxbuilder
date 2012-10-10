@@ -1,5 +1,5 @@
 /*
- * Copyright 2007-2010 the original author or authors.
+ * Copyright 2007-2012 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,14 +15,14 @@
 
 package griffon.builder.gfx.nodes.paints
 
+import griffon.builder.gfx.GfxAttribute
+
 import java.awt.Paint
 import java.awt.geom.AffineTransform
 import java.awt.geom.Line2D
 import java.awt.geom.Rectangle2D
-import static java.lang.Math.abs
 
-import griffon.builder.gfx.GfxAttribute
-import griffon.builder.gfx.PaintProvider
+import static java.lang.Math.abs
 
 /**
  * @author Andres Almiray <aalmiray@users.sourceforge.net>

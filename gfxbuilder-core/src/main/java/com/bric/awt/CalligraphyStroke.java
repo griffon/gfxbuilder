@@ -19,15 +19,14 @@
  */
 package com.bric.awt;
 
-import java.awt.Shape;
-import java.awt.Stroke;
-import java.awt.geom.GeneralPath;
-import java.awt.geom.PathIterator;
-
 import com.bric.geom.PathSegment;
+import com.bric.geom.PathSegment.Float;
 import com.bric.geom.PathWriter;
 import com.bric.geom.SimplifiedPathIterator;
-import com.bric.geom.PathSegment.Float;
+
+import java.awt.*;
+import java.awt.geom.GeneralPath;
+import java.awt.geom.PathIterator;
 
 /**
  * This <code>Stroke</code> resembles calligraphy.

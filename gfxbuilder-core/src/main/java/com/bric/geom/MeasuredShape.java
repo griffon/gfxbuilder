@@ -19,7 +19,7 @@
  */
 package com.bric.geom;
 
-import java.awt.Shape;
+import java.awt.*;
 import java.awt.geom.GeneralPath;
 import java.awt.geom.PathIterator;
 import java.awt.geom.Point2D;

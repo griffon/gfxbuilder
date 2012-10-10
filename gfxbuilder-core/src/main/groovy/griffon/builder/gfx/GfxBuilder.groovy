@@ -1,5 +1,5 @@
 /*
- * Copyright 2007-2010 the original author or authors.
+ * Copyright 2007-2012 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,21 +15,30 @@
 
 package griffon.builder.gfx
 
+import griffon.builder.gfx.nodes.outlines.CubicCurveNode
+import griffon.builder.gfx.nodes.outlines.LineNode
+import griffon.builder.gfx.nodes.outlines.PolylineNode
+import griffon.builder.gfx.nodes.outlines.QuadCurveNode
+import griffon.builder.gfx.nodes.paints.GradientPaintNode
+import griffon.builder.gfx.nodes.paints.LinearGradientPaintNode
+import griffon.builder.gfx.nodes.paints.RadialGradientPaintNode
+import griffon.builder.gfx.nodes.paints.TexturePaintNode
+import groovy.swing.SwingBuilder
 import groovy.swing.factory.BindFactory
 import groovy.swing.factory.BindProxyFactory
 import groovy.swing.factory.CollectionFactory
+import org.codehaus.griffon.jsilhouette.geom.ReuleauxTriangle
+
+import java.lang.reflect.InvocationTargetException
+import java.lang.reflect.Method
+import java.lang.reflect.Modifier
+
 import griffon.builder.gfx.factory.*
 import griffon.builder.gfx.nodes.misc.*
-import griffon.builder.gfx.nodes.outlines.*
-import griffon.builder.gfx.nodes.paints.*
 import griffon.builder.gfx.nodes.shapes.*
 import griffon.builder.gfx.nodes.shapes.path.*
 import griffon.builder.gfx.nodes.strokes.*
 import griffon.builder.gfx.nodes.transforms.*
-import org.codehaus.griffon.jsilhouette.geom.*
-
-import java.lang.reflect.*
-import groovy.swing.SwingBuilder
 
 /**
  * @author Andres Almiray <aalmiray@users.sourceforge.net>
