@@ -85,8 +85,9 @@ abstract class CustomGfxNode extends AbstractDrawableNode {
       transform.concatenate getRuntime().getLocalTransforms()
       context.g.transform = transform
 
+      CustomGfxNode self = this
       applyWithFilter(context) {
-        _node.apply(context)
+        self.node.apply(context)
       }
    }
 
