@@ -1,5 +1,5 @@
 /*
- * Copyright 2007-2012 the original author or authors.
+ * Copyright 2007-2013 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -26,8 +26,8 @@ import java.awt.Shape
 class LauburuNode extends AbstractShapeGfxNode {
     @GfxAttribute float cx = 6f
     @GfxAttribute float cy = 6f
-    @GfxAttribute(alias="r") float radius = 6f
-    @GfxAttribute(alias="a") float angle = 0f
+    @GfxAttribute(alias = "r") float radius = 6f
+    @GfxAttribute(alias = "a") float angle = 0f
 
     LauburuNode() {
         super("lauburu")
@@ -42,9 +42,9 @@ class LauburuNode extends AbstractShapeGfxNode {
     }
 
     Shape calculateShape() {
-       return new Lauburu( cx as float,
-                           cy as float,
-                           radius as float,
-                           angle as float )
+        return new Lauburu(cx as float,
+            cy as float,
+            radius as float,
+            angle as float)
     }
 }

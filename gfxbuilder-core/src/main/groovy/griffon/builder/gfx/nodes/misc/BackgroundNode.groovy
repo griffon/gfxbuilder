@@ -1,5 +1,5 @@
 /*
- * Copyright 2007-2012 the original author or authors.
+ * Copyright 2007-2013 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -26,24 +26,25 @@ import java.awt.Color
  * @author Andres Almiray <aalmiray@users.sourceforge.net>
  */
 class BackgroundNode extends GfxNode {
-    @GfxAttribute(alias="c", resets=false) def color
+    @GfxAttribute(alias = "c", resets = false)
+    def color
 
     BackgroundNode() {
-        super( "background" )
+        super("background")
     }
 
     BackgroundNode(Color color) {
-        super( "background" )
+        super("background")
         this.color = color
     }
 
     BackgroundNode(String color) {
-        super( "background" )
+        super("background")
         this.color = Colors.getColor(color)
     }
 
-    void apply(GfxContext context){
-        if( !color ) return
+    void apply(GfxContext context) {
+        if (!color) return
         def clip = context.g.clipBounds
         context.g.background = color
         context.g.clearRect(clip.x as int, clip.y as int, clip.width as int, clip.height as int)

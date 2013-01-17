@@ -1,5 +1,5 @@
 /*
- * Copyright 2007-2012 the original author or authors.
+ * Copyright 2007-2013 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -27,14 +27,14 @@ class TranslateTransform extends AbstractTransform {
     @GfxAttribute double y = 0d
 
     TranslateTransform() {
-       super("translate")
+        super("translate")
     }
 
     TranslateTransform clone() {
-       new TranslateTransform(x: x, y: y, enabled: enabled)
+        new TranslateTransform(x: x, y: y, enabled: enabled)
     }
 
     AffineTransform getTransform() {
-       AffineTransform.getTranslateInstance(x as double, y as double)
+        AffineTransform.getTranslateInstance(x as double, y as double)
     }
 }

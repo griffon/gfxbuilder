@@ -1,5 +1,5 @@
 /*
- * Copyright 2008-2012 the original author or authors.
+ * Copyright 2008-2013 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -31,69 +31,69 @@ import java.awt.Paint
  * @author Alexander Klein <info@aklein.org>
  */
 class MultiPaintFactory extends GfxBeanFactory {
-   MultiPaintFactory() {
-      super(MultiPaintNode, false)
-   }
+    MultiPaintFactory() {
+        super(MultiPaintNode, false)
+    }
 
-   public void setChild(FactoryBuilderSupport builder, Object parent, Object child) {
-      if(child instanceof PaintProvider) {
-         parent.addPaint(child)
-      }/* else {
+    public void setChild(FactoryBuilderSupport builder, Object parent, Object child) {
+        if (child instanceof PaintProvider) {
+            parent.addPaint(child)
+        }/* else {
          throw new RuntimeException("Node ${parent} does not accept nesting of ${child}.")
       }*/
-   }
+    }
 }
 
 /**
  * @author Andres Almiray <aalmiray@users.sourceforge.net>
  */
 class ColorPaintFactory extends AbstractGfxFactory {
-    public Object newInstance( FactoryBuilderSupport builder, Object name, Object value,
-          Map properties ) throws InstantiationException, IllegalAccessException {
-       ColorPaintNode node = new ColorPaintNode()
-       if( value != null && value instanceof Color || value instanceof String ){
-          builder.context.color = Colors.getColor(value)
-       }
-       return node
+    public Object newInstance(FactoryBuilderSupport builder, Object name, Object value,
+                              Map properties) throws InstantiationException, IllegalAccessException {
+        ColorPaintNode node = new ColorPaintNode()
+        if (value != null && value instanceof Color || value instanceof String) {
+            builder.context.color = Colors.getColor(value)
+        }
+        return node
     }
 
     public boolean onHandleNodeAttributes(FactoryBuilderSupport builder, Object node, Map attributes) {
-       if( attributes.containsKey( "red" ) ||
-          attributes.containsKey( "green" ) ||
-          attributes.containsKey( "blue" ) ||
-          attributes.containsKey( "alpha") ){
+        if (attributes.containsKey("red") ||
+            attributes.containsKey("green") ||
+            attributes.containsKey("blue") ||
+            attributes.containsKey("alpha")) {
 
-          def red = attributes.remove( "red" )
-          def green = attributes.remove( "green" )
-          def blue = attributes.remove( "blue" )
-          def alpha = attributes.remove( "alpha" )
+            def red = attributes.remove("red")
+            def green = attributes.remove("green")
+            def blue = attributes.remove("blue")
+            def alpha = attributes.remove("alpha")
 
-          red = red != null ? red : 0
-          green = green != null ? green : 0
-          blue = blue != null ? blue : 0
-          alpha = alpha != null ? alpha : 1
+            red = red != null ? red : 0
+            green = green != null ? green : 0
+            blue = blue != null ? blue : 0
+            alpha = alpha != null ? alpha : 1
 
-          red = red > 1 ? red/255 : red
-          green = green > 1 ? green/255 : green
-          blue = blue > 1 ? blue/255 : blue
-          alpha = alpha > 1 ? alpha/255 : alpha
+            red = red > 1 ? red / 255 : red
+            green = green > 1 ? green / 255 : green
+            blue = blue > 1 ? blue / 255 : blue
+            alpha = alpha > 1 ? alpha / 255 : alpha
 
-          attributes.color = new Color(red as float, green as float, blue as float, alpha as float)
-       }
+            attributes.color = new Color(red as float, green as float, blue as float, alpha as float)
+        }
 
-       Object color = attributes.get( "color" )
+        Object color = attributes.get("color")
 
-       if(color != null && color instanceof String){
-          attributes.put( "color", Colors.getColor( color ) )
-       }
+        if (color != null && color instanceof String) {
+            attributes.put("color", Colors.getColor(color))
+        }
 
-       color = attributes.get("color")
-       node.color = color == null ? builder.context.color : color
+        color = attributes.get("color")
+        node.color = color == null ? builder.context.color : color
 
-       return false
+        return false
     }
 
-    public boolean isLeaf(){
+    public boolean isLeaf() {
         return true
     }
 }
@@ -103,24 +103,24 @@ class ColorPaintFactory extends AbstractGfxFactory {
  */
 public class BorderPaintFactory extends AbstractGfxFactory {
     public Object newInstance(FactoryBuilderSupport builder, Object name, Object value,
-            Map properties) throws InstantiationException, IllegalAccessException {
+                              Map properties) throws InstantiationException, IllegalAccessException {
         BorderPaintNode node = new BorderPaintNode()
-        if( value != null &&
-            (value instanceof PaintProvider || value instanceof MultiPaintProvider) ) {
+        if (value != null &&
+            (value instanceof PaintProvider || value instanceof MultiPaintProvider)) {
             node.paint = value
         }
         return node
     }
 
     public void setChild(FactoryBuilderSupport builder, Object parent, Object child) {
-       if(child instanceof Paint || child instanceof PaintProvider || child instanceof MultiPaintProvider) {
-          parent.paint = child
-       } else {
-          throw new IllegalArgumentException("$child can not be nested inside $parent")
-       }
+        if (child instanceof Paint || child instanceof PaintProvider || child instanceof MultiPaintProvider) {
+            parent.paint = child
+        } else {
+            throw new IllegalArgumentException("$child can not be nested inside $parent")
+        }
     }
 
-    public boolean isLeaf(){
+    public boolean isLeaf() {
         return false
     }
 }

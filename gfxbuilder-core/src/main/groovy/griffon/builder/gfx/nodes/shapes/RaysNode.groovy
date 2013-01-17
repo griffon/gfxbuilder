@@ -1,5 +1,5 @@
 /*
- * Copyright 2007-2012 the original author or authors.
+ * Copyright 2007-2013 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -26,11 +26,11 @@ import java.awt.Shape
 class RaysNode extends AbstractShapeGfxNode {
     @GfxAttribute float cx = 5f
     @GfxAttribute float cy = 5f
-    @GfxAttribute(alias="r") float radius = 5f
-    @GfxAttribute(alias="rs") int rays = 2i
-    @GfxAttribute(alias="a") float angle = 0f
-    @GfxAttribute(alias="ex") float extent = 0.5f
-    @GfxAttribute(alias="rn") boolean rounded = false
+    @GfxAttribute(alias = "r") float radius = 5f
+    @GfxAttribute(alias = "rs") int rays = 2i
+    @GfxAttribute(alias = "a") float angle = 0f
+    @GfxAttribute(alias = "ex") float extent = 0.5f
+    @GfxAttribute(alias = "rn") boolean rounded = false
 
     RaysNode() {
         super("rays")
@@ -48,12 +48,12 @@ class RaysNode extends AbstractShapeGfxNode {
     }
 
     Shape calculateShape() {
-       return new Rays( cx as float,
-                        cy as float,
-                        radius as float,
-                        rays as int,
-                        angle as float,
-                        extent as float,
-                        rounded as boolean )
+        return new Rays(cx as float,
+            cy as float,
+            radius as float,
+            rays as int,
+            angle as float,
+            extent as float,
+            rounded as boolean)
     }
 }

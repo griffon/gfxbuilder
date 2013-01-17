@@ -1,5 +1,5 @@
 /*
- * Copyright 2007-2012 the original author or authors.
+ * Copyright 2007-2013 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -31,25 +31,25 @@ class MatrixTransform extends AbstractTransform {
     @GfxAttribute double m12 = 0
 
     MatrixTransform() {
-       super("matrix")
+        super("matrix")
     }
 
     MatrixTransform clone() {
-       new MatrixTransform(m00: m00,
-                           m10: m10,
-                           m01: m01,
-                           m11: m11,
-                           m02: m02,
-                           m12: m12,
-                           enabled: enabled)
+        new MatrixTransform(m00: m00,
+            m10: m10,
+            m01: m01,
+            m11: m11,
+            m02: m02,
+            m12: m12,
+            enabled: enabled)
     }
 
     AffineTransform getTransform() {
-       return new AffineTransform( m00 as double,
-                                   m10 as double,
-                                   m01 as double,
-                                   m11 as double,
-                                   m02 as double,
-                                   m12 as double )
+        return new AffineTransform(m00 as double,
+            m10 as double,
+            m01 as double,
+            m11 as double,
+            m02 as double,
+            m12 as double)
     }
 }

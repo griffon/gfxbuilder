@@ -1,5 +1,5 @@
 /*
- * Copyright 2007-2012 the original author or authors.
+ * Copyright 2007-2013 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -25,71 +25,71 @@ import java.beans.PropertyChangeEvent
  * @author Andres Almiray <aalmiray@users.sourceforge.net>
  */
 abstract class CustomGfxNode extends AbstractDrawableNode {
-   private DrawableNode _node
-   private static final GfxBuilder GFXBUILDER = new GfxBuilder()
+    private DrawableNode _node
+    private static final GfxBuilder GFXBUILDER = new GfxBuilder()
 
-   CustomGfxNode() {
-      super("customNode")
-      passThrough = false
-   }
+    CustomGfxNode() {
+        super("customNode")
+        passThrough = false
+    }
 
-   CustomGfxNode(String name) {
-      super(name)
-      passThrough = false
-   }
+    CustomGfxNode(String name) {
+        super(name)
+        passThrough = false
+    }
 
-   DrawableNode getNode() {
-      if(!_node) {
-         _node = createNode(GFXBUILDER)
-         _node.addPropertyChangeListener(this)
-      }
-      _node
-   }
+    DrawableNode getNode() {
+        if (!_node) {
+            _node = createNode(GFXBUILDER)
+            _node.addPropertyChangeListener(this)
+        }
+        _node
+    }
 
-   abstract DrawableNode createNode(GfxBuilder builder)
+    abstract DrawableNode createNode(GfxBuilder builder)
 
-   GfxRuntime getRuntime(GfxContext context) {
-      getNode().getRuntime(context)
-      super.getRuntime(context)
-   }
+    GfxRuntime getRuntime(GfxContext context) {
+        getNode().getRuntime(context)
+        super.getRuntime(context)
+    }
 
-   Shape getShape() {
-      getNode().getShape()
-   }
+    Shape getShape() {
+        getNode().getShape()
+    }
 
-   void propertyChanged(PropertyChangeEvent event) {
-      if(event.source == _node) {
-         onDirty(event)
-      } else {
-         super.propertyChanged(event)
-      }
-   }
+    void propertyChanged(PropertyChangeEvent event) {
+        if (event.source == _node) {
+            onDirty(event)
+        } else {
+            super.propertyChanged(event)
+        }
+    }
 
-   protected boolean triggersReset(PropertyChangeEvent event) {
-      if(event.source == _node) return _node.triggersReset(event)
-      return super.triggersReset(event)
-   }
+    protected boolean triggersReset(PropertyChangeEvent event) {
+        if (event.source == _node) return _node.triggersReset(event)
+        return super.triggersReset(event)
+    }
 
-   protected void reset(PropertyChangeEvent event) {
-      _node?.reset()
-      runtime?.reset()
-   }
+    protected void reset(PropertyChangeEvent event) {
+        _node?.reset()
+        runtime?.reset()
+    }
 
-   protected void beforeApply(GfxContext context) {
-      super.beforeApply(context)
-   }
+    protected void beforeApply(GfxContext context) {
+        super.beforeApply(context)
+    }
 
-   protected void applyNode(GfxContext context) {
-      AffineTransform transform = new AffineTransform()
-      transform.concatenate context.g.transform
-      transform.concatenate getRuntime().getLocalTransforms()
-      context.g.transform = transform
+    protected void applyNode(GfxContext context) {
+        AffineTransform transform = new AffineTransform()
+        transform.concatenate context.g.transform
+        transform.concatenate getRuntime().getLocalTransforms()
+        context.g.transform = transform
 
-      CustomGfxNode self = this
-      applyWithFilter(context) {
-        self.node.apply(context)
-      }
-   }
+        CustomGfxNode self = this
+        applyWithFilter(context) {
+            self.node.apply(context)
+        }
+    }
 
 //    protected boolean shouldSkip(GfxContext context) {
 //       if(super.shouldSkip(context)) true

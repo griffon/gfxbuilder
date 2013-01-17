@@ -1,5 +1,5 @@
 /*
- * Copyright 2007-2012 the original author or authors.
+ * Copyright 2007-2013 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -26,11 +26,11 @@ import java.awt.Shape
 class ArrowNode extends AbstractShapeGfxNode {
     @GfxAttribute float x = 0d
     @GfxAttribute float y = 0d
-    @GfxAttribute(alias="w") float width = 16d
-    @GfxAttribute(alias="h") float height = 10d
-    @GfxAttribute(alias="r") float rise
-    @GfxAttribute(alias="d") float depth
-    @GfxAttribute(alias="a") float angle = 0d
+    @GfxAttribute(alias = "w") float width = 16d
+    @GfxAttribute(alias = "h") float height = 10d
+    @GfxAttribute(alias = "r") float rise
+    @GfxAttribute(alias = "d") float depth
+    @GfxAttribute(alias = "a") float angle = 0d
 
     ArrowNode() {
         super("arrow")
@@ -47,15 +47,15 @@ class ArrowNode extends AbstractShapeGfxNode {
     }
 
     Shape calculateShape() {
-       def _r = rise != null ? rise : 0.5
-       def _d = depth != null ? depth : 0.5
-       def _a = angle != null ? angle : 0
-       return new Arrow( x as float,
-                         y as float,
-                         width as float,
-                         height as float,
-                         _r as float,
-                         _d as float,
-                         _a as float )
+        def _r = rise != null ? rise : 0.5
+        def _d = depth != null ? depth : 0.5
+        def _a = angle != null ? angle : 0
+        return new Arrow(x as float,
+            y as float,
+            width as float,
+            height as float,
+            _r as float,
+            _d as float,
+            _a as float)
     }
 }

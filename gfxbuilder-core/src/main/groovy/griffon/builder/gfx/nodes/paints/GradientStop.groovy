@@ -1,5 +1,5 @@
 /*
- * Copyright 2007-2012 the original author or authors.
+ * Copyright 2007-2013 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -23,23 +23,23 @@ import java.awt.Color
  * @author Andres Almiray <aalmiray@users.sourceforge.net>
  */
 class GradientStop {
-    @GfxAttribute(alias="c", resets=false) Color color
-    @GfxAttribute(alias="s", resets=false) float offset = 0f
-    @GfxAttribute(alias="o", resets=false) float opacity = Float.NaN
-    @GfxAttribute(alias="n", resets=false) String name
+    @GfxAttribute(alias = "c", resets = false) Color color
+    @GfxAttribute(alias = "s", resets = false) float offset = 0f
+    @GfxAttribute(alias = "o", resets = false) float opacity = Float.NaN
+    @GfxAttribute(alias = "n", resets = false) String name
 
 //     public void setColor(String color) {
 //        setColor((Color) Colors.getColor(color))
 //     }
 
     GradientStop clone() {
-       new GradientStop(color: color,
-                        offset: offset,
-                        opacity: opacity,
-                        name: name)
+        new GradientStop(color: color,
+            offset: offset,
+            opacity: opacity,
+            name: name)
     }
 
-    public String toString(){
-       return "stop[offset: $offset, color: $color, opacity: $opacity, name: $name]"
+    public String toString() {
+        return "stop[offset: $offset, color: $color, opacity: $opacity, name: $name]"
     }
 }

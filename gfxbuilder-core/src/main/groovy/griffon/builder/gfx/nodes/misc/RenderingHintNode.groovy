@@ -1,5 +1,5 @@
 /*
- * Copyright 2007-2012 the original author or authors.
+ * Copyright 2007-2013 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -25,24 +25,26 @@ import java.awt.RenderingHints
  * @author Andres Almiray <aalmiray@users.sourceforge.net>
  */
 class RenderingHintNode extends GfxNode {
-    @GfxAttribute(alias="k", resets=false) def key
-    @GfxAttribute(alias="v", resets=false) def value
+    @GfxAttribute(alias = "k", resets = false)
+    def key
+    @GfxAttribute(alias = "v", resets = false)
+    def value
 
     RenderingHintNode() {
         super("renderingHint")
     }
 
-    void apply(GfxContext context){
+    void apply(GfxContext context) {
         context.g.setRenderingHint(convertKey(), convertValue())
     }
 
-    private RenderingHints.Key convertKey(){
-        def prop = ("KEY_"+key.toUpperCase()).replaceAll(" ","_")
+    private RenderingHints.Key convertKey() {
+        def prop = ("KEY_" + key.toUpperCase()).replaceAll(" ", "_")
         return RenderingHints.@"${prop}"
     }
 
-    private Object convertValue(){
-        def prop = ("VALUE_"+value.toUpperCase()).replaceAll(" ","_")
+    private Object convertValue() {
+        def prop = ("VALUE_" + value.toUpperCase()).replaceAll(" ", "_")
         return RenderingHints.@"${prop}"
     }
 }

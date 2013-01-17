@@ -1,5 +1,5 @@
 /*
- * Copyright 2007-2012 the original author or authors.
+ * Copyright 2007-2013 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -26,45 +26,47 @@ import java.awt.Stroke
  * @author Andres Almiray <aalmiray@users.sourceforge.net>
  */
 class CompositeStrokeNode extends AbstractStrokeNode implements ComposableStroke {
-   @GfxAttribute(alias="s1") def stroke1
-   @GfxAttribute(alias="s2") def stroke2
+    @GfxAttribute(alias = "s1")
+    def stroke1
+    @GfxAttribute(alias = "s2")
+    def stroke2
 
-   CompositeStrokeNode() {
-      super("compositeStroke")
-   }
+    CompositeStrokeNode() {
+        super("compositeStroke")
+    }
 
-   void addStroke(Stroke stroke){
-      if(!stroke1){
-         stroke1 = stroke
-      } else if(!stroke2 && stroke != stroke1){
-         stroke2 = stroke
-      }
-   }
+    void addStroke(Stroke stroke) {
+        if (!stroke1) {
+            stroke1 = stroke
+        } else if (!stroke2 && stroke != stroke1) {
+            stroke2 = stroke
+        }
+    }
 
-   void addStroke(StrokeProvider stroke){
-      if(!stroke1){
-         stroke1 = stroke
-      } else if(!stroke2 && stroke != stroke1){
-         stroke2 = stroke
-      }
-   }
+    void addStroke(StrokeProvider stroke) {
+        if (!stroke1) {
+            stroke1 = stroke
+        } else if (!stroke2 && stroke != stroke1) {
+            stroke2 = stroke
+        }
+    }
 
-   ComposableStroke leftShift(Stroke stroke) {
-      addStroke(stroke)
-   }
+    ComposableStroke leftShift(Stroke stroke) {
+        addStroke(stroke)
+    }
 
-   ComposableStroke leftShift(StrokeProvider stroke) {
-      addStroke(stroke)
-   }
+    ComposableStroke leftShift(StrokeProvider stroke) {
+        addStroke(stroke)
+    }
 
-   void apply(GfxContext context) {
-      if(stroke1 instanceof StrokeProvider) stroke1.apply(context)
-      if(stroke2 instanceof StrokeProvider) stroke2.apply(context)
-   }
+    void apply(GfxContext context) {
+        if (stroke1 instanceof StrokeProvider) stroke1.apply(context)
+        if (stroke2 instanceof StrokeProvider) stroke2.apply(context)
+    }
 
     protected Stroke createStroke() {
-        if( !stroke1 || !stroke2 ){
-           throw new IllegalArgumentException("${this} must have two strokes.")
+        if (!stroke1 || !stroke2) {
+            throw new IllegalArgumentException("${this} must have two strokes.")
         }
 
         def _s1 = stroke1 instanceof StrokeProvider ? stroke1.getStroke() : stroke1

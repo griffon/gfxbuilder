@@ -1,5 +1,5 @@
 /*
- * Copyright 2009-2012 the original author or authors.
+ * Copyright 2009-2013 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -21,21 +21,21 @@ import griffon.builder.gfx.nodes.misc.RawGfxNode
  * @author Andres Almiray <aalmiray@users.sourceforge.com>
  */
 class RawFactory extends GfxBeanFactory {
-   RawFactory() {
-      super(RawGfxNode, false)
-   }
+    RawFactory() {
+        super(RawGfxNode, false)
+    }
 
-   public Object newInstance( FactoryBuilderSupport builder, Object name, Object value, Map attributes )
-            throws InstantiationException, IllegalAccessException {
-      return new RawGfxNode()
-   }
+    public Object newInstance(FactoryBuilderSupport builder, Object name, Object value, Map attributes)
+    throws InstantiationException, IllegalAccessException {
+        return new RawGfxNode()
+    }
 
-   public boolean isHandlesNodeChildren() {
-      return true
-   }
+    public boolean isHandlesNodeChildren() {
+        return true
+    }
 
-   public boolean onNodeChildren(FactoryBuilderSupport builder, Object node, Closure childContent) {
-      node.draw = childContent
-      return false
-   }
+    public boolean onNodeChildren(FactoryBuilderSupport builder, Object node, Closure childContent) {
+        node.draw = childContent
+        return false
+    }
 }

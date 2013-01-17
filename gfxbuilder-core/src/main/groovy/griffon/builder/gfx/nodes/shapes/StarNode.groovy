@@ -1,5 +1,5 @@
 /*
- * Copyright 2007-2012 the original author or authors.
+ * Copyright 2007-2013 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -28,8 +28,8 @@ class StarNode extends AbstractShapeGfxNode {
     @GfxAttribute float cy = 5f
     @GfxAttribute float or = 8f
     @GfxAttribute float ir = 3f
-    @GfxAttribute(alias="cn") int count = 5i
-    @GfxAttribute(alias="a") float angle = 0f
+    @GfxAttribute(alias = "cn") int count = 5i
+    @GfxAttribute(alias = "a") float angle = 0f
 
     StarNode() {
         super("star")
@@ -46,11 +46,11 @@ class StarNode extends AbstractShapeGfxNode {
     }
 
     Shape calculateShape() {
-       return new Star( cx as float,
-                         cy as float,
-                         or as float,
-                         ir as float,
-                         count as int,
-                         angle as float )
+        return new Star(cx as float,
+            cy as float,
+            or as float,
+            ir as float,
+            count as int,
+            angle as float)
     }
 }

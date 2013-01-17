@@ -1,5 +1,5 @@
 /*
- * Copyright 2007-2012 the original author or authors.
+ * Copyright 2007-2013 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -25,9 +25,9 @@ import java.awt.Shape
  * @author Andres Almiray <aalmiray@users.sourceforge.net>
  */
 abstract class AbstractOutlineGfxNode extends AbstractGfxNode implements OutlineProvider {
-   public AbstractOutlineGfxNode(String name) {
-      super(name)
-   }
+    public AbstractOutlineGfxNode(String name) {
+        super(name)
+    }
 
-   protected void fill(GfxContext context, Shape shape) {}
+    protected void fill(GfxContext context, Shape shape) {}
 }

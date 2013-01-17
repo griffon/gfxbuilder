@@ -1,5 +1,5 @@
 /*
- * Copyright 2007-2012 the original author or authors.
+ * Copyright 2007-2013 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -28,59 +28,59 @@ import java.beans.PropertyChangeEvent
  * @author Andres Almiray <aalmiray@users.sourceforge.net>
  */
 class ShapeStrokeNode extends AbstractStrokeNode {
-   @GfxAttribute List shapes = []
-   @GfxAttribute(alias="ad") float advance = 10f
+    @GfxAttribute List shapes = []
+    @GfxAttribute(alias = "ad") float advance = 10f
 
     ShapeStrokeNode() {
         super("shapeStroke")
     }
 
-    void addShape(Shape shape){
-        if(shape) shapes << shape
+    void addShape(Shape shape) {
+        if (shape) shapes << shape
     }
 
-    void addShape(DrawableNode node){
-        if(node) {
-           node.addPropertyChangeListener(this)
-           shapes << node
+    void addShape(DrawableNode node) {
+        if (node) {
+            node.addPropertyChangeListener(this)
+            shapes << node
         }
     }
 
     ShapeStrokeNode leftShift(Shape shape) {
-      addShape(shape)
+        addShape(shape)
     }
 
     ShapeStrokeNode leftShift(DrawableNode node) {
-      addShape(node)
+        addShape(node)
     }
 
-   void propertyChanged(PropertyChangeEvent event) {
-      if(shapes.contains(event.source)) {
-         onDirty(event)
-      } else {
-         super.propertyChanged(event)
-      }
-   }
+    void propertyChanged(PropertyChangeEvent event) {
+        if (shapes.contains(event.source)) {
+            onDirty(event)
+        } else {
+            super.propertyChanged(event)
+        }
+    }
 
-   void apply(GfxContext context) {
-      shapes.each { shape ->
-         if(shape instanceof DrawableNode) {
-            shape.getRuntime(context)
-         }
-      }
-   }
+    void apply(GfxContext context) {
+        shapes.each { shape ->
+            if (shape instanceof DrawableNode) {
+                shape.getRuntime(context)
+            }
+        }
+    }
 
-   protected Stroke createStroke() {
-      if(!shapes) throw new IllegalArgumentException("shapeStroke requires at least one shape.")
-      def s = []
-      shapes.each { shape ->
-         if(shape instanceof Shape) s << shape
-         if(shape instanceof DrawableNode && shape.enabled) {
-            def _s = shape.runtime.localShape
-            if(_s) s << _s
-         }
-      }
+    protected Stroke createStroke() {
+        if (!shapes) throw new IllegalArgumentException("shapeStroke requires at least one shape.")
+        def s = []
+        shapes.each { shape ->
+            if (shape instanceof Shape) s << shape
+            if (shape instanceof DrawableNode && shape.enabled) {
+                def _s = shape.runtime.localShape
+                if (_s) s << _s
+            }
+        }
 
-      return new ShapeStroke(s as Shape[], advance as float)
-   }
+        return new ShapeStroke(s as Shape[], advance as float)
+    }
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright 2007-2012 the original author or authors.
+ * Copyright 2007-2013 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -25,11 +25,11 @@ class MoveToExtPathSegment extends AbstractExtPathSegment {
     @GfxAttribute float x = 0
     @GfxAttribute float y = 0
 
-    MoveToExtPathSegment(){
-       super("xmoveTo")
+    MoveToExtPathSegment() {
+        super("xmoveTo")
     }
 
     void apply(ExtendedGeneralPath path) {
-       path.moveTo(x as float, y as float)
+        path.moveTo(x as float, y as float)
     }
 }

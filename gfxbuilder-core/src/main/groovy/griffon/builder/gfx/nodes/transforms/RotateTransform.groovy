@@ -1,5 +1,5 @@
 /*
- * Copyright 2007-2012 the original author or authors.
+ * Copyright 2007-2013 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -25,20 +25,20 @@ import java.awt.geom.AffineTransform
 class RotateTransform extends AbstractTransform {
     @GfxAttribute double x = 0d
     @GfxAttribute double y = 0d
-    @GfxAttribute(alias="a") double angle = 0d
+    @GfxAttribute(alias = "a") double angle = 0d
 
     RotateTransform() {
-       super("rotate")
+        super("rotate")
     }
 
     RotateTransform clone() {
-       new RotateTransform(x: x,
-                           y: y,
-                           angle: angle,
-                           enabled: enabled)
+        new RotateTransform(x: x,
+            y: y,
+            angle: angle,
+            enabled: enabled)
     }
 
     AffineTransform getTransform() {
-       AffineTransform.getRotateInstance(Math.toRadians(angle as double), x as double, y as double)
+        AffineTransform.getRotateInstance(Math.toRadians(angle as double), x as double, y as double)
     }
 }

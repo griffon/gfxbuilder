@@ -1,5 +1,5 @@
 /*
- * Copyright 2007-2012 the original author or authors.
+ * Copyright 2007-2013 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -23,12 +23,12 @@ import griffon.builder.gfx.GfxNode
  */
 abstract class AbstractTransform extends GfxNode implements Transform {
     AbstractTransform(String name) {
-       super(name)
+        super(name)
     }
 
     void apply(GfxContext context) {}
 
     String toString() {
-       "[${super.toString()}, enabled: $enabled, tx: $transform]"
+        "[${super.toString()}, enabled: $enabled, tx: $transform]"
     }
 }

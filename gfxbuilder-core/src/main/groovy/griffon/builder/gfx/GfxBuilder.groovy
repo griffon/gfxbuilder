@@ -1,5 +1,5 @@
 /*
- * Copyright 2007-2012 the original author or authors.
+ * Copyright 2007-2013 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,6 +15,8 @@
 
 package griffon.builder.gfx
 
+import griffon.builder.gfx.factory.*
+import griffon.builder.gfx.nodes.misc.*
 import griffon.builder.gfx.nodes.outlines.CubicCurveNode
 import griffon.builder.gfx.nodes.outlines.LineNode
 import griffon.builder.gfx.nodes.outlines.PolylineNode
@@ -23,6 +25,10 @@ import griffon.builder.gfx.nodes.paints.GradientPaintNode
 import griffon.builder.gfx.nodes.paints.LinearGradientPaintNode
 import griffon.builder.gfx.nodes.paints.RadialGradientPaintNode
 import griffon.builder.gfx.nodes.paints.TexturePaintNode
+import griffon.builder.gfx.nodes.shapes.*
+import griffon.builder.gfx.nodes.shapes.path.*
+import griffon.builder.gfx.nodes.strokes.*
+import griffon.builder.gfx.nodes.transforms.*
 import groovy.swing.SwingBuilder
 import groovy.swing.factory.BindFactory
 import groovy.swing.factory.BindProxyFactory
@@ -32,13 +38,6 @@ import org.codehaus.griffon.jsilhouette.geom.ReuleauxTriangle
 import java.lang.reflect.InvocationTargetException
 import java.lang.reflect.Method
 import java.lang.reflect.Modifier
-
-import griffon.builder.gfx.factory.*
-import griffon.builder.gfx.nodes.misc.*
-import griffon.builder.gfx.nodes.shapes.*
-import griffon.builder.gfx.nodes.shapes.path.*
-import griffon.builder.gfx.nodes.strokes.*
-import griffon.builder.gfx.nodes.transforms.*
 
 /**
  * @author Andres Almiray <aalmiray@users.sourceforge.net>
@@ -52,8 +51,8 @@ class GfxBuilder extends FactoryBuilderSupport {
 
     public GfxBuilder(boolean init = true) {
         super(false)
-        if(init) {
-           gfxbAutoRegister()
+        if (init) {
+            gfxbAutoRegister()
         }
     }
 
@@ -100,30 +99,30 @@ class GfxBuilder extends FactoryBuilderSupport {
 
         ServiceLoader.load(GfxBuilderPlugin)?.each { plugin ->
             plugin.properties.each { name, closure ->
-               if (!name.startsWith("register")) return
-               registringGroupName = name.substring("register".length())
-               if (registrationGroup.get(registringGroupName) == null) {
-                  registrationGroup.put(registringGroupName, new TreeSet<String>())
-               }
-               try {
-                  closure.resolveStrategy = Closure.DELEGATE_FIRST
-                  closure.delegate = this
-                  closure()
-               } catch (Exception e) {
-                  throw new RuntimeException("Could not init ${this.class.name} because of an exception in ${plugin.class.name}.${property.name}", e)
-               } finally {
-                  registringGroupName = ""
-               }
+                if (!name.startsWith("register")) return
+                registringGroupName = name.substring("register".length())
+                if (registrationGroup.get(registringGroupName) == null) {
+                    registrationGroup.put(registringGroupName, new TreeSet<String>())
+                }
+                try {
+                    closure.resolveStrategy = Closure.DELEGATE_FIRST
+                    closure.delegate = this
+                    closure()
+                } catch (Exception e) {
+                    throw new RuntimeException("Could not init ${this.class.name} because of an exception in ${plugin.class.name}.${property.name}", e)
+                } finally {
+                    registringGroupName = ""
+                }
             }
         }
     }
 
     private registerGfxBeanFactory(String name, Class beanClass) {
-        registerFactory(name, new GfxBeanFactory(beanClass,false))
+        registerFactory(name, new GfxBeanFactory(beanClass, false))
     }
 
     private registerGfxBeanFactory(String name, Class beanClass, boolean leaf) {
-        registerFactory(name, new GfxBeanFactory(beanClass,leaf))
+        registerFactory(name, new GfxBeanFactory(beanClass, leaf))
     }
 
     void registerGfxSupportNodes() {
@@ -212,10 +211,10 @@ class GfxBuilder extends FactoryBuilderSupport {
         //
         // area operations
         //
-        registerFactory("add", new AreaFactory("add","add"))
-        registerFactory("subtract", new AreaFactory("subtract","subtract"))
-        registerFactory("intersect", new AreaFactory("intersect","intersect"))
-        registerFactory("xor", new AreaFactory("xor","exclusiveOr"))
+        registerFactory("add", new AreaFactory("add", "add"))
+        registerFactory("subtract", new AreaFactory("subtract", "subtract"))
+        registerFactory("intersect", new AreaFactory("intersect", "intersect"))
+        registerFactory("xor", new AreaFactory("xor", "exclusiveOr"))
     }
 
     void registerGfxTransforms() {
@@ -243,31 +242,31 @@ class GfxBuilder extends FactoryBuilderSupport {
     void registerGfxStrokes() {
         registerFactory("stroke", new StrokeFactory())
         registerFactory("basicStroke", new StrokesFactory(BasicStrokeNode))
-        registerFactory("compositeStroke", new StrokesFactory(CompositeStrokeNode,false))
-        registerFactory("compoundStroke", new StrokesFactory(CompoundStrokeNode,false))
+        registerFactory("compositeStroke", new StrokesFactory(CompositeStrokeNode, false))
+        registerFactory("compoundStroke", new StrokesFactory(CompoundStrokeNode, false))
         registerFactory("textStroke", new StrokesFactory(TextStrokeNode))
         registerFactory("shapeStroke", new ShapeStrokeFactory())
         registerFactory("wobbleStroke", new StrokesFactory(WobbleStrokeNode))
-        registerFactory("zigzagStroke", new StrokesFactory(ZigzagStrokeNode,false))
+        registerFactory("zigzagStroke", new StrokesFactory(ZigzagStrokeNode, false))
         registerFactory("bristleStroke", new StrokesFactory(BristleStrokeNode))
         registerFactory("brushStroke", new StrokesFactory(BrushStrokeNode))
         registerFactory("calligraphyStroke", new StrokesFactory(CalligraphyStrokeNode))
-        registerFactory("charcoalStroke", new StrokesFactory(CharcoalStrokeNode,false))
+        registerFactory("charcoalStroke", new StrokesFactory(CharcoalStrokeNode, false))
     }
-        //
-        // filters
-        //
+    //
+    // filters
+    //
 //         registerFactory( "filters", new FilterGroupFactory() )
 
     void registerGfxSwing() {
-         registerFactory("canvas", new GfxCanvasFactory())
+        registerFactory("canvas", new GfxCanvasFactory())
     }
 
     public static objectIDAttributeDelegate(def builder, def node, def attributes) {
-       def theID = attributes.remove('id')
-       if (theID) {
-           builder.setVariable(theID, node)
-       }
+        def theID = attributes.remove('id')
+        if (theID) {
+            builder.setVariable(theID, node)
+        }
     }
 
     // Fix to prevent nodes without context to throw MPE when asked for id (e.g. in BindFactory)

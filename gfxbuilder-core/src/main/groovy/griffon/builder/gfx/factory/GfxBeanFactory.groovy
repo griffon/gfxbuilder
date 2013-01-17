@@ -1,5 +1,5 @@
 /*
- * Copyright 2008-2012 the original author or authors.
+ * Copyright 2008-2013 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -23,19 +23,19 @@ class GfxBeanFactory extends AbstractGfxFactory {
     final Class beanClass
     final protected boolean leaf
 
-    GfxBeanFactory( Class beanClass ) {
-        this( beanClass, true )
+    GfxBeanFactory(Class beanClass) {
+        this(beanClass, true)
     }
 
-    GfxBeanFactory( Class beanClass, boolean leaf ) {
+    GfxBeanFactory(Class beanClass, boolean leaf) {
         this.beanClass = beanClass
         this.leaf = leaf
     }
 
-    public Object newInstance( FactoryBuilderSupport builder, Object name, Object value,
-             Map properties ) throws InstantiationException, IllegalAccessException {
-        if(value) {
-            if( beanClass.isAssignableFrom(value.getClass()) ){
+    public Object newInstance(FactoryBuilderSupport builder, Object name, Object value,
+                              Map properties) throws InstantiationException, IllegalAccessException {
+        if (value) {
+            if (beanClass.isAssignableFrom(value.getClass())) {
                 return value
             } else {
                 return beanClass.getDeclaredConstructor([value.getClass()] as Class[]).newInstance([value] as Object[])

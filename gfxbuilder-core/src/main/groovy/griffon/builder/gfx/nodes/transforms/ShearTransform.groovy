@@ -1,5 +1,5 @@
 /*
- * Copyright 2007-2012 the original author or authors.
+ * Copyright 2007-2013 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -27,14 +27,14 @@ class ShearTransform extends AbstractTransform {
     @GfxAttribute double y = 1d
 
     ShearTransform() {
-       super("shear")
+        super("shear")
     }
 
     ShearTransform clone() {
-       new ShearTransform(x: x, y: y, enabled: enabled)
+        new ShearTransform(x: x, y: y, enabled: enabled)
     }
 
     AffineTransform getTransform() {
-       AffineTransform.getShearInstance(x as double, y as double)
+        AffineTransform.getShearInstance(x as double, y as double)
     }
 }

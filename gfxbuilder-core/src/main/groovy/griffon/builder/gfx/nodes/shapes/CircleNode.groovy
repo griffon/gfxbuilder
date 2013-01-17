@@ -1,5 +1,5 @@
 /*
- * Copyright 2007-2012 the original author or authors.
+ * Copyright 2007-2013 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -28,15 +28,15 @@ class CircleNode extends AbstractShapeGfxNode {
     @GfxAttribute double y = Double.NaN
     @GfxAttribute double cx = 5d
     @GfxAttribute double cy = 5d
-    @GfxAttribute(alias="r") double radius = 5d
+    @GfxAttribute(alias = "r") double radius = 5d
 
     CircleNode() {
-        super( "circle" )
+        super("circle")
     }
 
-    CircleNode( Ellipse2D circle ) {
-        super( "circle" )
-        radius = circle.width/2
+    CircleNode(Ellipse2D circle) {
+        super("circle")
+        radius = circle.width / 2
         x = circle.x
         y = circle.y
         cx = circle.x + radius
@@ -44,15 +44,15 @@ class CircleNode extends AbstractShapeGfxNode {
     }
 
     Shape calculateShape() {
-       if(Double.isNaN(x) && Double.isNaN(y)) {
-           return new Ellipse2D.Double( (cx - radius) as double,
-                                        (cy - radius) as double,
-                                        (radius * 2) as double,
-                                        (radius * 2) as double )
-       }
-       return new Ellipse2D.Double( x as double,
-                                    y as double,
-                                    (radius * 2) as double,
-                                    (radius * 2) as double )
+        if (Double.isNaN(x) && Double.isNaN(y)) {
+            return new Ellipse2D.Double((cx - radius) as double,
+                (cy - radius) as double,
+                (radius * 2) as double,
+                (radius * 2) as double)
+        }
+        return new Ellipse2D.Double(x as double,
+            y as double,
+            (radius * 2) as double,
+            (radius * 2) as double)
     }
 }

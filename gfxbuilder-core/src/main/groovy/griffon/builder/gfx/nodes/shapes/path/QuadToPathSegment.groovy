@@ -1,5 +1,5 @@
 /*
- * Copyright 2007-2012 the original author or authors.
+ * Copyright 2007-2013 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -28,14 +28,14 @@ class QuadToPathSegment extends AbstractPathSegment {
     @GfxAttribute double y1
     @GfxAttribute double y2
 
-    QuadToPathSegment(){
-       super("quadTo")
+    QuadToPathSegment() {
+        super("quadTo")
     }
 
-    void apply( GeneralPath path ) {
-       path.quadTo( x1 as double,
-                    y1 as double,
-                    x2 as double,
-                    y2 as double )
+    void apply(GeneralPath path) {
+        path.quadTo(x1 as double,
+            y1 as double,
+            x2 as double,
+            y2 as double)
     }
 }

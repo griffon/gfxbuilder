@@ -1,5 +1,5 @@
 /*
- * Copyright 2008-2012 the original author or authors.
+ * Copyright 2008-2013 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,23 +24,23 @@ import griffon.builder.gfx.nodes.misc.ClipNode
  * @author Andres Almiray <aalmiray@users.sourceforge.net>
  */
 class ClipFactory extends GfxBeanFactory {
-    ClipFactory(){
-       super(ClipNode, false)
+    ClipFactory() {
+        super(ClipNode, false)
     }
 
     public void setParent(FactoryBuilderSupport builder, Object parent, Object node) {
-       if(parent instanceof ContainerNode){
-          parent << node
-       } else {
-          throw new IllegalArgumentException("node can not be nested inside $parent")
-       }
+        if (parent instanceof ContainerNode) {
+            parent << node
+        } else {
+            throw new IllegalArgumentException("node can not be nested inside $parent")
+        }
     }
 
     public void setChild(FactoryBuilderSupport builder, Object parent, Object child) {
-       if(child instanceof DrawableNode) {
-          parent.setShape(child)
-       } else {
-          throw new IllegalArgumentException("$child can not be nested inside $parent")
-       }
+        if (child instanceof DrawableNode) {
+            parent.setShape(child)
+        } else {
+            throw new IllegalArgumentException("$child can not be nested inside $parent")
+        }
     }
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright 2007-2012 the original author or authors.
+ * Copyright 2007-2013 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,54 +24,55 @@ import java.awt.geom.Arc2D
  * @author Andres Almiray <aalmiray@users.sourceforge.net>
  */
 class ArcNode extends AbstractShapeGfxNode {
-   @GfxAttribute double x = 0d
-   @GfxAttribute double y = 0d
-   @GfxAttribute(alias="w") double width = 10d
-   @GfxAttribute(alias="h") double height = 10d
-   @GfxAttribute double start = 0d
-   @GfxAttribute double extent = 90d
-   @GfxAttribute def close
+    @GfxAttribute double x = 0d
+    @GfxAttribute double y = 0d
+    @GfxAttribute(alias = "w") double width = 10d
+    @GfxAttribute(alias = "h") double height = 10d
+    @GfxAttribute double start = 0d
+    @GfxAttribute double extent = 90d
+    @GfxAttribute
+    def close
 
-   ArcNode() {
-      super("arc")
-   }
+    ArcNode() {
+        super("arc")
+    }
 
-   ArcNode(Arc2D arc) {
-      super("arc")
-      x = arc.x
-      y = arc.y
-      width = arc.width
-      height = arc.height
-      start = arc.angleStart
-      extent = arc.angleExtent
-      close = arc.arcType
-   }
+    ArcNode(Arc2D arc) {
+        super("arc")
+        x = arc.x
+        y = arc.y
+        width = arc.width
+        height = arc.height
+        start = arc.angleStart
+        extent = arc.angleExtent
+        close = arc.arcType
+    }
 
     Shape calculateShape() {
-        return new Arc2D.Double( x as double,
-                                 y as double,
-                                 width as double,
-                                 height as double,
-                                 start as double,
-                                 extent as double,
-                                 getCloseValue() )
+        return new Arc2D.Double(x as double,
+            y as double,
+            width as double,
+            height as double,
+            start as double,
+            extent as double,
+            getCloseValue())
     }
 
     private def getCloseValue() {
-        if( !close ){
+        if (!close) {
             return Arc2D.OPEN
         }
-        if( close instanceof Number ){
-          return close as int
-        }else if( close instanceof String ){
-           if( close.compareToIgnoreCase("OPEN") == 0 ){
-               return Arc2D.OPEN
-           }else if( close.compareToIgnoreCase("CHORD") == 0 ){
-               return Arc2D.CHORD
-           }else if( close.compareToIgnoreCase("PIE") == 0 ){
-               return Arc2D.PIE
-           }
+        if (close instanceof Number) {
+            return close as int
+        } else if (close instanceof String) {
+            if (close.compareToIgnoreCase("OPEN") == 0) {
+                return Arc2D.OPEN
+            } else if (close.compareToIgnoreCase("CHORD") == 0) {
+                return Arc2D.CHORD
+            } else if (close.compareToIgnoreCase("PIE") == 0) {
+                return Arc2D.PIE
+            }
         }
-       return Arc2D.OPEN
+        return Arc2D.OPEN
     }
 }

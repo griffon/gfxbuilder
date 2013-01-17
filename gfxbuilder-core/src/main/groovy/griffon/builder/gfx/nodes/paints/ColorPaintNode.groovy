@@ -1,5 +1,5 @@
 /*
- * Copyright 2007-2012 the original author or authors.
+ * Copyright 2007-2013 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -26,21 +26,22 @@ import java.awt.geom.Rectangle2D
  * @author Andres Almiray <aalmiray@users.sourceforge.net>
  */
 final class ColorPaintNode extends AbstractPaintNode {
-    @GfxAttribute(alias="c", resets=false) def/*Color|String*/ color = Color.BLACK
+    @GfxAttribute(alias = "c", resets = false)
+    def/*Color|String*/ color = Color.BLACK
 
-    ColorPaintNode(){
-       super("colorPaint")
+    ColorPaintNode() {
+        super("colorPaint")
     }
 
     ColorPaintNode clone() {
-       new ColorPaintNode(color: color)
+        new ColorPaintNode(color: color)
     }
 
     Paint getPaint(Rectangle2D bounds) {
-       if( color instanceof String ){
-          return Colors.getColor( color )
-       }else if(color instanceof Color){
-          return color
-       }
+        if (color instanceof String) {
+            return Colors.getColor(color)
+        } else if (color instanceof Color) {
+            return color
+        }
     }
 }

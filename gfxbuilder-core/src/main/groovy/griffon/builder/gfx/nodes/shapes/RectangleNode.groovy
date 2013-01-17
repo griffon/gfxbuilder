@@ -1,5 +1,5 @@
 /*
- * Copyright 2007-2012 the original author or authors.
+ * Copyright 2007-2013 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -25,47 +25,47 @@ import java.awt.geom.RoundRectangle2D
  * @author Andres Almiray <aalmiray@users.sourceforge.net>
  */
 final class RectangleNode extends AbstractShapeGfxNode {
-   @GfxAttribute double x = 0d
-   @GfxAttribute double y = 0d
-   @GfxAttribute(alias="w") double width = 10d
-   @GfxAttribute(alias="h") double height = 10d
-   @GfxAttribute(alias="aw") double arcWidth = 0d
-   @GfxAttribute(alias="ah") double arcHeight = 0d
+    @GfxAttribute double x = 0d
+    @GfxAttribute double y = 0d
+    @GfxAttribute(alias = "w") double width = 10d
+    @GfxAttribute(alias = "h") double height = 10d
+    @GfxAttribute(alias = "aw") double arcWidth = 0d
+    @GfxAttribute(alias = "ah") double arcHeight = 0d
 
-   RectangleNode() {
-       super( "rect" )
-   }
+    RectangleNode() {
+        super("rect")
+    }
 
-   RectangleNode(Rectangle2D rectangle) {
-       super( "rect" )
-       x = rectangle.x
-       y = rectangle.y
-       width = rectangle.width
-       height = rectangle.height
-   }
+    RectangleNode(Rectangle2D rectangle) {
+        super("rect")
+        x = rectangle.x
+        y = rectangle.y
+        width = rectangle.width
+        height = rectangle.height
+    }
 
-   RectangleNode(RoundRectangle2D rectangle) {
-       super( "rect" )
-       x = rectangle.x
-       y = rectangle.y
-       width = rectangle.width
-       height = rectangle.height
-       arcHeight = rectangle.arcHeight
-       arcWidth = rectangle.arcWidth
-   }
+    RectangleNode(RoundRectangle2D rectangle) {
+        super("rect")
+        x = rectangle.x
+        y = rectangle.y
+        width = rectangle.width
+        height = rectangle.height
+        arcHeight = rectangle.arcHeight
+        arcWidth = rectangle.arcWidth
+    }
 
-   Shape calculateShape() {
-      if(arcWidth && arcHeight){
-         return new RoundRectangle2D.Double( x as double,
-                                             y as double,
-                                             width as double,
-                                             height as double,
-                                             arcWidth as double,
-                                             arcHeight as double )
-       }
-       return new Rectangle2D.Double( x as double,
-                                      y as double,
-                                      width as double,
-                                      height as double )
-   }
+    Shape calculateShape() {
+        if (arcWidth && arcHeight) {
+            return new RoundRectangle2D.Double(x as double,
+                y as double,
+                width as double,
+                height as double,
+                arcWidth as double,
+                arcHeight as double)
+        }
+        return new Rectangle2D.Double(x as double,
+            y as double,
+            width as double,
+            height as double)
+    }
 }

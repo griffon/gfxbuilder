@@ -1,5 +1,5 @@
 /*
- * Copyright 2008-2012 the original author or authors.
+ * Copyright 2008-2013 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -26,53 +26,53 @@ import java.awt.Color
  * @author Andres Almiray <aalmiray@users.sourceforge.net>
  */
 public class GradientStopFactory extends AbstractGfxFactory {
-   public boolean isLeaf() {
-      return true
-   }
+    public boolean isLeaf() {
+        return true
+    }
 
-   public Object newInstance( FactoryBuilderSupport builder, Object name, Object value,
-         Map properties ) throws InstantiationException, IllegalAccessException {
-      FactoryBuilderSupport.checkValueIsNull(value, name)
-      return new GradientStop()
-   }
+    public Object newInstance(FactoryBuilderSupport builder, Object name, Object value,
+                              Map properties) throws InstantiationException, IllegalAccessException {
+        FactoryBuilderSupport.checkValueIsNull(value, name)
+        return new GradientStop()
+    }
 
-   public boolean onHandleNodeAttributes( FactoryBuilderSupport builder, Object node, Map attributes ) {
-      if( attributes.containsKey("red") ||
-          attributes.containsKey("green")  ||
-          attributes.containsKey("blue") ||
-          attributes.containsKey("alpha") ){
+    public boolean onHandleNodeAttributes(FactoryBuilderSupport builder, Object node, Map attributes) {
+        if (attributes.containsKey("red") ||
+            attributes.containsKey("green") ||
+            attributes.containsKey("blue") ||
+            attributes.containsKey("alpha")) {
 
-         def red = attributes.remove( "red" )
-         def green = attributes.remove( "green" )
-         def blue = attributes.remove( "blue" )
-         def alpha = attributes.remove( "alpha" )
+            def red = attributes.remove("red")
+            def green = attributes.remove("green")
+            def blue = attributes.remove("blue")
+            def alpha = attributes.remove("alpha")
 
-         red = red != null ? red : 0
-         green = green != null ? green : 0
-         blue = blue != null ? blue : 0
-         alpha = alpha != null ? alpha : 255
+            red = red != null ? red : 0
+            green = green != null ? green : 0
+            blue = blue != null ? blue : 0
+            alpha = alpha != null ? alpha : 255
 
-         red = red > 1 ? red/255 : red
-         green = green > 1 ? green/255 : green
-         blue = blue > 1 ? blue/255 : blue
-         alpha = alpha > 1 ? alpha/255 : alpha
+            red = red > 1 ? red / 255 : red
+            green = green > 1 ? green / 255 : green
+            blue = blue > 1 ? blue / 255 : blue
+            alpha = alpha > 1 ? alpha / 255 : alpha
 
-         attributes.color = new Color( red as float, green as float, blue as float, alpha as float )
-      }
+            attributes.color = new Color(red as float, green as float, blue as float, alpha as float)
+        }
 
-      Object color = attributes.get("color")
-      if( color != null && color instanceof String ){
-         attributes.put("color", Colors.getColor( color))
-      }
+        Object color = attributes.get("color")
+        if (color != null && color instanceof String) {
+            attributes.put("color", Colors.getColor(color))
+        }
 
-      return true
-   }
+        return true
+    }
 
-   public void setParent( FactoryBuilderSupport builder, Object parent, Object child ) {
-      if( parent instanceof MultipleGradientPaintProvider ){
-         parent.addStop( child )
-         return
-      }
-      throw new IllegalArgumentException("stop must be nested inside a gradient node.")
-   }
+    public void setParent(FactoryBuilderSupport builder, Object parent, Object child) {
+        if (parent instanceof MultipleGradientPaintProvider) {
+            parent.addStop(child)
+            return
+        }
+        throw new IllegalArgumentException("stop must be nested inside a gradient node.")
+    }
 }

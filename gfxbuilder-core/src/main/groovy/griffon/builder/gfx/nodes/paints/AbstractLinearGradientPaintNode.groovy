@@ -1,5 +1,5 @@
 /*
- * Copyright 2007-2012 the original author or authors.
+ * Copyright 2007-2013 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -33,7 +33,8 @@ abstract class AbstractLinearGradientPaintNode extends AbstractPaintNode {
     @GfxAttribute double x2 = Double.NaN
     @GfxAttribute double y1 = Double.NaN
     @GfxAttribute double y2 = Double.NaN
-    @GfxAttribute(alias = "c", resets = false) def cycle
+    @GfxAttribute(alias = "c", resets = false)
+    def cycle
     @GfxAttribute(alias = "s") boolean stretch = false
     @GfxAttribute(alias = "f") boolean fit = true
 
@@ -104,13 +105,13 @@ abstract class AbstractLinearGradientPaintNode extends AbstractPaintNode {
             if (y2 > y1) {
                 // up-down
                 if (bounds.x != x1 || bounds.y != y1)
-                translate = AffineTransform.getTranslateInstance(bounds.x, bounds.y)
+                    translate = AffineTransform.getTranslateInstance(bounds.x, bounds.y)
             } else {
                 // down-up
                 corner = 2
                 def y = bounds.y + bounds.height - (y1 - y2)
                 if (bounds.x != x1 || y != y1)
-                translate = AffineTransform.getTranslateInstance(bounds.x, y)
+                    translate = AffineTransform.getTranslateInstance(bounds.x, y)
             }
         } else {
             // right-left
@@ -119,14 +120,14 @@ abstract class AbstractLinearGradientPaintNode extends AbstractPaintNode {
                 corner = 3
                 def x = bounds.x + bounds.width - (x1 - x2)
                 if (bounds.x + bounds.width != x1 || bounds.y != y1)
-                translate = AffineTransform.getTranslateInstance(x, bounds.y)
+                    translate = AffineTransform.getTranslateInstance(x, bounds.y)
             } else {
                 // down-up
                 corner = 4
                 def x = bounds.x + bounds.width - (x1 - x2)
                 def y = bounds.y + bounds.height - (y1 - y2)
                 if (bounds.x + bounds.width != x1 || y != y1)
-                translate = AffineTransform.getTranslateInstance(x, y)
+                    translate = AffineTransform.getTranslateInstance(x, y)
             }
         }
 
@@ -144,13 +145,13 @@ abstract class AbstractLinearGradientPaintNode extends AbstractPaintNode {
 
         switch (corner) {
             case 1: return makePaint(bounds.x, bounds.y,
-                    bounds.x + b.width, bounds.y + b.height)
+                bounds.x + b.width, bounds.y + b.height)
             case 2: return makePaint(bounds.x, bounds.y + bounds.height,
-                    bounds.x + b.width, bounds.y + bounds.height - b.height)
+                bounds.x + b.width, bounds.y + bounds.height - b.height)
             case 3: return makePaint(bounds.x + bounds.width, bounds.y,
-                    bounds.x + bounds.width - b.width, bounds.y + b.height)
+                bounds.x + bounds.width - b.width, bounds.y + b.height)
             case 4: return makePaint(bounds.x + bounds.width, bounds.y + bounds.height,
-                    bounds.x + bounds.width - b.width, bounds.y + bounds.height - b.height)
+                bounds.x + bounds.width - b.width, bounds.y + bounds.height - b.height)
         }
     }
 

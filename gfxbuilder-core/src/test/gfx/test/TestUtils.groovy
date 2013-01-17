@@ -8,82 +8,82 @@ import griffon.builder.gfx.GfxNode
 import griffon.builder.gfx.swing.GfxCanvas
 import groovy.swing.SwingBuilder
 
+import javax.swing.JFrame
+import javax.swing.SwingConstants
+import java.awt.*
 import java.awt.event.WindowAdapter
 import java.awt.image.BufferedImage
 import java.awt.image.DataBuffer
 import java.util.List
 import java.util.concurrent.CountDownLatch
-import javax.swing.JFrame
-import javax.swing.SwingConstants
-import java.awt.*
 
 /**
  * @author Alexander Klein <info@aklein.org>
  */
 class TestUtils {
 
-  static void displayInFrame(def title, GfxNode node, List size = [400, 400], def wait = false) {
-    def swing = new SwingBuilder()
-    CountDownLatch closeSignal = new CountDownLatch(1);
-    swing.edt {
-      frame(id: 'main',
-              title: title,
-              defaultCloseOperation: JFrame.DISPOSE_ON_CLOSE,
-              size: size,
-              visible: true) {
-        panel(background: java.awt.Color.WHITE) {
-        borderLayout()
-        widget(new GfxCanvas(node: node, opaque: false))
+    static void displayInFrame(def title, GfxNode node, List size = [400, 400], def wait = false) {
+        def swing = new SwingBuilder()
+        CountDownLatch closeSignal = new CountDownLatch(1);
+        swing.edt {
+            frame(id: 'main',
+                title: title,
+                defaultCloseOperation: JFrame.DISPOSE_ON_CLOSE,
+                size: size,
+                visible: true) {
+                panel(background: java.awt.Color.WHITE) {
+                    borderLayout()
+                    widget(new GfxCanvas(node: node, opaque: false))
+                }
+            }
         }
-      }
-    }
-    if (wait) {
-      swing.main.addWindowListener([windowClosed: {evt ->
-        closeSignal.countDown()
-      }] as WindowAdapter)
-      closeSignal.await()
-    }
-  }
-
-  static void displayInFrame(def title, BufferedImage img, def wait = false) {
-    def swing = new SwingBuilder()
-    CountDownLatch closeSignal = new CountDownLatch(1);
-    swing.edt {
-      frame(id: 'main',
-              title: title,
-              defaultCloseOperation: JFrame.DISPOSE_ON_CLOSE,
-              size: [img.width + 100, img.height + 100],
-              visible: true) {
-        panel(background: java.awt.Color.WHITE) {
-        borderLayout()
-        label(icon: imageIcon(image: img), horizontalAlignment: SwingConstants.CENTER, verticalAlignment: SwingConstants.CENTER)
+        if (wait) {
+            swing.main.addWindowListener([windowClosed: { evt ->
+                closeSignal.countDown()
+            }] as WindowAdapter)
+            closeSignal.await()
         }
-      }
     }
-    if (wait) {
-      swing.main.addWindowListener([windowClosed: {evt ->
-        closeSignal.countDown()
-      }] as WindowAdapter)
-      closeSignal.await()
-    }
-  }
 
-  static BufferedImage createImage(List size = [400, 400], def node, boolean show = false, def title = '', boolean wait = false) {
-    GraphicsConfiguration gc = GraphicsEnvironment.localGraphicsEnvironment.defaultScreenDevice.defaultConfiguration
-    def img = gc.createCompatibleImage(size[0], size[1], Transparency.TRANSLUCENT)
-    def context = new GfxContext()
-    context.g = img.getGraphics()
-    context.g.setClip(* ([0, 0] + size))
-    context.eventTargets = []
-    context.groupSettings = [:]
-    node.apply(context)
-    if(show) {
-      displayInFrame(title, img, wait)
+    static void displayInFrame(def title, BufferedImage img, def wait = false) {
+        def swing = new SwingBuilder()
+        CountDownLatch closeSignal = new CountDownLatch(1);
+        swing.edt {
+            frame(id: 'main',
+                title: title,
+                defaultCloseOperation: JFrame.DISPOSE_ON_CLOSE,
+                size: [img.width + 100, img.height + 100],
+                visible: true) {
+                panel(background: java.awt.Color.WHITE) {
+                    borderLayout()
+                    label(icon: imageIcon(image: img), horizontalAlignment: SwingConstants.CENTER, verticalAlignment: SwingConstants.CENTER)
+                }
+            }
+        }
+        if (wait) {
+            swing.main.addWindowListener([windowClosed: { evt ->
+                closeSignal.countDown()
+            }] as WindowAdapter)
+            closeSignal.await()
+        }
     }
-    return img
-  }
 
-  static assertPixel(Image img, def x, def y, def rgba, def threshold = 0, boolean alpha = true) {
+    static BufferedImage createImage(List size = [400, 400], def node, boolean show = false, def title = '', boolean wait = false) {
+        GraphicsConfiguration gc = GraphicsEnvironment.localGraphicsEnvironment.defaultScreenDevice.defaultConfiguration
+        def img = gc.createCompatibleImage(size[0], size[1], Transparency.TRANSLUCENT)
+        def context = new GfxContext()
+        context.g = img.getGraphics()
+        context.g.setClip(* ([0, 0] + size))
+        context.eventTargets = []
+        context.groupSettings = [:]
+        node.apply(context)
+        if (show) {
+            displayInFrame(title, img, wait)
+        }
+        return img
+    }
+
+    static assertPixel(Image img, def x, def y, def rgba, def threshold = 0, boolean alpha = true) {
         def data = img.data.getPixel(x, y, new int[4])
         def check = { color, idx ->
             Range range = (Math.max(0, rgba[idx] - threshold))..(Math.min(255, rgba[idx] + threshold))

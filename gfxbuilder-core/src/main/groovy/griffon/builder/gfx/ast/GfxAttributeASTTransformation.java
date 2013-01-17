@@ -1,5 +1,5 @@
 /*
- * Copyright 2008-2012 the original author or authors.
+ * Copyright 2008-2013 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -53,7 +53,7 @@ import java.util.Collection;
  * @author Danno Ferrin (shemnon)
  * @author Andres Almiray (aalmiray)
  */
-@GroovyASTTransformation(phase= CompilePhase.CANONICALIZATION)
+@GroovyASTTransformation(phase = CompilePhase.CANONICALIZATION)
 public class GfxAttributeASTTransformation implements ASTTransformation {
     private static final int ACC_SYNTHETIC = 4096;
 
@@ -87,8 +87,8 @@ public class GfxAttributeASTTransformation implements ASTTransformation {
     /**
      * Handles the bulk of the processing, mostly delegating to other methods.
      *
-     * @param nodes   the ast nodes
-     * @param source  the source unit for the nodes
+     * @param nodes  the ast nodes
+     * @param source the source unit for the nodes
      */
     public void visit(ASTNode[] nodes, SourceUnit source) {
         if (!(nodes[0] instanceof AnnotationNode) || !(nodes[1] instanceof AnnotatedNode)) {
@@ -102,16 +102,16 @@ public class GfxAttributeASTTransformation implements ASTTransformation {
             FieldNode fieldNode = (FieldNode) parent;
             if ((fieldNode.getModifiers() & Modifier.FINAL) != 0) {
                 source.getErrorCollector().addErrorAndContinue(
-                            new SyntaxErrorMessage(new SyntaxException(
-                                "@GfxAttribute cannot annotate a final property.",
-                                node.getLineNumber(),
-                                node.getColumnNumber()),
-                                source));
+                    new SyntaxErrorMessage(new SyntaxException(
+                        "@GfxAttribute cannot annotate a final property.",
+                        node.getLineNumber(),
+                        node.getColumnNumber()),
+                        source));
             }
             addListenerToProperty(source, node, declaringClass, fieldNode);
             final Expression member = node.getMember("alias");
-            if(member instanceof ConstantExpression && ((ConstantExpression)member).getValue() != null ) {
-               addAliasedProperty(source, node, declaringClass, fieldNode, ((ConstantExpression)member).getValue().toString());
+            if (member instanceof ConstantExpression && ((ConstantExpression) member).getValue() != null) {
+                addAliasedProperty(source, node, declaringClass, fieldNode, ((ConstantExpression) member).getValue().toString());
             }
         } else if (parent instanceof ClassNode) {
             addListenerToClass(source, node, (ClassNode) parent);
@@ -125,11 +125,11 @@ public class GfxAttributeASTTransformation implements ASTTransformation {
                 if (field.isStatic()) {
                     //noinspection ThrowableInstanceNeverThrown
                     source.getErrorCollector().addErrorAndContinue(
-                                new SyntaxErrorMessage(new SyntaxException(
-                                    "@GfxAttribute cannot annotate a static property.",
-                                    node.getLineNumber(),
-                                    node.getColumnNumber()),
-                                    source));
+                        new SyntaxErrorMessage(new SyntaxException(
+                            "@GfxAttribute cannot annotate a static property.",
+                            node.getLineNumber(),
+                            node.getColumnNumber()),
+                            source));
                 } else {
                     if (needsPropertyChangeSupport(declaringClass, source)) {
                         addPropertyChangeSupport(declaringClass);
@@ -141,11 +141,11 @@ public class GfxAttributeASTTransformation implements ASTTransformation {
         }
         //noinspection ThrowableInstanceNeverThrown
         source.getErrorCollector().addErrorAndContinue(
-                new SyntaxErrorMessage(new SyntaxException(
-                        "@GfxAttribute must be on a property, not a field.  Try removing the private, protected, or public modifier.",
-                        node.getLineNumber(),
-                        node.getColumnNumber()),
-                        source));
+            new SyntaxErrorMessage(new SyntaxException(
+                "@GfxAttribute must be on a property, not a field.  Try removing the private, protected, or public modifier.",
+                node.getLineNumber(),
+                node.getColumnNumber()),
+                source));
     }
 
     private void addListenerToClass(SourceUnit source, AnnotationNode node, ClassNode classNode) {
@@ -157,8 +157,7 @@ public class GfxAttributeASTTransformation implements ASTTransformation {
             // look to see if per-field handlers will catch this one...
             if (hasGfxAttributeAnnotation(field)
                 || ((field.getModifiers() & Modifier.FINAL) != 0)
-                || field.isStatic())
-            {
+                || field.isStatic()) {
                 // explicitly labeled properties are already handled,
                 // don't transform final properties
                 // don't transform static properties
@@ -179,14 +178,14 @@ public class GfxAttributeASTTransformation implements ASTTransformation {
         }
 
         String getterName = "get" + MetaClassHelper.capitalize(propertyName);
-        if(declaringClass.getGetterMethod(getterName) == null) {
+        if (declaringClass.getGetterMethod(getterName) == null) {
             final BlockStatement body = new BlockStatement();
             body.addStatement(new ReturnStatement(new FieldExpression(fieldNode)));
             declaringClass.addMethod(getterName,
-                                     Modifier.PUBLIC,
-                                     fieldNode.getType(),
-                                     Parameter.EMPTY_ARRAY,
-                                     ClassNode.EMPTY_ARRAY, body);
+                Modifier.PUBLIC,
+                fieldNode.getType(),
+                Parameter.EMPTY_ARRAY,
+                ClassNode.EMPTY_ARRAY, body);
         }
     }
 
@@ -222,13 +221,13 @@ public class GfxAttributeASTTransformation implements ASTTransformation {
 
             // add the firePropertyChange method call
             block.addStatement(new ExpressionStatement(new MethodCallExpression(
-                    VariableExpression.THIS_EXPRESSION,
-                    "firePropertyChange",
-                    new ArgumentListExpression(
-                            new Expression[]{
-                                    new ConstantExpression(propertyName),
-                                    oldValue,
-                                    newValue}))));
+                VariableExpression.THIS_EXPRESSION,
+                "firePropertyChange",
+                new ArgumentListExpression(
+                    new Expression[]{
+                        new ConstantExpression(propertyName),
+                        oldValue,
+                        newValue}))));
 
             // replace the existing code block with our new one
             setter.setCode(block);
@@ -252,38 +251,38 @@ public class GfxAttributeASTTransformation implements ASTTransformation {
      * Creates a statement body similar to:
      * <code>this.firePropertyChange("field", field, field = value)</code>
      *
-     * @param propertyNode           the field node for the property
+     * @param propertyNode    the field node for the property
      * @param fieldExpression a field expression for setting the property value
      * @return the created statement
      */
     protected Statement createGfxAttributeStatement(String propertyName, Expression fieldExpression) {
         // create statementBody
         return new ExpressionStatement(
-                new MethodCallExpression(
-                        VariableExpression.THIS_EXPRESSION,
-                        "firePropertyChange",
-                        new ArgumentListExpression(
-                                new Expression[]{
-                                        new ConstantExpression(propertyName),
-                                        fieldExpression,
-                                        new BinaryExpression(
-                                                fieldExpression,
-                                                Token.newSymbol(Types.EQUAL, 0, 0),
-                                                new VariableExpression("value"))})));
+            new MethodCallExpression(
+                VariableExpression.THIS_EXPRESSION,
+                "firePropertyChange",
+                new ArgumentListExpression(
+                    new Expression[]{
+                        new ConstantExpression(propertyName),
+                        fieldExpression,
+                        new BinaryExpression(
+                            fieldExpression,
+                            Token.newSymbol(Types.EQUAL, 0, 0),
+                            new VariableExpression("value"))})));
     }
 
     /**
      * Creates a setter method with the given body.
      *
      * @param declaringClass the class to which we will add the setter
-     * @param propertyNode          the field to back the setter
+     * @param propertyNode   the field to back the setter
      * @param setterName     the name of the setter
      * @param setterBlock    the statement representing the setter block
      */
     protected void createSetterMethod(ClassNode declaringClass, PropertyNode propertyNode, String setterName, Statement setterBlock) {
         Parameter[] setterParameterTypes = {new Parameter(propertyNode.getType(), "value")};
         MethodNode setter =
-                new MethodNode(setterName, propertyNode.getModifiers(), ClassHelper.VOID_TYPE, setterParameterTypes, ClassNode.EMPTY_ARRAY, setterBlock);
+            new MethodNode(setterName, propertyNode.getModifiers(), ClassHelper.VOID_TYPE, setterParameterTypes, ClassNode.EMPTY_ARRAY, setterBlock);
         setter.setSynthetic(true);
         // add it to the class
         declaringClass.addMethod(setter);
@@ -300,7 +299,7 @@ public class GfxAttributeASTTransformation implements ASTTransformation {
     protected void createSetterMethod(ClassNode declaringClass, FieldNode fieldNode, String setterName, Statement setterBlock) {
         Parameter[] setterParameterTypes = {new Parameter(fieldNode.getType(), "value")};
         MethodNode setter =
-                new MethodNode(setterName, Modifier.PUBLIC, ClassHelper.VOID_TYPE, setterParameterTypes, ClassNode.EMPTY_ARRAY, setterBlock);
+            new MethodNode(setterName, Modifier.PUBLIC, ClassHelper.VOID_TYPE, setterParameterTypes, ClassNode.EMPTY_ARRAY, setterBlock);
         setter.setSynthetic(true);
         // add it to the class
         declaringClass.addMethod(setter);
@@ -314,13 +313,13 @@ public class GfxAttributeASTTransformation implements ASTTransformation {
      * must be defined or a compilation error results.
      *
      * @param declaringClass the class to search
-     * @param sourceUnit the source unit, for error reporting. {@code @NotNull}.
+     * @param sourceUnit     the source unit, for error reporting. {@code @NotNull}.
      * @return true if property change support should be added
      */
     protected boolean needsPropertyChangeSupport(ClassNode declaringClass, SourceUnit sourceUnit) {
         boolean foundAdd = false, foundRemove = false, foundFire = false;
         ClassNode consideredClass = declaringClass;
-        while (consideredClass!= null) {
+        while (consideredClass != null) {
             for (MethodNode method : consideredClass.getMethods()) {
                 // just check length, MOP will match it up
                 foundAdd = foundAdd || method.getName().equals("addPropertyChangeListener") && method.getParameters().length == 1;
@@ -334,7 +333,7 @@ public class GfxAttributeASTTransformation implements ASTTransformation {
         }
         // check if a super class has @GfxAttribute annotations
         consideredClass = declaringClass.getSuperClass();
-        while (consideredClass!=null) {
+        while (consideredClass != null) {
             if (hasGfxAttributeAnnotation(consideredClass)) return false;
             for (FieldNode field : consideredClass.getFields()) {
                 if (hasGfxAttributeAnnotation(field)) return false;
@@ -346,7 +345,7 @@ public class GfxAttributeASTTransformation implements ASTTransformation {
                 new SimpleMessage("@GfxAttribute cannot be processed on "
                     + declaringClass.getName()
                     + " because some but not all of addPropertyChangeListener, removePropertyChange, and firePropertyChange were declared in the current or super classes.",
-                sourceUnit)
+                    sourceUnit)
             );
             return false;
         }
@@ -376,137 +375,137 @@ public class GfxAttributeASTTransformation implements ASTTransformation {
         // add field:
         // protected final PropertyChangeSupport this$propertyChangeSupport = new java.beans.PropertyChangeSupport(this)
         FieldNode pcsField = declaringClass.addField(
-                "this$propertyChangeSupport",
-                Modifier.FINAL | Modifier.PRIVATE | ACC_SYNTHETIC,
-                pcsClassNode,
-                new ConstructorCallExpression(pcsClassNode,
-                        new ArgumentListExpression(new Expression[]{new VariableExpression("this")})));
+            "this$propertyChangeSupport",
+            Modifier.FINAL | Modifier.PRIVATE | ACC_SYNTHETIC,
+            pcsClassNode,
+            new ConstructorCallExpression(pcsClassNode,
+                new ArgumentListExpression(new Expression[]{new VariableExpression("this")})));
 
         // add method:
         // void addPropertyChangeListener(listener) {
         //     this$propertyChangeSupport.addPropertyChangeListener(listener)
         //  }
         declaringClass.addMethod(
-                new MethodNode(
+            new MethodNode(
+                "addPropertyChangeListener",
+                Modifier.PUBLIC,
+                ClassHelper.VOID_TYPE,
+                new Parameter[]{new Parameter(pclClassNode, "listener")},
+                ClassNode.EMPTY_ARRAY,
+                new ExpressionStatement(
+                    new MethodCallExpression(
+                        new FieldExpression(pcsField),
                         "addPropertyChangeListener",
-                        Modifier.PUBLIC,
-                        ClassHelper.VOID_TYPE,
-                        new Parameter[]{new Parameter(pclClassNode, "listener")},
-                        ClassNode.EMPTY_ARRAY,
-                        new ExpressionStatement(
-                                new MethodCallExpression(
-                                        new FieldExpression(pcsField),
-                                        "addPropertyChangeListener",
-                                        new ArgumentListExpression(
-                                                new Expression[]{new VariableExpression("listener")})))));
+                        new ArgumentListExpression(
+                            new Expression[]{new VariableExpression("listener")})))));
 
         // add method:
         // void addPropertyChangeListener(name, listener) {
         //     this$propertyChangeSupport.addPropertyChangeListener(name, listener)
         //  }
         declaringClass.addMethod(
-                new MethodNode(
+            new MethodNode(
+                "addPropertyChangeListener",
+                Modifier.PUBLIC,
+                ClassHelper.VOID_TYPE,
+                new Parameter[]{new Parameter(ClassHelper.STRING_TYPE, "name"), new Parameter(pclClassNode, "listener")},
+                ClassNode.EMPTY_ARRAY,
+                new ExpressionStatement(
+                    new MethodCallExpression(
+                        new FieldExpression(pcsField),
                         "addPropertyChangeListener",
-                        Modifier.PUBLIC,
-                        ClassHelper.VOID_TYPE,
-                        new Parameter[]{new Parameter(ClassHelper.STRING_TYPE, "name"), new Parameter(pclClassNode, "listener")},
-                        ClassNode.EMPTY_ARRAY,
-                        new ExpressionStatement(
-                                new MethodCallExpression(
-                                        new FieldExpression(pcsField),
-                                        "addPropertyChangeListener",
-                                        new ArgumentListExpression(
-                                                new Expression[]{new VariableExpression("name"), new VariableExpression("listener")})))));
+                        new ArgumentListExpression(
+                            new Expression[]{new VariableExpression("name"), new VariableExpression("listener")})))));
 
         // add method:
         // boolean removePropertyChangeListener(listener) {
         //    return this$propertyChangeSupport.removePropertyChangeListener(listener);
         // }
         declaringClass.addMethod(
-                new MethodNode(
+            new MethodNode(
+                "removePropertyChangeListener",
+                Modifier.PUBLIC,
+                ClassHelper.VOID_TYPE,
+                new Parameter[]{new Parameter(pclClassNode, "listener")},
+                ClassNode.EMPTY_ARRAY,
+                new ExpressionStatement(
+                    new MethodCallExpression(
+                        new FieldExpression(pcsField),
                         "removePropertyChangeListener",
-                        Modifier.PUBLIC,
-                        ClassHelper.VOID_TYPE,
-                        new Parameter[]{new Parameter(pclClassNode, "listener")},
-                        ClassNode.EMPTY_ARRAY,
-                        new ExpressionStatement(
-                                new MethodCallExpression(
-                                        new FieldExpression(pcsField),
-                                        "removePropertyChangeListener",
-                                        new ArgumentListExpression(
-                                                new Expression[]{new VariableExpression("listener")})))));
+                        new ArgumentListExpression(
+                            new Expression[]{new VariableExpression("listener")})))));
 
         // add method: void removePropertyChangeListener(name, listener)
         declaringClass.addMethod(
-                new MethodNode(
+            new MethodNode(
+                "removePropertyChangeListener",
+                Modifier.PUBLIC,
+                ClassHelper.VOID_TYPE,
+                new Parameter[]{new Parameter(ClassHelper.STRING_TYPE, "name"), new Parameter(pclClassNode, "listener")},
+                ClassNode.EMPTY_ARRAY,
+                new ExpressionStatement(
+                    new MethodCallExpression(
+                        new FieldExpression(pcsField),
                         "removePropertyChangeListener",
-                        Modifier.PUBLIC,
-                        ClassHelper.VOID_TYPE,
-                        new Parameter[]{new Parameter(ClassHelper.STRING_TYPE, "name"), new Parameter(pclClassNode, "listener")},
-                        ClassNode.EMPTY_ARRAY,
-                        new ExpressionStatement(
-                                new MethodCallExpression(
-                                        new FieldExpression(pcsField),
-                                        "removePropertyChangeListener",
-                                        new ArgumentListExpression(
-                                                new Expression[]{new VariableExpression("name"), new VariableExpression("listener")})))));
+                        new ArgumentListExpression(
+                            new Expression[]{new VariableExpression("name"), new VariableExpression("listener")})))));
 
         // add method:
         // protected void firePropertyChange(String name, Object oldValue, Object newValue) {
         //     this$propertyChangeSupport.firePropertyChange(name, oldValue, newValue)
         // }
         declaringClass.addMethod(
-                new MethodNode(
+            new MethodNode(
+                "firePropertyChange",
+                Modifier.PROTECTED,
+                ClassHelper.VOID_TYPE,
+                new Parameter[]{new Parameter(ClassHelper.STRING_TYPE, "name"), new Parameter(ClassHelper.OBJECT_TYPE, "oldValue"), new Parameter(ClassHelper.OBJECT_TYPE, "newValue")},
+                ClassNode.EMPTY_ARRAY,
+                new ExpressionStatement(
+                    new MethodCallExpression(
+                        new FieldExpression(pcsField),
                         "firePropertyChange",
-                        Modifier.PROTECTED,
-                        ClassHelper.VOID_TYPE,
-                        new Parameter[]{new Parameter(ClassHelper.STRING_TYPE, "name"), new Parameter(ClassHelper.OBJECT_TYPE, "oldValue"), new Parameter(ClassHelper.OBJECT_TYPE, "newValue")},
-                        ClassNode.EMPTY_ARRAY,
-                        new ExpressionStatement(
-                                new MethodCallExpression(
-                                        new FieldExpression(pcsField),
-                                        "firePropertyChange",
-                                        new ArgumentListExpression(
-                                                new Expression[]{
-                                                        new VariableExpression("name"),
-                                                        new VariableExpression("oldValue"),
-                                                        new VariableExpression("newValue")})))));
+                        new ArgumentListExpression(
+                            new Expression[]{
+                                new VariableExpression("name"),
+                                new VariableExpression("oldValue"),
+                                new VariableExpression("newValue")})))));
 
         // add method:
         // PropertyChangeListener[] getPropertyChangeListeners() {
         //   return this$propertyChangeSupport.getPropertyChangeListeners
         // }
         declaringClass.addMethod(
-                new MethodNode(
-                        "getPropertyChangeListeners",
-                        Modifier.PUBLIC,
-                        pclClassNode.makeArray(),
-                        Parameter.EMPTY_ARRAY,
-                        ClassNode.EMPTY_ARRAY,
-                        new ReturnStatement(
-                                new ExpressionStatement(
-                                        new MethodCallExpression(
-                                                new FieldExpression(pcsField),
-                                                "getPropertyChangeListeners",
-                                                ArgumentListExpression.EMPTY_ARGUMENTS)))));
+            new MethodNode(
+                "getPropertyChangeListeners",
+                Modifier.PUBLIC,
+                pclClassNode.makeArray(),
+                Parameter.EMPTY_ARRAY,
+                ClassNode.EMPTY_ARRAY,
+                new ReturnStatement(
+                    new ExpressionStatement(
+                        new MethodCallExpression(
+                            new FieldExpression(pcsField),
+                            "getPropertyChangeListeners",
+                            ArgumentListExpression.EMPTY_ARGUMENTS)))));
 
         // add method:
         // PropertyChangeListener[] getPropertyChangeListeners(String name) {
         //   return this$propertyChangeSupport.getPropertyChangeListeners(name)
         // }
         declaringClass.addMethod(
-                new MethodNode(
-                        "getPropertyChangeListeners",
-                        Modifier.PUBLIC,
-                        pclClassNode.makeArray(),
-                        new Parameter[]{new Parameter(ClassHelper.STRING_TYPE, "name")},
-                        ClassNode.EMPTY_ARRAY,
-                        new ReturnStatement(
-                                new ExpressionStatement(
-                                        new MethodCallExpression(
-                                                new FieldExpression(pcsField),
-                                                "getPropertyChangeListeners",
-                                                new ArgumentListExpression(
-                                                new Expression[]{new VariableExpression("name")}))))));
+            new MethodNode(
+                "getPropertyChangeListeners",
+                Modifier.PUBLIC,
+                pclClassNode.makeArray(),
+                new Parameter[]{new Parameter(ClassHelper.STRING_TYPE, "name")},
+                ClassNode.EMPTY_ARRAY,
+                new ReturnStatement(
+                    new ExpressionStatement(
+                        new MethodCallExpression(
+                            new FieldExpression(pcsField),
+                            "getPropertyChangeListeners",
+                            new ArgumentListExpression(
+                                new Expression[]{new VariableExpression("name")}))))));
     }
 }

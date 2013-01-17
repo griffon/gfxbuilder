@@ -1,5 +1,5 @@
 /*
- * Copyright 2007-2012 the original author or authors.
+ * Copyright 2007-2013 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -22,15 +22,15 @@ import griffon.builder.gfx.GfxNode
  * @author Andres Almiray <aalmiray@users.sourceforge.net>
  */
 abstract class AbstractGfxRuntime implements GfxRuntime {
-   protected GfxContext _context
-   protected GfxNode _node
+    protected GfxContext _context
+    protected GfxNode _node
 
-   AbstractGfxRuntime(GfxNode node, GfxContext context) {
-      _node = node
-      _context = context
-   }
+    AbstractGfxRuntime(GfxNode node, GfxContext context) {
+        _node = node
+        _context = context
+    }
 
-   final GfxContext getContext() {
-      _context
-   }
+    final GfxContext getContext() {
+        _context
+    }
 }

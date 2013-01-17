@@ -1,5 +1,5 @@
 /*
- * Copyright 2007-2012 the original author or authors.
+ * Copyright 2007-2013 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -28,30 +28,30 @@ class AreaNode extends AbstractShapeGfxNode {
     private final String areaMethod
 
     AreaNode(String name, String methodName) {
-        super("area-"+name)
+        super("area-" + name)
         this.areaMethod = methodName
     }
 
     Shape calculateShape() {
-        def shapeNodes = nodes.findAll{ it instanceof ShapeProvider }
-        if( !shapeNodes ) {
-           throw new IllegalArgumentException("No nested shapes on ${this}")
+        def shapeNodes = nodes.findAll { it instanceof ShapeProvider }
+        if (!shapeNodes) {
+            throw new IllegalArgumentException("No nested shapes on ${this}")
         }
 
         GfxContext context = getRuntime().getContext()
         List shapes = []
-        for(node in shapeNodes) {
-           if(!node.visible || !node.enabled) continue
-           if(!node.getRuntime()) node.getRuntime(context)
-           def s = node.runtime.localShape
-           if(s) shapes << s
+        for (node in shapeNodes) {
+            if (!node.visible || !node.enabled) continue
+            if (!node.getRuntime()) node.getRuntime(context)
+            def s = node.runtime.localShape
+            if (s) shapes << s
         }
 
-        if(!shapes) return null
-        if(shapes.size() == 1) return shapes[0]
+        if (!shapes) return null
+        if (shapes.size() == 1) return shapes[0]
         Area area = new Area(shapes[0])
         shapes[1..-1].each { s ->
-           area."$areaMethod"(s instanceof Area ? s : new Area(s))
+            area."$areaMethod"(s instanceof Area ? s : new Area(s))
         }
         area
     }

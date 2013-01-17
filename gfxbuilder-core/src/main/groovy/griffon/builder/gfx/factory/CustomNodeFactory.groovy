@@ -1,5 +1,5 @@
 /*
- * Copyright 2008-2012 the original author or authors.
+ * Copyright 2008-2013 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -22,11 +22,11 @@ import griffon.builder.gfx.CustomGfxNode
  * @author Andres Almiray <aalmiray@users.sourceforge.com>
  */
 class CustomNodeFactory extends AbstractGfxFactory {
-    public Object newInstance( FactoryBuilderSupport builder, Object name, Object value, Map attributes )
-            throws InstantiationException, IllegalAccessException {
-        if( value instanceof CustomGfxNode ) {
+    public Object newInstance(FactoryBuilderSupport builder, Object name, Object value, Map attributes)
+    throws InstantiationException, IllegalAccessException {
+        if (value instanceof CustomGfxNode) {
             return value
-        } else if( value instanceof Class && CustomGfxNode.isAssignableFrom(value) ) {
+        } else if (value instanceof Class && CustomGfxNode.isAssignableFrom(value)) {
             return value.newInstance()
         }
         throw new RuntimeException("in $name value must be either an instance of CustomGfxNode or a CustomGfxNode subclass.")

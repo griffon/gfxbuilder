@@ -1,5 +1,5 @@
 /*
- * Copyright 2007-2012 the original author or authors.
+ * Copyright 2007-2013 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -29,20 +29,20 @@ abstract class AbstractStrokeNode extends GfxNode implements StrokeProvider {
     protected Stroke _stroke
 
     public AbstractStrokeNode(String name) {
-       super( name )
+        super(name)
     }
 
     void apply(GfxContext context) {}
 
-    Stroke getStroke(){
-       if( _stroke == null ){
-          _stroke = createStroke()
-       }
-       _stroke
+    Stroke getStroke() {
+        if (_stroke == null) {
+            _stroke = createStroke()
+        }
+        _stroke
     }
 
-    Shape createStrokedShape( Shape shape ){
-       createStroke().createStrokedShape(shape)
+    Shape createStrokedShape(Shape shape) {
+        createStroke().createStrokedShape(shape)
     }
 
     protected abstract Stroke createStroke()

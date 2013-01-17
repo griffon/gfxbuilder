@@ -1,5 +1,5 @@
 /*
- * Copyright 2008-2012 the original author or authors.
+ * Copyright 2008-2013 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -25,40 +25,40 @@ import java.awt.Color
  * @author Andres Almiray <aalmiray@users.sourceforge.net>
  */
 class ColorFactory extends AbstractGfxFactory {
-    public Object newInstance( FactoryBuilderSupport builder, Object name, Object value,
-          Map properties ) throws InstantiationException, IllegalAccessException {
-        if( value != null ){
-            if(Color.class.isAssignableFrom(value.getClass())){
+    public Object newInstance(FactoryBuilderSupport builder, Object name, Object value,
+                              Map properties) throws InstantiationException, IllegalAccessException {
+        if (value != null) {
+            if (Color.class.isAssignableFrom(value.getClass())) {
                 return value
-            }else{
+            } else {
                 return Colors.getColor(value)
             }
         }
 
-        if( properties.red == null ) properties.red = properties.remove("r")
-        if( properties.green == null ) properties.green = properties.remove("g")
-        if( properties.blue == null ) properties.blue = properties.remove("b")
-        if( properties.alpha == null ) properties.alpha = properties.remove("a")
+        if (properties.red == null) properties.red = properties.remove("r")
+        if (properties.green == null) properties.green = properties.remove("g")
+        if (properties.blue == null) properties.blue = properties.remove("b")
+        if (properties.alpha == null) properties.alpha = properties.remove("a")
 
-        if( properties.containsKey( "red" ) ||
-            properties.containsKey( "green" ) ||
-            properties.containsKey( "blue" ) ||
-            properties.containsKey( "alpha") ){
+        if (properties.containsKey("red") ||
+            properties.containsKey("green") ||
+            properties.containsKey("blue") ||
+            properties.containsKey("alpha")) {
 
-            def red = properties.remove( "red" )
-            def green = properties.remove( "green" )
-            def blue = properties.remove( "blue" )
-            def alpha = properties.remove( "alpha" )
+            def red = properties.remove("red")
+            def green = properties.remove("green")
+            def blue = properties.remove("blue")
+            def alpha = properties.remove("alpha")
 
             red = red != null ? red : 0
             green = green != null ? green : 0
             blue = blue != null ? blue : 0
             alpha = alpha != null ? alpha : 255
 
-            red = red > 1 ? red/255 : red
-            green = green > 1 ? green/255 : green
-            blue = blue > 1 ? blue/255 : blue
-            alpha = alpha > 1 ? alpha/255 : alpha
+            red = red > 1 ? red / 255 : red
+            green = green > 1 ? green / 255 : green
+            blue = blue > 1 ? blue / 255 : blue
+            alpha = alpha > 1 ? alpha / 255 : alpha
 
             return new Color(red as float, green as float, blue as float, alpha as float)
         }
@@ -66,11 +66,11 @@ class ColorFactory extends AbstractGfxFactory {
         return Color.BLACK
     }
 
-    public void setParent( FactoryBuilderSupport builder, Object parent, Object child ){
-       // empty
+    public void setParent(FactoryBuilderSupport builder, Object parent, Object child) {
+        // empty
     }
 
-    public boolean isLeaf(){
+    public boolean isLeaf() {
         return true
     }
 }
@@ -79,28 +79,28 @@ class ColorFactory extends AbstractGfxFactory {
  * @author Andres Almiray <aalmiray@users.sourceforge.net>
  */
 class HSLColorFactory extends AbstractGfxFactory {
-    public Object newInstance( FactoryBuilderSupport builder, Object name, Object value,
-          Map properties ) throws InstantiationException, IllegalAccessException {
+    public Object newInstance(FactoryBuilderSupport builder, Object name, Object value,
+                              Map properties) throws InstantiationException, IllegalAccessException {
         HSLColor hsl = new HSLColor(Color.BLACK)
-        if( value != null ){
-            if( Color.class.isAssignableFrom(value.getClass())){
+        if (value != null) {
+            if (Color.class.isAssignableFrom(value.getClass())) {
                 return value
-            } else if(HSLColor.class.isAssignableFrom(value.getClass())){
+            } else if (HSLColor.class.isAssignableFrom(value.getClass())) {
                 hsl = value
             } else {
-               return Colors.getColor(value)
+                return Colors.getColor(value)
             }
         }
 
-        if( properties.hue == null )        properties.hue        = properties.remove("h")
-        if( properties.saturation == null ) properties.saturation = properties.remove("s")
-        if( properties.luminance == null )  properties.luminance  = properties.remove("l")
-        if( properties.alpha == null )      properties.alpha      = properties.remove("a")
+        if (properties.hue == null) properties.hue = properties.remove("h")
+        if (properties.saturation == null) properties.saturation = properties.remove("s")
+        if (properties.luminance == null) properties.luminance = properties.remove("l")
+        if (properties.alpha == null) properties.alpha = properties.remove("a")
 
-        if( properties.containsKey("hue") ||
+        if (properties.containsKey("hue") ||
             properties.containsKey("saturation") ||
             properties.containsKey("luminance") ||
-            properties.containsKey("alpha")){
+            properties.containsKey("alpha")) {
 
             def h = properties.remove("hue")
             def s = properties.remove("saturation")
@@ -115,18 +115,18 @@ class HSLColorFactory extends AbstractGfxFactory {
             def _a = a != null ? a : hsl.alpha
 
             hsl = new HSLColor(_h as float, _s as float, _l as float, _a as float)
-            if(shade != null) hsl = new HSLColor(hsl.adjustShade(shade as float))
-            if(tone != null) hsl = new HSLColor(hsl.adjustTone(tone as float))
+            if (shade != null) hsl = new HSLColor(hsl.adjustShade(shade as float))
+            if (tone != null) hsl = new HSLColor(hsl.adjustTone(tone as float))
         }
 
         return hsl.getRGB()
     }
 
-    public void setParent( FactoryBuilderSupport builder, Object parent, Object child ){
-       // empty
+    public void setParent(FactoryBuilderSupport builder, Object parent, Object child) {
+        // empty
     }
 
-    public boolean isLeaf(){
+    public boolean isLeaf() {
         return true
     }
 }

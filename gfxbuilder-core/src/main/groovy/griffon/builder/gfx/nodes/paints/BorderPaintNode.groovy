@@ -1,5 +1,5 @@
 /*
- * Copyright 2007-2012 the original author or authors.
+ * Copyright 2007-2013 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,57 +15,58 @@
 
 package griffon.builder.gfx.nodes.paints
 
+import griffon.builder.gfx.*
+
 import java.awt.Paint
 import java.awt.geom.Rectangle2D
 import java.beans.PropertyChangeEvent
-
-import griffon.builder.gfx.*
 
 /**
  * @author Andres Almiray <aalmiray@users.sourceforge.net>
  */
 final class BorderPaintNode extends AbstractPaintNode implements BorderPaintProvider {
-    @GfxAttribute(alias="p", resets=false) def/*Paint|PaintProvider*/ paint
+    @GfxAttribute(alias = "p", resets = false)
+    def/*Paint|PaintProvider*/ paint
 
     BorderPaintNode() {
         super("borderPaint")
     }
 
     void setProperty(String property, Object value) {
-       if(property == "paint" || property == "p"){
-          value = value instanceof PaintProvider || value instanceof MultiPaintProvider ? value.clone() : value
-          super.setProperty(property, value)
-       } else if( this.@paint != null ){
-          this.@paint.setProperty(property, value)
-       } else {
-          throw new MissingPropertyException(property, BorderPaintNode)
-       }
+        if (property == "paint" || property == "p") {
+            value = value instanceof PaintProvider || value instanceof MultiPaintProvider ? value.clone() : value
+            super.setProperty(property, value)
+        } else if (this.@paint != null) {
+            this.@paint.setProperty(property, value)
+        } else {
+            throw new MissingPropertyException(property, BorderPaintNode)
+        }
     }
 
-    Object getProperty( String property ) {
-       if(property == "paint" || property == "p"){
-          return this.@paint
-       }else if(this.@paint != null){
-          return this.@paint.getProperty(property)
-       }
-       throw new MissingPropertyException(property, BorderPaintNode)
+    Object getProperty(String property) {
+        if (property == "paint" || property == "p") {
+            return this.@paint
+        } else if (this.@paint != null) {
+            return this.@paint.getProperty(property)
+        }
+        throw new MissingPropertyException(property, BorderPaintNode)
     }
 
     public void propertyChange(PropertyChangeEvent event) {
-       if(event.source == this.@paint){
-          onDirty(event)
-       }else{
-          super.propertyChange(event)
-       }
+        if (event.source == this.@paint) {
+            onDirty(event)
+        } else {
+            super.propertyChange(event)
+        }
     }
 
     Paint getPaint(Rectangle2D bounds) {
-       if(!paint ) throw new IllegalStateException("borderPaint.paint is null!")
-       if(paint instanceof MultiPaintProvider) return null
-       if(!(paint instanceof PaintProvider)){
-          throw new IllegalStateException("borderPaint.paint is not a PaintProvider!")
-       }
-       return paint.getPaint(bounds)
+        if (!paint) throw new IllegalStateException("borderPaint.paint is null!")
+        if (paint instanceof MultiPaintProvider) return null
+        if (!(paint instanceof PaintProvider)) {
+            throw new IllegalStateException("borderPaint.paint is not a PaintProvider!")
+        }
+        return paint.getPaint(bounds)
     }
 
     void apply(GfxContext context) {}

@@ -1,5 +1,5 @@
 /*
- * Copyright 2007-2012 the original author or authors.
+ * Copyright 2007-2013 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -29,7 +29,7 @@ class DonutNode extends AbstractShapeGfxNode {
     @GfxAttribute float or = 5f
     @GfxAttribute float ir = 2f
     @GfxAttribute int sides = 0i
-    @GfxAttribute(alias="a") float angle = 0f
+    @GfxAttribute(alias = "a") float angle = 0f
 
     DonutNode() {
         super("donut")
@@ -46,11 +46,11 @@ class DonutNode extends AbstractShapeGfxNode {
     }
 
     Shape calculateShape() {
-       return new Donut( cx as float,
-                         cy as float,
-                         or as float,
-                         ir as float,
-                         sides as int,
-                         angle as float )
+        return new Donut(cx as float,
+            cy as float,
+            or as float,
+            ir as float,
+            sides as int,
+            angle as float)
     }
 }

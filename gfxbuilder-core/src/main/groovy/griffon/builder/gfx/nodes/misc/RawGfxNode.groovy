@@ -1,5 +1,5 @@
 /*
- * Copyright 2007-2012 the original author or authors.
+ * Copyright 2007-2013 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -21,7 +21,7 @@ import griffon.builder.gfx.GfxNode
 /**
  * @author Andres Almiray <aalmiray@users.sourceforge.net>
  */
-class RawGfxNode extends GfxNode  {
+class RawGfxNode extends GfxNode {
     private Closure draw
 
     RawGfxNode() {
@@ -29,7 +29,7 @@ class RawGfxNode extends GfxNode  {
     }
 
     void apply(GfxContext context) {
-        if(draw) {
+        if (draw) {
             draw(context.g, context.component, context.bounds)
         }
     }

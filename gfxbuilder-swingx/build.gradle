@@ -1,5 +1,5 @@
 /*
- * Copyright 2008-2012 the original author or authors.
+ * Copyright 2008-2013 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -22,14 +22,14 @@ ext {
 
 dependencies {
     compile "org.swinglabs.swingx:swingx-core:$swingxVersion",
-            "org.swinglabs.swingx:swingx-graphics:$swingxVersion",
-            "org.swinglabs.swingx:swingx-painters:$swingxVersion",
-            "org.swinglabs.swingx:swingx-plaf:$swingxVersion",
-            "org.swinglabs.swingx:swingx-autocomplete:$swingxVersion",
-            "org.swinglabs.swingx:swingx-action:$swingxVersion",
-            "org.swinglabs.swingx:swingx-common:$swingxVersion",
-            "org.swinglabs.swingx:swingx-beaninfo:$swingxVersion",
-            project(':gfxbuilder-core')
+        "org.swinglabs.swingx:swingx-graphics:$swingxVersion",
+        "org.swinglabs.swingx:swingx-painters:$swingxVersion",
+        "org.swinglabs.swingx:swingx-plaf:$swingxVersion",
+        "org.swinglabs.swingx:swingx-autocomplete:$swingxVersion",
+        "org.swinglabs.swingx:swingx-action:$swingxVersion",
+        "org.swinglabs.swingx:swingx-common:$swingxVersion",
+        "org.swinglabs.swingx:swingx-beaninfo:$swingxVersion",
+        project(':gfxbuilder-core')
 }
 
 metaInf << fileTree(dir: file('src/resources/metainf'))

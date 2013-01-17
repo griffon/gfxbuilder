@@ -1,5 +1,5 @@
 /*
- * Copyright 2007-2012 the original author or authors.
+ * Copyright 2007-2013 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -25,16 +25,17 @@ import java.awt.Stroke
  * @author Andres Almiray <aalmiray@users.sourceforge.net>
  */
 class BasicStrokeNode extends AbstractStrokeNode {
-   @GfxAttribute(alias="w") float width = 1f
-   @GfxAttribute int cap
-   @GfxAttribute(alias="j") int join
-   @GfxAttribute(alias="m") float miterlimit = 1
-   @GfxAttribute(alias="d") def dash
-   @GfxAttribute(alias="dp") float dashphase = 0
+    @GfxAttribute(alias = "w") float width = 1f
+    @GfxAttribute int cap
+    @GfxAttribute(alias = "j") int join
+    @GfxAttribute(alias = "m") float miterlimit = 1
+    @GfxAttribute(alias = "d")
+    def dash
+    @GfxAttribute(alias = "dp") float dashphase = 0
 
-   BasicStrokeNode() {
-      super("basicStroke")
-   }
+    BasicStrokeNode() {
+        super("basicStroke")
+    }
 
     protected Stroke createStroke() {
         def _w = width
@@ -46,12 +47,12 @@ class BasicStrokeNode extends AbstractStrokeNode {
         _c = GfxUtils.getCapValue(_c)
         _j = GfxUtils.getJoinValue(_j)
         _d = GfxUtils.getDashValue(_d)
-        if( _m == null ) _m = 10
+        if (_m == null) _m = 10
 
-        if( _d != null && dashphase != null ){
-           return new BasicStroke(_w as float, _c as int, _j as int, _m as float, _d as float[], dashphase as float)
-        }else{
-           return new BasicStroke(_w as float, _c as int, _j as int, _m as float)
+        if (_d != null && dashphase != null) {
+            return new BasicStroke(_w as float, _c as int, _j as int, _m as float, _d as float[], dashphase as float)
+        } else {
+            return new BasicStroke(_w as float, _c as int, _j as int, _m as float)
         }
     }
 }

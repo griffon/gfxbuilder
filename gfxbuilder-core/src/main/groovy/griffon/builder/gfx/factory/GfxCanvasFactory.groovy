@@ -1,5 +1,5 @@
 /*
- * Copyright 2009-2012 the original author or authors.
+ * Copyright 2009-2013 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -22,21 +22,21 @@ import groovy.swing.factory.ComponentFactory
  * @author Andres Almiray <aalmiray@users.sourceforge.com>
  */
 class GfxCanvasFactory extends ComponentFactory {
-   GfxCanvasFactory() {
-      super(GfxCanvas, false)
-   }
+    GfxCanvasFactory() {
+        super(GfxCanvas, false)
+    }
 
-   public Object newInstance( FactoryBuilderSupport builder, Object name, Object value, Map attributes )
-            throws InstantiationException, IllegalAccessException {
-      return new GfxCanvas()
-   }
+    public Object newInstance(FactoryBuilderSupport builder, Object name, Object value, Map attributes)
+    throws InstantiationException, IllegalAccessException {
+        return new GfxCanvas()
+    }
 
-   public boolean isHandlesNodeChildren() {
-      return true
-   }
+    public boolean isHandlesNodeChildren() {
+        return true
+    }
 
-   public boolean onNodeChildren(FactoryBuilderSupport builder, Object node, Closure childContent) {
-      node.node = childContent()
-      return false
-   }
+    public boolean onNodeChildren(FactoryBuilderSupport builder, Object node, Closure childContent) {
+        node.node = childContent()
+        return false
+    }
 }

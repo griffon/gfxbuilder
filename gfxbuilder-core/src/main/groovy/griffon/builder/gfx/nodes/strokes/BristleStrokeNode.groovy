@@ -1,5 +1,5 @@
 /*
- * Copyright 2007-2012 the original author or authors.
+ * Copyright 2007-2013 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,17 +24,17 @@ import java.awt.Stroke
  * @author Andres Almiray <aalmiray@users.sourceforge.net>
  */
 class BristleStrokeNode extends AbstractStrokeNode {
-    @GfxAttribute(alias="w")  float width = 1f
-    @GfxAttribute(alias="t")  float thickness = 1f
-    @GfxAttribute(alias="rs") int randomSeed = 0i
+    @GfxAttribute(alias = "w") float width = 1f
+    @GfxAttribute(alias = "t") float thickness = 1f
+    @GfxAttribute(alias = "rs") int randomSeed = 0i
 
     BristleStrokeNode() {
-       super("bristleStroke")
+        super("bristleStroke")
     }
 
     protected Stroke createStroke() {
         return new BristleStroke(width as float,
-                                 thickness as float,
-                                 randomSeed as int)
+            thickness as float,
+            randomSeed as int)
     }
 }

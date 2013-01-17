@@ -1,5 +1,5 @@
 /*
- * Copyright 2007-2012 the original author or authors.
+ * Copyright 2007-2013 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -26,10 +26,10 @@ import java.awt.Shape
 class AsteriskNode extends AbstractShapeGfxNode {
     @GfxAttribute float cx = 5f
     @GfxAttribute float cy = 5f
-    @GfxAttribute(alias="r") float radius = 2.5f
-    @GfxAttribute(alias="a") float angle = 0f
-    @GfxAttribute(alias="b") int beams = 5i
-    @GfxAttribute(alias="rn") float roundness = 0f
+    @GfxAttribute(alias = "r") float radius = 2.5f
+    @GfxAttribute(alias = "a") float angle = 0f
+    @GfxAttribute(alias = "b") int beams = 5i
+    @GfxAttribute(alias = "rn") float roundness = 0f
 
     AsteriskNode() {
         super("asterisk")
@@ -46,12 +46,12 @@ class AsteriskNode extends AbstractShapeGfxNode {
     }
 
     Shape calculateShape() {
-       return new Asterisk( cx as float,
-                            cy as float,
-                            radius as float,
-                            width as float,
-                            beams as int,
-                            angle as float,
-                            roundness as float )
+        return new Asterisk(cx as float,
+            cy as float,
+            radius as float,
+            width as float,
+            beams as int,
+            angle as float,
+            roundness as float)
     }
 }

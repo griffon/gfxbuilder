@@ -1,5 +1,5 @@
 /*
- * Copyright 2007-2012 the original author or authors.
+ * Copyright 2007-2013 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,11 +24,11 @@ import java.awt.Stroke
  * @author Andres Almiray <aalmiray@users.sourceforge.net>
  */
 class CalligraphyStrokeNode extends AbstractStrokeNode {
-    @GfxAttribute(alias="w") float width = 1f
-    @GfxAttribute(alias="a") float angle = Math.toRadians(135) as float
+    @GfxAttribute(alias = "w") float width = 1f
+    @GfxAttribute(alias = "a") float angle = Math.toRadians(135) as float
 
     CalligraphyStrokeNode() {
-       super("calligraphyStroke")
+        super("calligraphyStroke")
     }
 
     protected Stroke createStroke() {

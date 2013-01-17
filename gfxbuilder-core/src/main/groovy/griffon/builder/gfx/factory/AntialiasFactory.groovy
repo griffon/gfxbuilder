@@ -1,5 +1,5 @@
 /*
- * Copyright 2008-2012 the original author or authors.
+ * Copyright 2008-2013 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -22,33 +22,38 @@ import griffon.builder.gfx.nodes.misc.RenderingHintNode
  * @author Andres Almiray <aalmiray@users.sourceforge.net>
  */
 public class AntialiasFactory extends AbstractGfxFactory {
-    public Object newInstance( FactoryBuilderSupport builder, Object name, Object value,
-            Map properties ) throws InstantiationException, IllegalAccessException {
+    public Object newInstance(FactoryBuilderSupport builder, Object name, Object value,
+                              Map properties) throws InstantiationException, IllegalAccessException {
         RenderingHintNode node = new RenderingHintNode()
         node.key = 'antialiasing'
-        setAntialiasValue(node,value)
-        if( properties.containsKey("enabled") ){
-           setAntialiasValue(node,properties.remove("enabled"))
+        setAntialiasValue(node, value)
+        if (properties.containsKey("enabled")) {
+            setAntialiasValue(node, properties.remove("enabled"))
         }
         return node
     }
 
-    public boolean onHandleNodeAttributes( FactoryBuilderSupport builder, Object node, Map attributes ){
-       return false
+    public boolean onHandleNodeAttributes(FactoryBuilderSupport builder, Object node, Map attributes) {
+        return false
     }
 
-    public boolean isLeaf(){
-       return true
+    public boolean isLeaf() {
+        return true
     }
 
-    private void setAntialiasValue( node, value ){
-       if( value == null ){ node.value = 'antialias on' }
-       else if( value instanceof Boolean ){
-          node.value = "antialias ${value?'on':'off'}"
-       }else if( value instanceof String ){
-          if( "off" == value ){ node.value = 'antialias off' }
-          else if( "on" == value ){ node.value = 'antialias on' }
-          else{ throw new IllegalArgumentException("value must be a boolean or any of ['on'|'off']") }
-       }
+    private void setAntialiasValue(node, value) {
+        if (value == null) {
+            node.value = 'antialias on'
+        } else if (value instanceof Boolean) {
+            node.value = "antialias ${value ? 'on' : 'off'}"
+        } else if (value instanceof String) {
+            if ("off" == value) {
+                node.value = 'antialias off'
+            } else if ("on" == value) {
+                node.value = 'antialias on'
+            } else {
+                throw new IllegalArgumentException("value must be a boolean or any of ['on'|'off']")
+            }
+        }
     }
 }

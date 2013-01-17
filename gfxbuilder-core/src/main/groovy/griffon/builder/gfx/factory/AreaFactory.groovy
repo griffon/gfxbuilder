@@ -1,5 +1,5 @@
 /*
- * Copyright 2008-2012 the original author or authors.
+ * Copyright 2008-2013 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -22,16 +22,16 @@ import griffon.builder.gfx.nodes.shapes.AreaNode
  * @author Andres Almiray <aalmiray@users.sourceforge.net>
  */
 class AreaFactory extends AbstractGfxFactory {
-     private String name
-     private String methodName
+    private String name
+    private String methodName
 
-     AreaFactory(String name, String methodName){
-         this.name = name
-         this.methodName = methodName
-     }
+    AreaFactory(String name, String methodName) {
+        this.name = name
+        this.methodName = methodName
+    }
 
-     public Object newInstance( FactoryBuilderSupport builder, Object name, Object value,
-             Map properties ) throws InstantiationException, IllegalAccessException {
-         return new AreaNode(this.name, methodName)
-     }
+    public Object newInstance(FactoryBuilderSupport builder, Object name, Object value,
+                              Map properties) throws InstantiationException, IllegalAccessException {
+        return new AreaNode(this.name, methodName)
+    }
 }

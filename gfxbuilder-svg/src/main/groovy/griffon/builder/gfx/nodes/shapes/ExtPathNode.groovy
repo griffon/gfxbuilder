@@ -1,5 +1,5 @@
 /*
- * Copyright 2007-2012 the original author or authors.
+ * Copyright 2007-2013 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -27,64 +27,64 @@ import java.beans.PropertyChangeEvent
 /**
  * @author Andres Almiray <aalmiray@users.sourceforge.net>
  */
-class ExtPathNode extends AbstractShapeGfxNode  {
-   private ObservableList _segments = []
+class ExtPathNode extends AbstractShapeGfxNode {
+    private ObservableList _segments = []
 
-   @GfxAttribute(alias="wn") int winding
-   @GfxAttribute(alias="cl") boolean close
+    @GfxAttribute(alias = "wn") int winding
+    @GfxAttribute(alias = "cl") boolean close
 
-   ExtPathNode() {
-      super("path")
-      _segments.addPropertyChangeListener(this)
-   }
+    ExtPathNode() {
+        super("path")
+        _segments.addPropertyChangeListener(this)
+    }
 
-   void propertyChanged(PropertyChangeEvent event) {
-      if(event.source == _segments || event.source instanceof ExtPathSegment) {
-         onDirty(event)
-      } else {
-         super.propertyChanged(event)
-      }
-   }
+    void propertyChanged(PropertyChangeEvent event) {
+        if (event.source == _segments || event.source instanceof ExtPathSegment) {
+            onDirty(event)
+        } else {
+            super.propertyChanged(event)
+        }
+    }
 
-   public void addPathSegment(ExtPathSegment segment ) {
-      if( !segment ) return
-      _segments << segment
-      segment.addPropertyChangeListener(this)
-   }
+    public void addPathSegment(ExtPathSegment segment) {
+        if (!segment) return
+        _segments << segment
+        segment.addPropertyChangeListener(this)
+    }
 
-   Shape calculateShape()  {
-      if( _segments.size() > 0 && !(_segments[0] instanceof MoveToExtPathSegment) ){
-         throw new IllegalStateException("You must call 'moveTo' as the first segment of a path")
-      }
-      ExtendedGeneralPath path = new ExtendedGeneralPath(getWindingRule())
-      _segments.each { segment ->
-         segment.apply(runtime.context)
-         segment.apply(path)
-      }
-      if(close){
-         path.closePath()
-      }
-      return path
-   }
+    Shape calculateShape() {
+        if (_segments.size() > 0 && !(_segments[0] instanceof MoveToExtPathSegment)) {
+            throw new IllegalStateException("You must call 'moveTo' as the first segment of a path")
+        }
+        ExtendedGeneralPath path = new ExtendedGeneralPath(getWindingRule())
+        _segments.each { segment ->
+            segment.apply(runtime.context)
+            segment.apply(path)
+        }
+        if (close) {
+            path.closePath()
+        }
+        return path
+    }
 
-   private int getWindingRule() {
-      if( winding == null ){
-         return GeneralPath.WIND_NON_ZERO
-      }
-
-      if( winding instanceof Integer ){
-         return winding
-      }else if( winding instanceof String ){
-         if( "non_zero".compareToIgnoreCase( winding ) == 0 ||
-             "nonzero".compareToIgnoreCase( winding ) == 0 ){
+    private int getWindingRule() {
+        if (winding == null) {
             return GeneralPath.WIND_NON_ZERO
-         }else if( "even_odd".compareToIgnoreCase( winding ) == 0 ||
-                   "evenodd".compareToIgnoreCase( winding ) == 0){
-            return GeneralPath.WIND_EVEN_ODD
-         }else{
-            throw new IllegalStateException("'winding=$winding' is not one of [non_zero,even_odd]")
-         }
-      }
-      throw new IllegalStateException("'winding' value is not a String nor an Integer")
-   }
+        }
+
+        if (winding instanceof Integer) {
+            return winding
+        } else if (winding instanceof String) {
+            if ("non_zero".compareToIgnoreCase(winding) == 0 ||
+                "nonzero".compareToIgnoreCase(winding) == 0) {
+                return GeneralPath.WIND_NON_ZERO
+            } else if ("even_odd".compareToIgnoreCase(winding) == 0 ||
+                "evenodd".compareToIgnoreCase(winding) == 0) {
+                return GeneralPath.WIND_EVEN_ODD
+            } else {
+                throw new IllegalStateException("'winding=$winding' is not one of [non_zero,even_odd]")
+            }
+        }
+        throw new IllegalStateException("'winding' value is not a String nor an Integer")
+    }
 }

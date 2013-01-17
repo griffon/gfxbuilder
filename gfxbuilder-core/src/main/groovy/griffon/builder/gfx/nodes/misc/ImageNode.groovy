@@ -1,5 +1,5 @@
 /*
- * Copyright 2007-2012 the original author or authors.
+ * Copyright 2007-2013 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -31,99 +31,103 @@ import java.beans.PropertyChangeEvent
  * @author Andres Almiray <aalmiray@users.sourceforge.net>
  */
 class ImageNode extends AbstractDrawableNode {
-   private Image _image
-   private Shape _shape
+    private Image _image
+    private Shape _shape
 
-   @GfxAttribute(alias="i") Image image
-   @GfxAttribute(alias="f") def file
-   @GfxAttribute(alias="u") def url
-   @GfxAttribute(alias="cl") def classpath
-   @GfxAttribute double x = 0d
-   @GfxAttribute double y = 0d
-   @GfxAttribute(alias="w") double width = Double.NaN
-   @GfxAttribute(alias="h") double height = Double.NaN
-   @GfxAttribute(resets=false) def interpolation
+    @GfxAttribute(alias = "i") Image image
+    @GfxAttribute(alias = "f")
+    def file
+    @GfxAttribute(alias = "u")
+    def url
+    @GfxAttribute(alias = "cl")
+    def classpath
+    @GfxAttribute double x = 0d
+    @GfxAttribute double y = 0d
+    @GfxAttribute(alias = "w") double width = Double.NaN
+    @GfxAttribute(alias = "h") double height = Double.NaN
+    @GfxAttribute(resets = false)
+    def interpolation
 
-   ImageNode() {
-      super("image")
-   }
+    ImageNode() {
+        super("image")
+    }
 
-   ImageNode(Image image) {
-      super("image")
-      this.image = image
-   }
+    ImageNode(Image image) {
+        super("image")
+        this.image = image
+    }
 
-   ImageNode(File file) {
-      super("image")
-      this.file = file
-   }
+    ImageNode(File file) {
+        super("image")
+        this.file = file
+    }
 
-   ImageNode(URL url) {
-      super("image")
-      this.url = url
-   }
+    ImageNode(URL url) {
+        super("image")
+        this.url = url
+    }
 
-   ImageNode(String classpath) {
-      super("image")
-      this.classpath = classpath
-   }
+    ImageNode(String classpath) {
+        super("image")
+        this.classpath = classpath
+    }
 
-   protected void reset(PropertyChangeEvent event) {
-      _image = null
-      _shape = null
-   }
+    protected void reset(PropertyChangeEvent event) {
+        _image = null
+        _shape = null
+    }
 
-   Image getImg() {
-      if(!_image) {
-         _image = getRuntime().getImage()
-      }
-      _image
-   }
+    Image getImg() {
+        if (!_image) {
+            _image = getRuntime().getImage()
+        }
+        _image
+    }
 
-   Shape getShape() {
-      if(!_shape) {
-         _shape = getRuntime().getShape()
-      }
-      _shape
-   }
+    Shape getShape() {
+        if (!_shape) {
+            _shape = getRuntime().getShape()
+        }
+        _shape
+    }
 
-   protected void beforeApply(GfxContext context) {
-      super.beforeApply(context)
-      getImg()
-   }
+    protected void beforeApply(GfxContext context) {
+        super.beforeApply(context)
+        getImg()
+    }
 
-   protected void applyNode(GfxContext context) {
-      def _interpolation = getInterpolationValue()
-      if(_interpolation) {
-         context.g.setRenderingHint(RenderingHints.KEY_INTERPOLATION, _interpolation)
-      }
+    protected void applyNode(GfxContext context) {
+        def _interpolation = getInterpolationValue()
+        if (_interpolation) {
+            context.g.setRenderingHint(RenderingHints.KEY_INTERPOLATION, _interpolation)
+        }
 
-      AffineTransform transform = new AffineTransform()
-      transform.concatenate context.g.transform
-      transform.concatenate getRuntime().getLocalTransforms()
-      context.g.transform = transform
+        AffineTransform transform = new AffineTransform()
+        transform.concatenate context.g.transform
+        transform.concatenate getRuntime().getLocalTransforms()
+        context.g.transform = transform
 
-      applyWithFilter(context) {
-         if(Double.isNaN(width) && Double.isNaN(height)) {
-            context.g.drawImage(_image, x as int, y as int, context.component)
-         } else {
-            context.g.drawImage(_image, x as int, y as int, width as int, height as int, context.component)
-         }
-      }
-   }
+        applyWithFilter(context) {
+            if (Double.isNaN(width) && Double.isNaN(height)) {
+                context.g.drawImage(_image, x as int, y as int, context.component)
+            } else {
+                context.g.drawImage(_image, x as int, y as int, width as int, height as int, context.component)
+            }
+        }
+    }
 
-   GfxRuntime createRuntime(GfxContext context) {
-      new ImageGfxRuntime(this, context)
-   }
+    GfxRuntime createRuntime(GfxContext context) {
+        new ImageGfxRuntime(this, context)
+    }
 
-   private def getInterpolationValue() {
-      switch( interpolation ){
-          case ~/(?i:bicubic)/:  return RenderingHints.VALUE_INTERPOLATION_BICUBIC
-          case ~/(?i:bilinear)/: return RenderingHints.VALUE_INTERPOLATION_BILINEAR
-          case ~/(?i:nearest neighbor)/:
-          case ~/(?i:nearest)/:
-             return RenderingHints.VALUE_INTERPOLATION_NEAREST_NEIGHBOR
-      }
-      return RenderingHints.VALUE_INTERPOLATION_BILINEAR
-   }
+    private def getInterpolationValue() {
+        switch (interpolation) {
+            case ~/(?i:bicubic)/: return RenderingHints.VALUE_INTERPOLATION_BICUBIC
+            case ~/(?i:bilinear)/: return RenderingHints.VALUE_INTERPOLATION_BILINEAR
+            case ~/(?i:nearest neighbor)/:
+            case ~/(?i:nearest)/:
+                return RenderingHints.VALUE_INTERPOLATION_NEAREST_NEIGHBOR
+        }
+        return RenderingHints.VALUE_INTERPOLATION_BILINEAR
+    }
 }

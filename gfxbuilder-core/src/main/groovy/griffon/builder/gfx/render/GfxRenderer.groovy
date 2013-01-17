@@ -1,5 +1,5 @@
 /*
- * Copyright 2007-2012 the original author or authors.
+ * Copyright 2007-2013 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,10 +20,10 @@ import griffon.builder.gfx.GfxContext
 import griffon.builder.gfx.GfxNode
 import griffon.builder.gfx.GfxUtils
 
+import javax.imageio.ImageIO
 import java.awt.Rectangle
 import java.awt.RenderingHints
 import java.awt.image.BufferedImage
-import javax.imageio.ImageIO
 
 /**
  * @author Andres Almiray <aalmiray@users.sourceforge.net>
@@ -32,12 +32,12 @@ final class GfxRenderer {
     private GfxBuilder _gfxb
     RenderingHints renderingHints = new RenderingHints(null)
 
-    public GfxRenderer(){
-       _gfxb = new GfxBuilder()
+    public GfxRenderer() {
+        _gfxb = new GfxBuilder()
     }
 
-    public GfxBuilder getGfxBuilder(){
-       return _gfxb
+    public GfxBuilder getGfxBuilder() {
+        return _gfxb
     }
 
     /**
@@ -51,7 +51,7 @@ final class GfxRenderer {
      * @param closure a closure containg GfxBuilder's nodes
      */
     public BufferedImage render(int width, int height, Closure closure) {
-       return render( width, height, _gfxb.group(closure) )
+        return render(width, height, _gfxb.group(closure))
     }
 
     /**
@@ -64,7 +64,7 @@ final class GfxRenderer {
      * @param node any GfxNode
      */
     public BufferedImage render(int width, int height, GfxNode node) {
-       return render( GfxUtils.createCompatibleImage(width, height, true), node )
+        return render(GfxUtils.createCompatibleImage(width, height, true), node)
     }
 
     /**
@@ -77,7 +77,7 @@ final class GfxRenderer {
      * @param closure a closure containg GfxBuilder's nodes
      */
     public BufferedImage render(Rectangle clip, Closure closure) {
-       return render( clip, _gfxb.group(closure) )
+        return render(clip, _gfxb.group(closure))
     }
 
     /**
@@ -89,7 +89,7 @@ final class GfxRenderer {
      * @param node any GfxNode
      */
     public BufferedImage render(Rectangle clip, GfxNode node) {
-       return render( GfxUtils.createCompatibleImage(clip.width as int, clip.height as int, true), clip, node )
+        return render(GfxUtils.createCompatibleImage(clip.width as int, clip.height as int, true), clip, node)
     }
 
     /**
@@ -100,7 +100,7 @@ final class GfxRenderer {
      * @param closure a closure containg GfxBuilder's nodes
      */
     public BufferedImage render(BufferedImage dst, Closure closure) {
-       return render( dst, _gfxb.group(closure) )
+        return render(dst, _gfxb.group(closure))
     }
 
     /**
@@ -110,7 +110,7 @@ final class GfxRenderer {
      * @param node any GfxNode
      */
     public BufferedImage render(BufferedImage dst, GfxNode node) {
-       return render( dst, [0,0,dst.width,dst.height] as Rectangle, node )
+        return render(dst, [0, 0, dst.width, dst.height] as Rectangle, node)
     }
 
     /**
@@ -123,7 +123,7 @@ final class GfxRenderer {
      * @param closure a closure containg GfxBuilder's nodes
      */
     public BufferedImage render(BufferedImage dst, Rectangle clip, Closure closure) {
-       return render( dst, clip, _gfxb.group(closure) )
+        return render(dst, clip, _gfxb.group(closure))
     }
 
     /**
@@ -135,16 +135,16 @@ final class GfxRenderer {
      * @param node any GfxNode
      */
     public BufferedImage render(BufferedImage dst, Rectangle clip, GfxNode node) {
-       def context = new GfxContext()
-       def g = dst.createGraphics()
-       g.renderingHints = renderingHints
-       def cb = g.clipBounds
-       g.setClip( clip )
-       context.g = g
-       node.apply(context)
-       g.dispose()
-       if( !cb ) g.setClip( cb )
-       return dst
+        def context = new GfxContext()
+        def g = dst.createGraphics()
+        g.renderingHints = renderingHints
+        def cb = g.clipBounds
+        g.setClip(clip)
+        context.g = g
+        node.apply(context)
+        g.dispose()
+        if (!cb) g.setClip(cb)
+        return dst
     }
 
     /**
@@ -166,7 +166,7 @@ final class GfxRenderer {
      * @return a File reference to the written image
      */
     public File renderToFile(String filename, int width, int height, Closure closure) {
-       return renderToFile( filename, width, height, _gfxb.group(closure) )
+        return renderToFile(filename, width, height, _gfxb.group(closure))
     }
 
     /**
@@ -188,7 +188,7 @@ final class GfxRenderer {
      * @return a File reference to the written image
      */
     public File renderToFile(String filename, int width, int height, GfxNode node) {
-       return renderToFile( filename, GfxUtils.createCompatibleImage(width, height, withAlpha(filename)), node )
+        return renderToFile(filename, GfxUtils.createCompatibleImage(width, height, withAlpha(filename)), node)
     }
 
     /**
@@ -209,7 +209,7 @@ final class GfxRenderer {
      * @return a File reference to the written image
      */
     public File renderToFile(String filename, Rectangle clip, Closure closure) {
-       return renderToFile( filename, clip, _gfxb.group(closure) )
+        return renderToFile(filename, clip, _gfxb.group(closure))
     }
 
     /**
@@ -229,8 +229,8 @@ final class GfxRenderer {
      * @return a File reference to the written image
      */
     public File renderToFile(String filename, Rectangle clip, GfxNode node) {
-       return renderToFile(filename, GfxUtils.createCompatibleImage(
-             clip.width as int, clip.height as int, withAlpha(filename)), clip, node)
+        return renderToFile(filename, GfxUtils.createCompatibleImage(
+            clip.width as int, clip.height as int, withAlpha(filename)), clip, node)
     }
 
     /**
@@ -249,7 +249,7 @@ final class GfxRenderer {
      * @return a File reference to the written image
      */
     public File renderToFile(String filename, BufferedImage dst, Closure closure) {
-       return renderToFile( filename, dst, [0,0,dst.width,dst.height] as Rectangle, _gfxb.group(closure) )
+        return renderToFile(filename, dst, [0, 0, dst.width, dst.height] as Rectangle, _gfxb.group(closure))
     }
 
     /**
@@ -267,7 +267,7 @@ final class GfxRenderer {
      * @return a File reference to the written image
      */
     public File renderToFile(String filename, BufferedImage dst, GfxNode node) {
-       return renderToFile( filename, dst, [0,0,dst.width,dst.height] as Rectangle, node )
+        return renderToFile(filename, dst, [0, 0, dst.width, dst.height] as Rectangle, node)
     }
 
     /**
@@ -288,7 +288,7 @@ final class GfxRenderer {
      * @return a File reference to the written image
      */
     public File renderToFile(String filename, BufferedImage dst, Rectangle clip, Closure closure) {
-       return renderToFile( filename, dst, clip, _gfxb.group(closure) )
+        return renderToFile(filename, dst, clip, _gfxb.group(closure))
     }
 
     /**
@@ -307,28 +307,28 @@ final class GfxRenderer {
      * @return a File reference to the written image
      */
     public File renderToFile(String filename, BufferedImage dst, Rectangle clip, GfxNode node) {
-       def fileSeparator = "/" /*System.getProperty("file.separator")*/
-       def file = null
-       def extension = "png"
+        def fileSeparator = "/" /*System.getProperty("file.separator")*/
+        def file = null
+        def extension = "png"
 
-       if(filename.lastIndexOf(fileSeparator) != -1){
-          def dirs = filename[0..(filename.lastIndexOf(fileSeparator)-1)]
-          def fname = filename[(filename.lastIndexOf(fileSeparator)+1)..-1]
-          extension = fname[(fname.lastIndexOf(".")+1)..-1]
-          File parent = new File(dirs)
-          parent.mkdirs()
-          file = new File(parent,fname)
-       } else {
-          file = new File(filename)
-          extension = filename[(filename.lastIndexOf(".")+1)..-1]
-       }
+        if (filename.lastIndexOf(fileSeparator) != -1) {
+            def dirs = filename[0..(filename.lastIndexOf(fileSeparator) - 1)]
+            def fname = filename[(filename.lastIndexOf(fileSeparator) + 1)..-1]
+            extension = fname[(fname.lastIndexOf(".") + 1)..-1]
+            File parent = new File(dirs)
+            parent.mkdirs()
+            file = new File(parent, fname)
+        } else {
+            file = new File(filename)
+            extension = filename[(filename.lastIndexOf(".") + 1)..-1]
+        }
 
-       if(!dst) dst = GfxUtils.createCompatibleImage(width, height, withAlpha(filename))
-       ImageIO.write(render(dst, clip, node), extension, file)
-       return file
+        if (!dst) dst = GfxUtils.createCompatibleImage(width, height, withAlpha(filename))
+        ImageIO.write(render(dst, clip, node), extension, file)
+        return file
     }
 
     private boolean withAlpha(String filename) {
-       return filename.toLowerCase() ==~ /.*\.png/ || filename.toLowerCase() ==~ /.*\.gif/
+        return filename.toLowerCase() ==~ /.*\.png/ || filename.toLowerCase() ==~ /.*\.gif/
     }
 }

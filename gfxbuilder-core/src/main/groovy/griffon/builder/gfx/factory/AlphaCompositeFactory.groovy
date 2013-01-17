@@ -1,5 +1,5 @@
 /*
- * Copyright 2008-2012 the original author or authors.
+ * Copyright 2008-2013 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -22,42 +22,42 @@ import java.awt.AlphaComposite
  * @author Andres Almiray <aalmiray@users.sourceforge.net>
  */
 class AlphaCompositeFactory extends AbstractGfxFactory {
-   public boolean isLeaf(){
-      return true
-   }
+    public boolean isLeaf() {
+        return true
+    }
 
-   public Object newInstance( FactoryBuilderSupport builder, Object name, Object value,
-         Map properties ) throws InstantiationException, IllegalAccessException {
-      if( FactoryBuilderSupport.checkValueIsTypeNotString(value, name, AlphaComposite) ){
-         return value
-      }else{
-         def rule = properties.remove("rule")
-         def alpha = properties.remove("alpha")
+    public Object newInstance(FactoryBuilderSupport builder, Object name, Object value,
+                              Map properties) throws InstantiationException, IllegalAccessException {
+        if (FactoryBuilderSupport.checkValueIsTypeNotString(value, name, AlphaComposite)) {
+            return value
+        } else {
+            def rule = properties.remove("rule")
+            def alpha = properties.remove("alpha")
 
-         if( rule == null ){
-            throw new IllegalArgumentException("Null value for alphaComposite.rule")
-         }
-
-         def composite = null
-         if( rule instanceof Number ){
-            if( alpha != null ){
-               return AlphaComposite.getInstance(rule, alpha as float)
-            }else{
-               return AlphaComposite.getInstance(rule)
+            if (rule == null) {
+                throw new IllegalArgumentException("Null value for alphaComposite.rule")
             }
-         }else if( rule instanceof String ){
-            def r = rule.toUpperCase().replaceAll(" ","_")
-            if(alpha != null){
-               return AlphaComposite.getInstance(AlphaComposite."$r", alpha as float)
-            }else{
-               return AlphaComposite.getInstance(AlphaComposite."$r")
-            }
-         }
-         throw new IllegalArgumentException("Invalid value for alphaComposite")
-      }
-   }
 
-   public void setParent( FactoryBuilderSupport builder, Object parent, Object child ){
-      // empty
-   }
+            def composite = null
+            if (rule instanceof Number) {
+                if (alpha != null) {
+                    return AlphaComposite.getInstance(rule, alpha as float)
+                } else {
+                    return AlphaComposite.getInstance(rule)
+                }
+            } else if (rule instanceof String) {
+                def r = rule.toUpperCase().replaceAll(" ", "_")
+                if (alpha != null) {
+                    return AlphaComposite.getInstance(AlphaComposite."$r", alpha as float)
+                } else {
+                    return AlphaComposite.getInstance(AlphaComposite."$r")
+                }
+            }
+            throw new IllegalArgumentException("Invalid value for alphaComposite")
+        }
+    }
+
+    public void setParent(FactoryBuilderSupport builder, Object parent, Object child) {
+        // empty
+    }
 }

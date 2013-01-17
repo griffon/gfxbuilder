@@ -1,5 +1,5 @@
 /*
- * Copyright 2007-2012 the original author or authors.
+ * Copyright 2007-2013 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -22,25 +22,25 @@ import org.apache.batik.ext.awt.geom.ExtendedGeneralPath
  * @author Andres Almiray <aalmiray@users.sourceforge.net>
  */
 class ArcToExtPathSegment extends AbstractExtPathSegment {
-   @GfxAttribute float x
-   @GfxAttribute float y
-   @GfxAttribute float rx
-   @GfxAttribute float ry
-   @GfxAttribute(alias="a") float angle
-   @GfxAttribute(alias="la") boolean largeArc
-   @GfxAttribute(alias="sw") boolean sweep
+    @GfxAttribute float x
+    @GfxAttribute float y
+    @GfxAttribute float rx
+    @GfxAttribute float ry
+    @GfxAttribute(alias = "a") float angle
+    @GfxAttribute(alias = "la") boolean largeArc
+    @GfxAttribute(alias = "sw") boolean sweep
 
-   ArcToExtPathSegment(){
-      super("xarcTo")
-   }
+    ArcToExtPathSegment() {
+        super("xarcTo")
+    }
 
-   public void apply(ExtendedGeneralPath path) {
-      path.arcTo( rx as float,
-                  ry as float,
-                  angle as float,
-                  largeArc as boolean,
-                  sweep as boolean,
-                  x as float,
-                  y as float )
-   }
+    public void apply(ExtendedGeneralPath path) {
+        path.arcTo(rx as float,
+            ry as float,
+            angle as float,
+            largeArc as boolean,
+            sweep as boolean,
+            x as float,
+            y as float)
+    }
 }

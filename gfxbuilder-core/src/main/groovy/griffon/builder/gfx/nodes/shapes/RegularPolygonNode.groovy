@@ -1,5 +1,5 @@
 /*
- * Copyright 2007-2012 the original author or authors.
+ * Copyright 2007-2013 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -26,9 +26,9 @@ import java.awt.Shape
 class RegularPolygonNode extends AbstractShapeGfxNode {
     @GfxAttribute float cx = 5f
     @GfxAttribute float cy = 5f
-    @GfxAttribute(alias="r") float radius = 5f
+    @GfxAttribute(alias = "r") float radius = 5f
     @GfxAttribute int sides = 3i
-    @GfxAttribute(alias="a") float angle = 0f
+    @GfxAttribute(alias = "a") float angle = 0f
 
     RegularPolygonNode() {
         super("regularPolygon")
@@ -44,10 +44,10 @@ class RegularPolygonNode extends AbstractShapeGfxNode {
     }
 
     Shape calculateShape() {
-       return new RegularPolygon( cx as float,
-                                  cy as float,
-                                  radius as float,
-                                  sides as int,
-                                  angle as float )
+        return new RegularPolygon(cx as float,
+            cy as float,
+            radius as float,
+            sides as int,
+            angle as float)
     }
 }

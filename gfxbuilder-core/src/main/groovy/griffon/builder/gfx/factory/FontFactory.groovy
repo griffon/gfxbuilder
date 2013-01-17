@@ -1,5 +1,5 @@
 /*
- * Copyright 2008-2012 the original author or authors.
+ * Copyright 2008-2013 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -27,49 +27,51 @@ import java.awt.Font
  * @author Andres Almiray <aalmiray@users.sourceforge.net>
  */
 class FontFactory extends AbstractGfxFactory {
-    public Object newInstance( FactoryBuilderSupport builder, Object name, Object value,
-            Map properties ) throws InstantiationException, IllegalAccessException {
+    public Object newInstance(FactoryBuilderSupport builder, Object name, Object value,
+                              Map properties) throws InstantiationException, IllegalAccessException {
         FontNode node = new FontNode()
-        if( value != null && Font.class.isAssignableFrom( value.class ) ){
+        if (value != null && Font.class.isAssignableFrom(value.class)) {
             node.font = value
             return node
         }
 
-        def face = properties.remove( "face" )
+        def face = properties.remove("face")
         face = face != null ? face : "Default"
-        def style = properties.remove( "style" )
-        style = style != null ? getStyle(style): Font.PLAIN
-        def size = properties.remove( "size" )
+        def style = properties.remove("style")
+        style = style != null ? getStyle(style) : Font.PLAIN
+        def size = properties.remove("size")
         size = size ? size : 12
-        node.font = new Font( face, style as int, size as int )
+        node.font = new Font(face, style as int, size as int)
 
         return node
     }
 
-    public void setParent( FactoryBuilderSupport builder, Object parent, Object child ) {
-       if( parent instanceof GroupNode || parent instanceof TextNode ) {
-          parent << child
-       } else if( parent instanceof TextStrokeNode ){
-          parent.font = child
-       } else {
-          throw new IllegalArgumentException("font() can only be nested in [group, text, textStroke]")
-       }
+    public void setParent(FactoryBuilderSupport builder, Object parent, Object child) {
+        if (parent instanceof GroupNode || parent instanceof TextNode) {
+            parent << child
+        } else if (parent instanceof TextStrokeNode) {
+            parent.font = child
+        } else {
+            throw new IllegalArgumentException("font() can only be nested in [group, text, textStroke]")
+        }
     }
 
-    public boolean isLeaf(){
+    public boolean isLeaf() {
         return true
     }
 
-    private def getStyle( style ){
-       if( style instanceof String ){
-          def s = Font.PLAIN
-          style.split(/\|/).each { w ->
-             if( w.equalsIgnoreCase("plain") ){ s |= Font.PLAIN }
-             else if( w.equalsIgnoreCase("bold") ){ s |= Font.BOLD }
-             else if( w.equalsIgnoreCase("italic") ) s |= Font.ITALIC
-          }
-          return s
-       }
-       return style
+    private def getStyle(style) {
+        if (style instanceof String) {
+            def s = Font.PLAIN
+            style.split(/\|/).each { w ->
+                if (w.equalsIgnoreCase("plain")) {
+                    s |= Font.PLAIN
+                } else if (w.equalsIgnoreCase("bold")) {
+                    s |= Font.BOLD
+                } else if (w.equalsIgnoreCase("italic")) s |= Font.ITALIC
+            }
+            return s
+        }
+        return style
     }
 }

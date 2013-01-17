@@ -1,5 +1,5 @@
 /*
- * Copyright 2008-2012 the original author or authors.
+ * Copyright 2008-2013 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -36,11 +36,11 @@ subprojects {
     }
 
     dependencies {
-        groovy       "org.codehaus.groovy:groovy-all:$groovyVersion"
-        compile      "org.codehaus.groovy:groovy-all:$groovyVersion"
-        testCompile  "junit:junit:4.8.2"
+        groovy "org.codehaus.groovy:groovy-all:$groovyVersion"
+        compile "org.codehaus.groovy:groovy-all:$groovyVersion"
+        testCompile "junit:junit:4.10"
         deployerJars 'org.apache.maven.wagon:wagon-webdav:1.0-beta-2',
-                     'org.apache.maven:maven-ant-tasks:2.1.0'
+            'org.apache.maven:maven-ant-tasks:2.1.0'
     }
 
     configure([compileGroovy, compileTestGroovy]) {
@@ -55,8 +55,8 @@ subprojects {
 
     metaInf << fileTree(dir: project(':').file('.'), includes: ['LICENSE.txt'])
 
-    if(!project.hasProperty('projectName')) projectName = 'Gfxbuilder'
-    if(!project.hasProperty('projectDescription')) projectDescription = 'Gfxbuilder-core: build Java2D drawings with Groovy'
+    if (!project.hasProperty('projectName')) projectName = 'Gfxbuilder'
+    if (!project.hasProperty('projectDescription')) projectDescription = 'Gfxbuilder-core: build Java2D drawings with Groovy'
     jar {
         manifest {
             attributes(
@@ -76,8 +76,8 @@ subprojects {
     installer = install.repositories.mavenInstaller
     def deployer = null
 
-    if(!project.hasProperty('codehausUsername')) codehausUsername = ''
-    if(!project.hasProperty('codehausPassword')) codehausPassword = ''
+    if (!project.hasProperty('codehausUsername')) codehausUsername = ''
+    if (!project.hasProperty('codehausPassword')) codehausPassword = ''
 
     uploadArchives {
         repositories {
@@ -132,6 +132,6 @@ subprojects {
 }
 
 task wrapper(type: Wrapper) {
-    gradleVersion = '1.2'
+    gradleVersion = '1.3'
     jarFile = 'gradle/wrapper/gradle-wrapper.jar'
 }

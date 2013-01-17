@@ -1,5 +1,5 @@
 /*
- * Copyright 2007-2012 the original author or authors.
+ * Copyright 2007-2013 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -23,17 +23,17 @@ import java.awt.geom.AffineTransform
  * @author Andres Almiray <aalmiray@users.sourceforge.net>
  */
 class TransformTransform extends AbstractTransform {
-    @GfxAttribute(alias="t") AffineTransform transform
+    @GfxAttribute(alias = "t") AffineTransform transform
 
     TransformTransform() {
-       super("transform")
+        super("transform")
     }
 
     TransformTransform clone() {
-       new TransformTransform(transform: transform, enabled: enabled)
+        new TransformTransform(transform: transform, enabled: enabled)
     }
 
     AffineTransform getTransform() {
-       transform
+        transform
     }
 }

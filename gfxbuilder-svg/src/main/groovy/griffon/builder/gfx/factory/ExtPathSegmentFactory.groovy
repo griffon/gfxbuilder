@@ -1,5 +1,5 @@
 /*
- * Copyright 2008-2012 the original author or authors.
+ * Copyright 2008-2013 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -26,40 +26,40 @@ import java.awt.Shape
  * @author Andres Almiray <aalmiray@users.sourceforge.net>
  */
 class ExtPathSegmentFactory extends GfxBeanFactory {
-   public ExtPathSegmentFactory( Class segmentClass ) {
-      super(segmentClass, true)
-   }
+    public ExtPathSegmentFactory(Class segmentClass) {
+        super(segmentClass, true)
+    }
 
-   public void setParent(FactoryBuilderSupport builder, Object parent, Object node) {
-      if(parent instanceof ExtPathNode) {
-         parent.addPathSegment(node)
-      } else {
-         throw new RuntimeException("Node ${parent} does not accept nesting of ${child}.")
-      }
-   }
+    public void setParent(FactoryBuilderSupport builder, Object parent, Object node) {
+        if (parent instanceof ExtPathNode) {
+            parent.addPathSegment(node)
+        } else {
+            throw new RuntimeException("Node ${parent} does not accept nesting of ${child}.")
+        }
+    }
 }
 
 /**
  * @author Andres Almiray <aalmiray@users.sourceforge.net>
  */
 class ShapeExtPathSegmentFactory extends GfxBeanFactory {
-   public ShapeExtPathSegmentFactory() {
-      super(ShapeExtPathSegment, false)
-   }
+    public ShapeExtPathSegmentFactory() {
+        super(ShapeExtPathSegment, false)
+    }
 
-   public void setParent(FactoryBuilderSupport builder, Object parent, Object node) {
-      if(parent instanceof ExtPathNode) {
-         parent.addPathSegment(node)
-      } else {
-         throw new RuntimeException("Node ${parent} does not accept nesting of ${child}.")
-      }
-   }
+    public void setParent(FactoryBuilderSupport builder, Object parent, Object node) {
+        if (parent instanceof ExtPathNode) {
+            parent.addPathSegment(node)
+        } else {
+            throw new RuntimeException("Node ${parent} does not accept nesting of ${child}.")
+        }
+    }
 
-   public void setChild(FactoryBuilderSupport builder, Object parent, Object child) {
-      if(child instanceof Shape || child instanceof DrawableNode) {
-         parent.setShape(child)
-      } else {
-         throw new RuntimeException("Node ${parent} does not accept nesting of ${child}.")
-      }
-   }
+    public void setChild(FactoryBuilderSupport builder, Object parent, Object child) {
+        if (child instanceof Shape || child instanceof DrawableNode) {
+            parent.setShape(child)
+        } else {
+            throw new RuntimeException("Node ${parent} does not accept nesting of ${child}.")
+        }
+    }
 }

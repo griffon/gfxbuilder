@@ -1,5 +1,5 @@
 /*
- * Copyright 2007-2012 the original author or authors.
+ * Copyright 2007-2013 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -26,40 +26,40 @@ import java.awt.Stroke
  * @author Andres Almiray <aalmiray@users.sourceforge.net>
  */
 public class ZigzagStrokeNode extends AbstractStrokeNode implements ComposableStroke {
-    @GfxAttribute(alias="s") Stroke stroke
-    @GfxAttribute(alias="a") float amplitude = 10f
-    @GfxAttribute(alias="w") float wavelength = 10f
+    @GfxAttribute(alias = "s") Stroke stroke
+    @GfxAttribute(alias = "a") float amplitude = 10f
+    @GfxAttribute(alias = "w") float wavelength = 10f
 
     ZigzagStrokeNode() {
-       super( "zigzagStroke" )
+        super("zigzagStroke")
     }
 
     public void addStroke(Stroke stroke) {
-       setStroke(stroke)
+        setStroke(stroke)
     }
 
     public void addStroke(StrokeProvider stroke) {
-       setStroke(stroke)
+        setStroke(stroke)
     }
 
-   ComposableStroke leftShift(Stroke stroke) {
-      addStroke(stroke)
-   }
+    ComposableStroke leftShift(Stroke stroke) {
+        addStroke(stroke)
+    }
 
-   ComposableStroke leftShift(StrokeProvider stroke) {
-      addStroke(stroke)
-   }
+    ComposableStroke leftShift(StrokeProvider stroke) {
+        addStroke(stroke)
+    }
 
-   void apply(GfxContext context) {
-      if(stroke instanceof StrokeProvider) stroke.apply(context)
-   }
+    void apply(GfxContext context) {
+        if (stroke instanceof StrokeProvider) stroke.apply(context)
+    }
 
     protected Stroke createStroke() {
-       if( !stroke ){
-          throw new IllegalArgumentException("${this}.stroke is null.")
-       }
+        if (!stroke) {
+            throw new IllegalArgumentException("${this}.stroke is null.")
+        }
 
-       def _s = stroke instanceof StrokeProvider ? stroke.getStroke() : stroke
-       return new ZigzagStroke(_s, amplitude as float, wavelength as float)
+        def _s = stroke instanceof StrokeProvider ? stroke.getStroke() : stroke
+        return new ZigzagStroke(_s, amplitude as float, wavelength as float)
     }
 }

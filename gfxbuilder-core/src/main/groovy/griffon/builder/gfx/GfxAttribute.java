@@ -1,5 +1,5 @@
 /*
- * Copyright 2008-2012 the original author or authors.
+ * Copyright 2008-2013 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -27,22 +27,22 @@ import java.lang.annotation.Target;
  * Annotates a groovy property, and indicates that it should be a bound
  * property according to the JavaBeans spec, announding to listeners that
  * the value has changed.
- *
+ * <p/>
  * It is a compilation error to place this annotation on a field (that is
  * nota property, i.e. has scope visibility modifiers).
- *
+ * <p/>
  * It is a compilation error to place this annotation on a property with
  * a user defined settter.
  *
- * @see GfxAttributeASTTransformation
- *
  * @author Danno Ferrin (shemnon)
  * @author Andres Almiray (aalmiray)
+ * @see GfxAttributeASTTransformation
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ElementType.FIELD, ElementType.TYPE})
 @GroovyASTTransformationClass("griffon.builder.gfx.ast.GfxAttributeASTTransformation")
 public @interface GfxAttribute {
-   String alias() default "";
-   boolean resets() default true;
+    String alias() default "";
+
+    boolean resets() default true;
 }

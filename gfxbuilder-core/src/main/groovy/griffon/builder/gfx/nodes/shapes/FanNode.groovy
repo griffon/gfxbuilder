@@ -1,5 +1,5 @@
 /*
- * Copyright 2007-2012 the original author or authors.
+ * Copyright 2007-2013 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -27,10 +27,10 @@ import java.awt.geom.Rectangle2D
 class FanNode extends AbstractShapeGfxNode {
     @GfxAttribute float cx = 10f
     @GfxAttribute float cy = 10f
-    @GfxAttribute Shape blade = new Rectangle2D.Float(0,0,4,8)
+    @GfxAttribute Shape blade = new Rectangle2D.Float(0, 0, 4, 8)
     @GfxAttribute int blades = 2
-    @GfxAttribute(alias="a") float angle = 0f
-    @GfxAttribute(alias="bcx") float bladeCx = 0.5f
+    @GfxAttribute(alias = "a") float angle = 0f
+    @GfxAttribute(alias = "bcx") float bladeCx = 0.5f
 
     FanNode() {
         super("fan")
@@ -47,11 +47,11 @@ class FanNode extends AbstractShapeGfxNode {
     }
 
     Shape calculateShape() {
-       return new Fan( cx as float,
-                       cy as float,
-                       shape,
-                       blades as int,
-                       sides as float,
-                       bladeCx as float )
+        return new Fan(cx as float,
+            cy as float,
+            shape,
+            blades as int,
+            sides as float,
+            bladeCx as float)
     }
 }

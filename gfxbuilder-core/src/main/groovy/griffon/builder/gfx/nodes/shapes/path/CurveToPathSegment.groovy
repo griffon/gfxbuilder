@@ -1,5 +1,5 @@
 /*
- * Copyright 2007-2012 the original author or authors.
+ * Copyright 2007-2013 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -30,16 +30,16 @@ class CurveToPathSegment extends AbstractPathSegment {
     @GfxAttribute double y2
     @GfxAttribute double y3
 
-    CurveToPathSegment(){
-       super("curveTo")
+    CurveToPathSegment() {
+        super("curveTo")
     }
 
-    public void apply( GeneralPath path ) {
-       path.curveTo( x1 as double,
-                     y1 as double,
-                     x2 as double,
-                     y2 as double,
-                     x3 as double,
-                     y3 as double )
+    public void apply(GeneralPath path) {
+        path.curveTo(x1 as double,
+            y1 as double,
+            x2 as double,
+            y2 as double,
+            x3 as double,
+            y3 as double)
     }
 }

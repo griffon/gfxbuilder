@@ -1,5 +1,5 @@
 /*
- * Copyright 2007-2012 the original author or authors.
+ * Copyright 2007-2013 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -33,44 +33,44 @@ class PolygonNode extends AbstractShapeGfxNode {
     PolygonNode(Polygon polygon) {
         super("polygon")
         def ps = []
-        for(int i = 0; i < polygon.xpoints.length; i++) {
-           ps << polygon.xpoints[i]
-           ps << polygon.ypoints[i]
+        for (int i = 0; i < polygon.xpoints.length; i++) {
+            ps << polygon.xpoints[i]
+            ps << polygon.ypoints[i]
         }
         points = ps
     }
 
     Shape calculateShape() {
-       if( points.size() == 0 ){
-           return null
-       }
+        if (points.size() == 0) {
+            return null
+        }
 
-       if( points.size() % 2 == 1 ){
-           throw new IllegalStateException("Odd number of points")
-       }
+        if (points.size() % 2 == 1) {
+            throw new IllegalStateException("Odd number of points")
+        }
 
-       int npoints = points.size() / 2
-       int[] xpoints = new int[npoints]
-       int[] ypoints = new int[npoints]
-       npoints.times { i ->
-           Object ox = points.get( 2 * i )
-           Object oy = points.get( (2 * i) + 1 )
-           xpoints[i] = convertToInteger( ox, 2 * 1 )
-           ypoints[i] = convertToInteger( oy, (2 * i) + 1 )
-       }
-       return new Polygon(xpoints, ypoints, npoints)
+        int npoints = points.size() / 2
+        int[] xpoints = new int[npoints]
+        int[] ypoints = new int[npoints]
+        npoints.times { i ->
+            Object ox = points.get(2 * i)
+            Object oy = points.get((2 * i) + 1)
+            xpoints[i] = convertToInteger(ox, 2 * 1)
+            ypoints[i] = convertToInteger(oy, (2 * i) + 1)
+        }
+        return new Polygon(xpoints, ypoints, npoints)
     }
 
-    private int convertToInteger( Object obj, int index ) {
-       int point = 0
-       if( obj == null ){
-           throw new IllegalStateException( ((index % 2 == 0) ? "x" : "y") + "[" + index+ "] is null" )
-       }
-       if( obj instanceof Number ){
-           point = obj.intValue()
-       }else{
-           throw new IllegalStateException( ((index % 2 == 0) ? "x" : "y") + "[" + index + "] is not a number" )
-       }
-       return point
+    private int convertToInteger(Object obj, int index) {
+        int point = 0
+        if (obj == null) {
+            throw new IllegalStateException(((index % 2 == 0) ? "x" : "y") + "[" + index + "] is null")
+        }
+        if (obj instanceof Number) {
+            point = obj.intValue()
+        } else {
+            throw new IllegalStateException(((index % 2 == 0) ? "x" : "y") + "[" + index + "] is not a number")
+        }
+        return point
     }
 }

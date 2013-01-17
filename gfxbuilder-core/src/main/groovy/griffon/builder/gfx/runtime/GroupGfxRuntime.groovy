@@ -1,5 +1,5 @@
 /*
- * Copyright 2007-2012 the original author or authors.
+ * Copyright 2007-2013 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -25,9 +25,9 @@ import java.beans.PropertyChangeEvent
  * @author Andres Almiray <aalmiray@users.sourceforge.net>
  */
 class GroupGfxRuntime extends DrawableGfxRuntime {
-   GroupGfxRuntime(GfxNode node, GfxContext context){
-      super(node, context)
-   }
+    GroupGfxRuntime(GfxNode node, GfxContext context) {
+        super(node, context)
+    }
 /*
    public Shape getLocalShape() {
       getShape()
@@ -38,17 +38,17 @@ class GroupGfxRuntime extends DrawableGfxRuntime {
    }
 */
 
-   void reset(PropertyChangeEvent event = null) {
-      super.reset(event)
-      switch(event?.propertyName) {
-         case "fill":
-         case "borderColor":
-         case "borderWidth":
-            _node.nodes.each { n ->
-               if(n instanceof DrawableNode) {
-                  n.runtime?.reset(event)
-               }
-            }
-      }
-   }
+    void reset(PropertyChangeEvent event = null) {
+        super.reset(event)
+        switch (event?.propertyName) {
+            case "fill":
+            case "borderColor":
+            case "borderWidth":
+                _node.nodes.each { n ->
+                    if (n instanceof DrawableNode) {
+                        n.runtime?.reset(event)
+                    }
+                }
+        }
+    }
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright 2007-2012 the original author or authors.
+ * Copyright 2007-2013 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -26,39 +26,39 @@ import java.awt.Stroke
  * @author Andres Almiray <aalmiray@users.sourceforge.net>
  */
 class CharcoalStrokeNode extends AbstractStrokeNode implements ComposableStroke {
-    @GfxAttribute(alias="s")  Stroke stroke
-    @GfxAttribute(alias="w")  float width = 1f
-    @GfxAttribute(alias="sz") float size = 1f
-    @GfxAttribute(alias="a")  float angle = (Math.PI/4) as float
-    @GfxAttribute(alias="rs") int randomSeed = 0
+    @GfxAttribute(alias = "s") Stroke stroke
+    @GfxAttribute(alias = "w") float width = 1f
+    @GfxAttribute(alias = "sz") float size = 1f
+    @GfxAttribute(alias = "a") float angle = (Math.PI / 4) as float
+    @GfxAttribute(alias = "rs") int randomSeed = 0
 
     CharcoalStrokeNode() {
-       super("charcoalStroke")
+        super("charcoalStroke")
     }
 
     public void addStroke(Stroke stroke) {
-       setStroke(stroke)
+        setStroke(stroke)
     }
 
     public void addStroke(StrokeProvider stroke) {
-       setStroke(stroke)
+        setStroke(stroke)
     }
 
     ComposableStroke leftShift(Stroke stroke) {
-       addStroke(stroke)
+        addStroke(stroke)
     }
 
     ComposableStroke leftShift(StrokeProvider stroke) {
-       addStroke(stroke)
+        addStroke(stroke)
     }
 
     void apply(GfxContext context) {
-       if(stroke instanceof StrokeProvider) stroke.apply(context)
+        if (stroke instanceof StrokeProvider) stroke.apply(context)
     }
 
     protected Stroke createStroke() {
-       Stroke _s = stroke instanceof StrokeProvider ? stroke.getStroke() : stroke
-       _s? new CharcoalStroke(_s, size as float, angle as float, randomSeed as int):
-           new CharcoalStroke(width as float, angle as float, randomSeed as int)
+        Stroke _s = stroke instanceof StrokeProvider ? stroke.getStroke() : stroke
+        _s ? new CharcoalStroke(_s, size as float, angle as float, randomSeed as int) :
+            new CharcoalStroke(width as float, angle as float, randomSeed as int)
     }
 }
