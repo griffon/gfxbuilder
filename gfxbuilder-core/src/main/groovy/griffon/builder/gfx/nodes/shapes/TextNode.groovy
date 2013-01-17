@@ -58,13 +58,13 @@ class TextNode extends AbstractShapeGfxNode {
     }
 
     Shape calculateShape() {
-        def __t = text.split(/\n/)
+        String[] __t = text.split(/\n/)
         if(__t.size() == 1){
            // single row text
            return center(calculateSingleRowOutline())
         }else{
            // multiple row text
-           return center(calculateMultipleRowOutline(context, __t))
+           return center(calculateMultipleRowOutline(__t))
         }
     }
 
