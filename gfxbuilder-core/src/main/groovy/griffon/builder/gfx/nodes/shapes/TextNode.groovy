@@ -114,7 +114,7 @@ class TextNode extends AbstractShapeGfxNode {
         def frc = g.getFontRenderContext()
         def fm = g.fontMetrics
 
-        def layout = new TextLayout(rows[0], g.font, frc)
+        def layout = new TextLayout(textRows[0], g.font, frc)
         def dy = fm.ascent * 2 - fm.height
         outline = new Area(layout.getOutline(AffineTransform.getTranslateInstance(x, y + dy)))
 
